@@ -1,0 +1,1335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Global">
+      <UniqueIdentifier>{f98b6182-85a5-4c70-98e8-47e6dd361379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{c211f96f-639c-4636-a2c4-57fbf2f8d075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\TypeList">
+      <UniqueIdentifier>{3850b152-bce5-4378-9212-3423d277a31c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\TypeVar">
+      <UniqueIdentifier>{deaa8034-0038-4d58-8d81-55a13422ce6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem">
+      <UniqueIdentifier>{4082f560-08ab-42d3-9ba5-e18b89ac0ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Random">
+      <UniqueIdentifier>{63efeed3-e40b-43eb-a396-ff7b48b19615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\Combination">
+      <UniqueIdentifier>{e0ea49ca-6c01-4604-b94b-3eb9b6b82f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\Combination\TSP">
+      <UniqueIdentifier>{6c1c07ce-b84f-49e3-89f8-885afe6aec8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\FunctionOpt">
+      <UniqueIdentifier>{e3883a12-5afc-48ad-9a73-7a565daa0bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\FunctionOpt\MOP">
+      <UniqueIdentifier>{69f46faa-c778-41af-95dc-a552734bcdb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\FunctionOpt\MOP\DTLZ">
+      <UniqueIdentifier>{0ed70e96-e5cb-4567-a53c-45d6a7328609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\FunctionOpt\MOP\MOEA-F">
+      <UniqueIdentifier>{51dadc40-3b25-4fef-8eb2-f7bfb2d8b921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\FunctionOpt\MOP\ZDT">
+      <UniqueIdentifier>{10679103-6814-4d1b-a80b-6de20360bced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{618f04d9-25e9-45d7-965e-c3e0083bf586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm">
+      <UniqueIdentifier>{ece0f8d6-e92e-4bb5-9243-a7272dd4b576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\Clustering">
+      <UniqueIdentifier>{24bc60af-4666-4c4c-aa70-3b24b0b67e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Measure">
+      <UniqueIdentifier>{a8cfd9d3-7682-4572-8c6b-7c34d7f1500c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\DE">
+      <UniqueIdentifier>{e1c31efd-15f1-4c87-980e-c260044174c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\DE\FAMF_DE">
+      <UniqueIdentifier>{15209178-e171-4ab3-9762-772398ccc91b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\DE\MOEA_DE">
+      <UniqueIdentifier>{1d44af60-6cc4-405c-82e7-06b5ba3412fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\Other">
+      <UniqueIdentifier>{e3d454d7-fa14-47c6-a3d9-38603e92a411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\Other\LKH">
+      <UniqueIdentifier>{bf213ee6-251a-4f44-a27f-aacab93c76b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\ACO">
+      <UniqueIdentifier>{41d5aade-0ca0-4919-811e-10139ae8f53b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\ACO\AS">
+      <UniqueIdentifier>{722077f6-d9ff-48d3-bfa8-8e87b57a3fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO">
+      <UniqueIdentifier>{9ef6b206-29af-4d5f-8755-f449d4c97f2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\ClusteringPSO">
+      <UniqueIdentifier>{44699b06-ba74-4510-be74-6072a1425236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\ClusteringPSO\AMSO">
+      <UniqueIdentifier>{6586c66f-2eb7-4f96-88df-648e026827fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\ClusteringPSO\CPSO">
+      <UniqueIdentifier>{24eb9dae-7229-4a54-b984-9784e1db1021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\ClusteringPSO\CPSOR">
+      <UniqueIdentifier>{325cbdf3-4f8c-4342-afca-7701fd7aba56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO">
+      <UniqueIdentifier>{08fa31b5-58ba-458f-9a25-066849be833b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\PSO_G">
+      <UniqueIdentifier>{61040d08-2681-4e38-b087-9b0d8fa2c11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\PSO_L">
+      <UniqueIdentifier>{d0027cd6-a8e9-4408-8cea-91c8ef056a54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\PSO\SLPSO">
+      <UniqueIdentifier>{4d68536c-6a0b-4d59-8d64-b80da79a7436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\GA">
+      <UniqueIdentifier>{71199e34-5d06-4898-a283-a62392ee9672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\GA\MOEA_GA">
+      <UniqueIdentifier>{1023655b-9ab7-4b45-a366-dc0f58f9006c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\MOEA">
+      <UniqueIdentifier>{f9901d9d-b122-4cfd-bdfc-40d3c307223a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\MOEA\MOEAD">
+      <UniqueIdentifier>{018e5093-3510-4006-aae2-c32cb8b31f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\MOEA\MOEAD\MOEAD_ALG">
+      <UniqueIdentifier>{5efa73a8-43ce-49ef-8737-4de11128eaa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\MOEA\NSGAII">
+      <UniqueIdentifier>{048c8397-bcd8-48c6-9b5d-98fbc4e98f3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\MOEA\NSGAII\NSGAII_ALG">
+      <UniqueIdentifier>{caaf4b93-84a4-42d3-8395-2219b03d73a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\MOEA\NSGAIII">
+      <UniqueIdentifier>{cd8e1437-e04a-4f47-a44d-0c78424c4029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG">
+      <UniqueIdentifier>{7ec02980-55cf-4992-aee4-9d597bf5ef18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\RealWorld">
+      <UniqueIdentifier>{9dd2c19c-acd6-404d-8416-12968a077d46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\Other\LKH\LKH_outPutResult">
+      <UniqueIdentifier>{37420b74-e62e-4d50-96ca-d046e74e790d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\DE\ClassicDE">
+      <UniqueIdentifier>{5ce733ff-bfb4-4e61-aa29-a349cb2eae43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Clustering">
+      <UniqueIdentifier>{e4d75198-d730-47d7-997c-d28b7a9501ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Problem\DOP">
+      <UniqueIdentifier>{896a716b-eb6a-40f5-a17d-2653e4123689}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Global\boundaryCont.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TypeVar\arithmetic.cpp">
+      <Filter>Utility\TypeVar</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TypeVar\assign.cpp">
+      <Filter>Utility\TypeVar</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TypeVar\ctor.cpp">
+      <Filter>Utility\TypeVar</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TypeVar\dynamic.cpp">
+      <Filter>Utility\TypeVar</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TypeVar\relational.cpp">
+      <Filter>Utility\TypeVar</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TypeVar\types.cpp">
+      <Filter>Utility\TypeVar</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\matrix.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\myVector.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Random\extreal.cpp">
+      <Filter>Random</Filter>
+    </ClCompile>
+    <ClCompile Include="Random\newran.cpp">
+      <Filter>Random</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\problem.cpp">
+      <Filter>Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\ContinuousProblem.cpp">
+      <Filter>Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\ContOptima.cpp">
+      <Filter>Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="Global\global.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\BenchmarkFunction.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FAckley.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FBeasley.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FBraninRCOS.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FCenter_peak.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FElliptic.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FFive_hills.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FGriewank.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FHimmenblau.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FHybridComp.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FIBA.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FKeane_Bump.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global1.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global2.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global3.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global4.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global5.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FMichalewicz.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FModified_Rastrigin.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FModified_Shekel.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FNoncont_Rastrigin.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FPenalized_1.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FPenalized_2.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FQuartic_Noisy.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FRastrigin.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FRosenbrock.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FScaffer_F6.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_1_2.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_6.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_13.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_21.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_22.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FShaffer.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FShubert.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSix_humpCamelBack.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSphere.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FStep.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FSzu.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FValleys.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FVincent.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FWaves.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\FWeierstrass.cpp">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Algorithm.cpp">
+      <Filter>Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ.cpp">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ1.cpp">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ2.cpp">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ3.cpp">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ4.cpp">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F1.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F2.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F3.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F4.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F5.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F6.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F7.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F8.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F9.cpp">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT.cpp">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT1.cpp">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT2.cpp">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT3.cpp">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT4.cpp">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT6.cpp">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClCompile>
+    <ClCompile Include="Measure\mSingleObj.cpp">
+      <Filter>Measure</Filter>
+    </ClCompile>
+    <ClCompile Include="Measure\mMultiObj.cpp">
+      <Filter>Measure</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\Combination\TSP\OptimalEdgeInfo.cpp">
+      <Filter>Problem\Combination\TSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\Combination\TSP\TravellingSalesman.cpp">
+      <Filter>Problem\Combination\TSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\DE\DEIndividual.cpp">
+      <Filter>Algorithm\DE</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\DE\FAMF_DE\FAMFIndiDE.cpp">
+      <Filter>Algorithm\DE\FAMF_DE</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\DE\FAMF_DE\FAMFPopDE.cpp">
+      <Filter>Algorithm\DE\FAMF_DE</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\DE\MOEA_DE\DExover2_RealMuPopulation.cpp">
+      <Filter>Algorithm\DE\MOEA_DE</Filter>
+    </ClCompile>
+    <ClCompile Include="Measure\mMultiModal.cpp">
+      <Filter>Measure</Filter>
+    </ClCompile>
+    <ClCompile Include="Measure\mROOT.cpp">
+      <Filter>Measure</Filter>
+    </ClCompile>
+    <ClCompile Include="Measure\mSingleObjDyn.cpp">
+      <Filter>Measure</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Activate.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\AddCandidate.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\AddExtraCandidates.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\AddTourCandidates.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\AdjustCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\AllocateStructures.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Ascent.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Best2OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Best3OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Best4OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Best5OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\BestKOptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Between.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Between_SL.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Between_SSL.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\BridgeGain.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\BuildKDTree.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\C.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\CandidateReport.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ChooseInitialTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Connect.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\CreateCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\CreateDelaunayCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\CreateQuadrantCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Delaunay.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Distance.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Distance_SPECIAL.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\eprintf.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ERXT.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Excludable.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Exclude.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\FindTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Flip.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Flip_SL.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Flip_SSL.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Forbidden.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\FreeStructures.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\fscanint.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Gain23.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\GenerateCandidates.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Genetic.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\GeoConversion.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\GetTime.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\GreedyTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Hashing.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Heap.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\IsCandidate.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\IsCommonEdge.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\IsPossibleCandidate.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\KSwapKick.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\LinKernighan.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\LKHmain.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Make2OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Make3OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Make4OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Make5OptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\MakeKOptMove.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\MergeBetterTourWithBestTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\MergeWithTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Minimum1TreeCost.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\MinimumSpanningTree.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\NormalizeNodeList.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\NormalizeSegmentList.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\OrderCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\PatchCycles.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\printff.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\PrintParameters.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\qsort.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Random.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ReadCandidates.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ReadLine.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ReadParameters.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ReadPenalties.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ReadProblem.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\RecordBestTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\RecordBetterTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\RemoveFirstActive.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\ResetCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\RestoreTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SegmentSize.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Sequence.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SFCTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveCompressedSubproblem.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveDelaunaySubproblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveKarpSubproblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveKCenterSubproblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveKMeansSubproblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveRoheSubproblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveSFCSubproblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveSubproblem.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveSubproblemBorderProblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SolveTourSegmentSubproblems.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\Statistics.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\StoreTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\SymmetrizeCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\TrimCandidateSet.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\WriteCandidates.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\WritePenalties.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\WriteTour.cpp">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\ACO\Ant.cpp">
+      <Filter>Algorithm\ACO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\ACO\AS\AS.cpp">
+      <Filter>Algorithm\ACO\AS</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Clustering\FAMFDera.cpp">
+      <Filter>Algorithm\Clustering</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\Particle.cpp">
+      <Filter>Algorithm\PSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSubSwarm.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\AMSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSwarm.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\AMSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSubSwarm.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSwarm.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSubSwarm.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSOR</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSwarm.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSOR</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFParticle.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\FAMF_PSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFPopPSO.cpp">
+      <Filter>Algorithm\PSO\ClusteringPSO\FAMF_PSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\PSO_G\SwarmGBest.cpp">
+      <Filter>Algorithm\PSO\PSO_G</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\PSO_L\SwarmLBest.cpp">
+      <Filter>Algorithm\PSO\PSO_L</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\SLPSO\SLParticle.cpp">
+      <Filter>Algorithm\PSO\SLPSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\PSO\SLPSO\SLSwarm.cpp">
+      <Filter>Algorithm\PSO\SLPSO</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\GA\MOEA_GA\SBX_RealMuPopulation.cpp">
+      <Filter>Algorithm\GA\MOEA_GA</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_DExover2RealMu.cpp">
+      <Filter>Algorithm\MOEA\MOEAD\MOEAD_ALG</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_SBXRealMu.cpp">
+      <Filter>Algorithm\MOEA\MOEAD\MOEAD_ALG</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_DExover2RealMu.cpp">
+      <Filter>Algorithm\MOEA\NSGAII\NSGAII_ALG</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_SBXRealMu.cpp">
+      <Filter>Algorithm\MOEA\NSGAII\NSGAII_ALG</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_DExover2RealMu.cpp">
+      <Filter>Algorithm\MOEA\NSGAIII\NSGAIII_ALG</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_SBXRealMu.cpp">
+      <Filter>Algorithm\MOEA\NSGAIII\NSGAIII_ALG</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\MathAux.cpp">
+      <Filter>Algorithm\MOEA\NSGAIII</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\ReferencePoint.cpp">
+      <Filter>Algorithm\MOEA\NSGAIII</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\initialization.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\main.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\run.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\RealWorld\FGear_Train.cpp">
+      <Filter>Problem\RealWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\RealWorld\FParEst_FMSoundWaves.cpp">
+      <Filter>Problem\RealWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Other\LKH\LKH_outPutResult\LKH_OBJ.cpp">
+      <Filter>Algorithm\Other\LKH\LKH_outPutResult</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\objectFactory.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\DOP\CompositionDBG.cpp">
+      <Filter>Problem\DOP</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\DOP\DynamicContinuous.cpp">
+      <Filter>Problem\DOP</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\DOP\DynamicProblem.cpp">
+      <Filter>Problem\DOP</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\DOP\MovingPeak.cpp">
+      <Filter>Problem\DOP</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\DOP\RealDBG.cpp">
+      <Filter>Problem\DOP</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem\DOP\RotationDBG.cpp">
+      <Filter>Problem\DOP</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Global\boundary.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Global\encoding.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Global\solution.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TypeList\NullType.h">
+      <Filter>Utility\TypeList</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TypeList\Typelist.h">
+      <Filter>Utility\TypeList</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TypeList\TypelistMacros.h">
+      <Filter>Utility\TypeList</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TypeList\TypeManip.h">
+      <Filter>Utility\TypeList</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TypeVar\typeVar.h">
+      <Filter>Utility\TypeVar</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\definition.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\include.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\matrix.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\myexcept.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\myVector.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\objectFactory.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Random\extreal.h">
+      <Filter>Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Random\newran.h">
+      <Filter>Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\problem.h">
+      <Filter>Problem</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\optimum.h">
+      <Filter>Problem</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\ContinuousProblem.h">
+      <Filter>Problem</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\ContOptima.h">
+      <Filter>Problem</Filter>
+    </ClInclude>
+    <ClInclude Include="Global\global.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\BenchmarkFunction.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FAckley.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FBeasley.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FBraninRCOS.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FCenter_peak.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FElliptic.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FFive_hills.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FGriewank.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FHimmenblau.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FHybridComp.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FIBA.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FKeane_Bump.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global1.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global2.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global3.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global4.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global5.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FMichalewicz.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FModified_Rastrigin.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FModified_Shekel.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FNoncont_Rastrigin.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FPenalized_1.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FPenalized_2.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FQuartic_Noisy.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FRastrigin.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FRosenbrock.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FScaffer_F6.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_1_2.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_6.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_13.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_21.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_22.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FShaffer.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FShubert.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSix_humpCamelBack.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSphere.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FStep.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FSzu.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FValleys.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FVincent.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FWaves.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\FWeierstrass.h">
+      <Filter>Problem\FunctionOpt</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Algorithm.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Clustering\FAMFDera.h">
+      <Filter>Algorithm\Clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ.h">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ1.h">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ2.h">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ3.h">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ4.h">
+      <Filter>Problem\FunctionOpt\MOP\DTLZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F1.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F2.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F3.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F4.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F5.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F6.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F7.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F8.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F9.h">
+      <Filter>Problem\FunctionOpt\MOP\MOEA-F</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT.h">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT1.h">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT2.h">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT3.h">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT4.h">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT6.h">
+      <Filter>Problem\FunctionOpt\MOP\ZDT</Filter>
+    </ClInclude>
+    <ClInclude Include="Measure\mSingleObj.h">
+      <Filter>Measure</Filter>
+    </ClInclude>
+    <ClInclude Include="Measure\mMultiObj.h">
+      <Filter>Measure</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\Combination\TSP\OptimalEdgeInfo.h">
+      <Filter>Problem\Combination\TSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\Combination\TSP\TravellingSalesman.h">
+      <Filter>Problem\Combination\TSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Individual.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MultiPopulation.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MultiPopulationCont.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Population.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PopulationCont.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\DE\DEIndividual.h">
+      <Filter>Algorithm\DE</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\DE\DEPopulation.h">
+      <Filter>Algorithm\DE</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\DE\FAMF_DE\FAMFIndiDE.h">
+      <Filter>Algorithm\DE\FAMF_DE</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\DE\FAMF_DE\FAMFPopDE.h">
+      <Filter>Algorithm\DE\FAMF_DE</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\DE\MOEA_DE\DExover2_RealMuPopulation.h">
+      <Filter>Algorithm\DE\MOEA_DE</Filter>
+    </ClInclude>
+    <ClInclude Include="Measure\mMultiModal.h">
+      <Filter>Measure</Filter>
+    </ClInclude>
+    <ClInclude Include="Measure\mROOT.h">
+      <Filter>Measure</Filter>
+    </ClInclude>
+    <ClInclude Include="Measure\mSingleObjDyn.h">
+      <Filter>Measure</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Clustering\FAMF.h">
+      <Filter>Algorithm\Clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Clustering\FAMFPop.h">
+      <Filter>Algorithm\Clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\Delaunay.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\GainType.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\Genetic.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\GeoConversion.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\Hashing.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\Heap.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\inttypes.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\LKH.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\Segment.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\Sequence.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\stdafx.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\stdint.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\targetver.h">
+      <Filter>Algorithm\Other\LKH</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\ACO\Ant.h">
+      <Filter>Algorithm\ACO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\ACO\AS\AS.h">
+      <Filter>Algorithm\ACO\AS</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\Particle.h">
+      <Filter>Algorithm\PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\Swarm.h">
+      <Filter>Algorithm\PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSubSwarm.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\AMSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSwarm.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\AMSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSubSwarm.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSwarm.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSubSwarm.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSOR</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSwarm.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\CPSOR</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFParticle.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\FAMF_PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFPopPSO.h">
+      <Filter>Algorithm\PSO\ClusteringPSO\FAMF_PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\PSO_G\SwarmGBest.h">
+      <Filter>Algorithm\PSO\PSO_G</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\PSO_L\SwarmLBest.h">
+      <Filter>Algorithm\PSO\PSO_L</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\SLPSO\Progress.h">
+      <Filter>Algorithm\PSO\SLPSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\SLPSO\SLParticle.h">
+      <Filter>Algorithm\PSO\SLPSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\PSO\SLPSO\SLSwarm.h">
+      <Filter>Algorithm\PSO\SLPSO</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\GA\GAIndividual.h">
+      <Filter>Algorithm\GA</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\GA\GAPopulation.h">
+      <Filter>Algorithm\GA</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\GA\MOEA_GA\SBX_RealMuPopulation.h">
+      <Filter>Algorithm\GA\MOEA_GA</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_DExover2RealMu.h">
+      <Filter>Algorithm\MOEA\MOEAD\MOEAD_ALG</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_SBXRealMu.h">
+      <Filter>Algorithm\MOEA\MOEAD\MOEAD_ALG</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\MOEAD\MOEAD.h">
+      <Filter>Algorithm\MOEA\MOEAD</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_DExover2RealMu.h">
+      <Filter>Algorithm\MOEA\NSGAII\NSGAII_ALG</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_SBXRealMu.h">
+      <Filter>Algorithm\MOEA\NSGAII\NSGAII_ALG</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAII\NSGAII.h">
+      <Filter>Algorithm\MOEA\NSGAII</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_DExover2RealMu.h">
+      <Filter>Algorithm\MOEA\NSGAIII\NSGAIII_ALG</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_SBXRealMu.h">
+      <Filter>Algorithm\MOEA\NSGAIII\NSGAIII_ALG</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\MathAux.h">
+      <Filter>Algorithm\MOEA\NSGAIII</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\NSGAIII.h">
+      <Filter>Algorithm\MOEA\NSGAIII</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\ReferencePoint.h">
+      <Filter>Algorithm\MOEA\NSGAIII</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\initialization.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\run.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\test.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\types.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\RealWorld\FGear_Train.h">
+      <Filter>Problem\RealWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\RealWorld\FParEst_FMSoundWaves.h">
+      <Filter>Problem\RealWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Other\LKH\LKH_outPutResult\LKH_OBJ.h">
+      <Filter>Algorithm\Other\LKH\LKH_outPutResult</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\DE\ClassicDE\DE_BEST_2.h">
+      <Filter>Algorithm\DE\ClassicDE</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\DE\ClassicDE\DE_Rand1.h">
+      <Filter>Algorithm\DE\ClassicDE</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Clustering\Group.h">
+      <Filter>Utility\Clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Clustering\HSLHClustering.h">
+      <Filter>Utility\Clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\DOP\CompositionDBG.h">
+      <Filter>Problem\DOP</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\DOP\DynamicContinuous.h">
+      <Filter>Problem\DOP</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\DOP\DynamicProblem.h">
+      <Filter>Problem\DOP</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\DOP\MovingPeak.h">
+      <Filter>Problem\DOP</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\DOP\RealDBG.h">
+      <Filter>Problem\DOP</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem\DOP\RotationDBG.h">
+      <Filter>Problem\DOP</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

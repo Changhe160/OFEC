@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{534988A8-D0EE-4193-B877-E5D5E7D502A6}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>OFEC</RootNamespace>
+    <ProjectName>OFEC</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(BoostInclude1_59)</AdditionalIncludeDirectories>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(BoostLib)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Algorithm\ACO\Ant.cpp" />
+    <ClCompile Include="Algorithm\ACO\AS\AS.cpp" />
+    <ClCompile Include="Algorithm\Algorithm.cpp" />
+    <ClCompile Include="Algorithm\Clustering\FAMFDera.cpp" />
+    <ClCompile Include="Algorithm\DE\DEIndividual.cpp" />
+    <ClCompile Include="Algorithm\DE\FAMF_DE\FAMFIndiDE.cpp" />
+    <ClCompile Include="Algorithm\DE\FAMF_DE\FAMFPopDE.cpp" />
+    <ClCompile Include="Algorithm\DE\MOEA_DE\DExover2_RealMuPopulation.cpp" />
+    <ClCompile Include="Algorithm\GA\MOEA_GA\SBX_RealMuPopulation.cpp" />
+    <ClCompile Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_DExover2RealMu.cpp" />
+    <ClCompile Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_SBXRealMu.cpp" />
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\MathAux.cpp" />
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_DExover2RealMu.cpp" />
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_SBXRealMu.cpp" />
+    <ClCompile Include="Algorithm\MOEA\NSGAIII\ReferencePoint.cpp" />
+    <ClCompile Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_DExover2RealMu.cpp" />
+    <ClCompile Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_SBXRealMu.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Activate.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\AddCandidate.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\AddExtraCandidates.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\AddTourCandidates.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\AdjustCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\AllocateStructures.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Ascent.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Best2OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Best3OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Best4OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Best5OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\BestKOptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Between.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Between_SL.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Between_SSL.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\BridgeGain.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\BuildKDTree.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\C.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\CandidateReport.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ChooseInitialTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Connect.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\CreateCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\CreateDelaunayCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\CreateQuadrantCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Delaunay.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Distance.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Distance_SPECIAL.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\eprintf.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ERXT.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Excludable.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Exclude.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\FindTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Flip.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Flip_SL.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Flip_SSL.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Forbidden.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\FreeStructures.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\fscanint.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Gain23.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\GenerateCandidates.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Genetic.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\GeoConversion.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\GetTime.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\GreedyTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Hashing.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Heap.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\IsCandidate.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\IsCommonEdge.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\IsPossibleCandidate.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\KSwapKick.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\LinKernighan.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\LKHmain.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\LKH_outPutResult\LKH_OBJ.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Make2OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Make3OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Make4OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Make5OptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\MakeKOptMove.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\MergeBetterTourWithBestTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\MergeWithTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Minimum1TreeCost.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\MinimumSpanningTree.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\NormalizeNodeList.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\NormalizeSegmentList.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\OrderCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\PatchCycles.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\printff.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\PrintParameters.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\qsort.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Random.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ReadCandidates.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ReadLine.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ReadParameters.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ReadPenalties.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ReadProblem.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\RecordBestTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\RecordBetterTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\RemoveFirstActive.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\ResetCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\RestoreTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SegmentSize.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Sequence.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SFCTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveCompressedSubproblem.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveDelaunaySubproblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveKarpSubproblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveKCenterSubproblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveKMeansSubproblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveRoheSubproblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveSFCSubproblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveSubproblem.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveSubproblemBorderProblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SolveTourSegmentSubproblems.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\Statistics.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\StoreTour.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\SymmetrizeCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\TrimCandidateSet.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\WriteCandidates.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\WritePenalties.cpp" />
+    <ClCompile Include="Algorithm\Other\LKH\WriteTour.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSubSwarm.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSwarm.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSubSwarm.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSwarm.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSubSwarm.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSwarm.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFParticle.cpp" />
+    <ClCompile Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFPopPSO.cpp" />
+    <ClCompile Include="Algorithm\PSO\Particle.cpp" />
+    <ClCompile Include="Algorithm\PSO\PSO_G\SwarmGBest.cpp" />
+    <ClCompile Include="Algorithm\PSO\PSO_L\SwarmLBest.cpp" />
+    <ClCompile Include="Algorithm\PSO\SLPSO\SLParticle.cpp" />
+    <ClCompile Include="Algorithm\PSO\SLPSO\SLSwarm.cpp" />
+    <ClCompile Include="Global\boundaryCont.cpp" />
+    <ClCompile Include="Global\global.cpp" />
+    <ClCompile Include="Measure\mMultiModal.cpp" />
+    <ClCompile Include="Measure\mMultiObj.cpp" />
+    <ClCompile Include="Measure\mROOT.cpp" />
+    <ClCompile Include="Measure\mSingleObj.cpp" />
+    <ClCompile Include="Measure\mSingleObjDyn.cpp" />
+    <ClCompile Include="Problem\Combination\TSP\OptimalEdgeInfo.cpp" />
+    <ClCompile Include="Problem\Combination\TSP\TravellingSalesman.cpp" />
+    <ClCompile Include="Problem\ContinuousProblem.cpp" />
+    <ClCompile Include="Problem\ContOptima.cpp" />
+    <ClCompile Include="Problem\DOP\CompositionDBG.cpp" />
+    <ClCompile Include="Problem\DOP\DynamicContinuous.cpp" />
+    <ClCompile Include="Problem\DOP\DynamicProblem.cpp" />
+    <ClCompile Include="Problem\DOP\MovingPeak.cpp" />
+    <ClCompile Include="Problem\DOP\RealDBG.cpp" />
+    <ClCompile Include="Problem\DOP\RotationDBG.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\BenchmarkFunction.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FAckley.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FBeasley.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FBraninRCOS.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FCenter_peak.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FElliptic.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FFive_hills.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FGriewank.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FHimmenblau.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FHybridComp.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FIBA.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FKeane_Bump.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global1.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global2.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global3.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global4.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FMAX_global5.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FMichalewicz.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FModified_Rastrigin.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FModified_Shekel.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FNoncont_Rastrigin.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FPenalized_1.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FPenalized_2.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FQuartic_Noisy.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FRastrigin.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FRosenbrock.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FScaffer_F6.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_1_2.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_13.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_21.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_22.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSchwefel_2_6.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FShaffer.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FShubert.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSix_humpCamelBack.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSphere.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FStep.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FSzu.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FValleys.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FVincent.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FWaves.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\FWeierstrass.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ1.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ2.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ3.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ4.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F1.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F2.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F3.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F4.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F5.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F6.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F7.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F8.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\MOEA-F\F9.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT1.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT2.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT3.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT4.cpp" />
+    <ClCompile Include="Problem\FunctionOpt\MOP\ZDT\ZDT6.cpp" />
+    <ClCompile Include="Problem\problem.cpp" />
+    <ClCompile Include="Problem\RealWorld\FGear_Train.cpp" />
+    <ClCompile Include="Problem\RealWorld\FParEst_FMSoundWaves.cpp" />
+    <ClCompile Include="Random\extreal.cpp" />
+    <ClCompile Include="Random\newran.cpp" />
+    <ClCompile Include="Test\initialization.cpp" />
+    <ClCompile Include="Test\main.cpp" />
+    <ClCompile Include="Test\run.cpp" />
+    <ClCompile Include="Utility\matrix.cpp" />
+    <ClCompile Include="Utility\myVector.cpp" />
+    <ClCompile Include="Utility\objectFactory.cpp" />
+    <ClCompile Include="Utility\TypeVar\arithmetic.cpp" />
+    <ClCompile Include="Utility\TypeVar\assign.cpp" />
+    <ClCompile Include="Utility\TypeVar\ctor.cpp" />
+    <ClCompile Include="Utility\TypeVar\dynamic.cpp" />
+    <ClCompile Include="Utility\TypeVar\relational.cpp" />
+    <ClCompile Include="Utility\TypeVar\types.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Algorithm\ACO\Ant.h" />
+    <ClInclude Include="Algorithm\ACO\AS\AS.h" />
+    <ClInclude Include="Algorithm\Algorithm.h" />
+    <ClInclude Include="Algorithm\Clustering\FAMF.h" />
+    <ClInclude Include="Algorithm\Clustering\FAMFDera.h" />
+    <ClInclude Include="Algorithm\Clustering\FAMFPop.h" />
+    <ClInclude Include="Algorithm\DE\ClassicDE\DE_BEST_2.h" />
+    <ClInclude Include="Algorithm\DE\ClassicDE\DE_Rand1.h" />
+    <ClInclude Include="Algorithm\DE\DEIndividual.h" />
+    <ClInclude Include="Algorithm\DE\DEPopulation.h" />
+    <ClInclude Include="Algorithm\DE\FAMF_DE\FAMFIndiDE.h" />
+    <ClInclude Include="Algorithm\DE\FAMF_DE\FAMFPopDE.h" />
+    <ClInclude Include="Algorithm\DE\MOEA_DE\DExover2_RealMuPopulation.h" />
+    <ClInclude Include="Algorithm\GA\GAIndividual.h" />
+    <ClInclude Include="Algorithm\GA\GAPopulation.h" />
+    <ClInclude Include="Algorithm\GA\MOEA_GA\SBX_RealMuPopulation.h" />
+    <ClInclude Include="Algorithm\Individual.h" />
+    <ClInclude Include="Algorithm\MOEA\MOEAD\MOEAD.h" />
+    <ClInclude Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_DExover2RealMu.h" />
+    <ClInclude Include="Algorithm\MOEA\MOEAD\MOEAD_ALG\MOEAD_SBXRealMu.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\MathAux.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\NSGAIII.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_DExover2RealMu.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\NSGAIII_ALG\NSGAIII_SBXRealMu.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAIII\ReferencePoint.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAII\NSGAII.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_DExover2RealMu.h" />
+    <ClInclude Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_SBXRealMu.h" />
+    <ClInclude Include="Algorithm\MultiPopulation.h" />
+    <ClInclude Include="Algorithm\MultiPopulationCont.h" />
+    <ClInclude Include="Algorithm\Other\LKH\Delaunay.h" />
+    <ClInclude Include="Algorithm\Other\LKH\GainType.h" />
+    <ClInclude Include="Algorithm\Other\LKH\Genetic.h" />
+    <ClInclude Include="Algorithm\Other\LKH\GeoConversion.h" />
+    <ClInclude Include="Algorithm\Other\LKH\Hashing.h" />
+    <ClInclude Include="Algorithm\Other\LKH\Heap.h" />
+    <ClInclude Include="Algorithm\Other\LKH\inttypes.h" />
+    <ClInclude Include="Algorithm\Other\LKH\LKH.h" />
+    <ClInclude Include="Algorithm\Other\LKH\LKH_outPutResult\LKH_OBJ.h" />
+    <ClInclude Include="Algorithm\Other\LKH\Segment.h" />
+    <ClInclude Include="Algorithm\Other\LKH\Sequence.h" />
+    <ClInclude Include="Algorithm\Other\LKH\stdafx.h" />
+    <ClInclude Include="Algorithm\Other\LKH\stdint.h" />
+    <ClInclude Include="Algorithm\Other\LKH\targetver.h" />
+    <ClInclude Include="Algorithm\Population.h" />
+    <ClInclude Include="Algorithm\PopulationCont.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSubSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\AMSO\AMSOSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSubSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSOR\CPSORSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSubSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\CPSO\CPSOSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFParticle.h" />
+    <ClInclude Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFPopPSO.h" />
+    <ClInclude Include="Algorithm\PSO\Particle.h" />
+    <ClInclude Include="Algorithm\PSO\PSO_G\SwarmGBest.h" />
+    <ClInclude Include="Algorithm\PSO\PSO_L\SwarmLBest.h" />
+    <ClInclude Include="Algorithm\PSO\SLPSO\Progress.h" />
+    <ClInclude Include="Algorithm\PSO\SLPSO\SLParticle.h" />
+    <ClInclude Include="Algorithm\PSO\SLPSO\SLSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\Swarm.h" />
+    <ClInclude Include="Global\boundary.h" />
+    <ClInclude Include="Global\encoding.h" />
+    <ClInclude Include="Global\global.h" />
+    <ClInclude Include="Global\solution.h" />
+    <ClInclude Include="Measure\mMultiModal.h" />
+    <ClInclude Include="Measure\mMultiObj.h" />
+    <ClInclude Include="Measure\mROOT.h" />
+    <ClInclude Include="Measure\mSingleObj.h" />
+    <ClInclude Include="Measure\mSingleObjDyn.h" />
+    <ClInclude Include="Problem\Combination\TSP\OptimalEdgeInfo.h" />
+    <ClInclude Include="Problem\Combination\TSP\TravellingSalesman.h" />
+    <ClInclude Include="Problem\ContinuousProblem.h" />
+    <ClInclude Include="Problem\ContOptima.h" />
+    <ClInclude Include="Problem\DOP\CompositionDBG.h" />
+    <ClInclude Include="Problem\DOP\DynamicContinuous.h" />
+    <ClInclude Include="Problem\DOP\DynamicProblem.h" />
+    <ClInclude Include="Problem\DOP\MovingPeak.h" />
+    <ClInclude Include="Problem\DOP\RealDBG.h" />
+    <ClInclude Include="Problem\DOP\RotationDBG.h" />
+    <ClInclude Include="Problem\FunctionOpt\BenchmarkFunction.h" />
+    <ClInclude Include="Problem\FunctionOpt\FAckley.h" />
+    <ClInclude Include="Problem\FunctionOpt\FBeasley.h" />
+    <ClInclude Include="Problem\FunctionOpt\FBraninRCOS.h" />
+    <ClInclude Include="Problem\FunctionOpt\FCenter_peak.h" />
+    <ClInclude Include="Problem\FunctionOpt\FElliptic.h" />
+    <ClInclude Include="Problem\FunctionOpt\FFive_hills.h" />
+    <ClInclude Include="Problem\FunctionOpt\FGriewank.h" />
+    <ClInclude Include="Problem\FunctionOpt\FHimmenblau.h" />
+    <ClInclude Include="Problem\FunctionOpt\FHybridComp.h" />
+    <ClInclude Include="Problem\FunctionOpt\FIBA.h" />
+    <ClInclude Include="Problem\FunctionOpt\FKeane_Bump.h" />
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global1.h" />
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global2.h" />
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global3.h" />
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global4.h" />
+    <ClInclude Include="Problem\FunctionOpt\FMAX_global5.h" />
+    <ClInclude Include="Problem\FunctionOpt\FMichalewicz.h" />
+    <ClInclude Include="Problem\FunctionOpt\FModified_Rastrigin.h" />
+    <ClInclude Include="Problem\FunctionOpt\FModified_Shekel.h" />
+    <ClInclude Include="Problem\FunctionOpt\FNoncont_Rastrigin.h" />
+    <ClInclude Include="Problem\FunctionOpt\FPenalized_1.h" />
+    <ClInclude Include="Problem\FunctionOpt\FPenalized_2.h" />
+    <ClInclude Include="Problem\FunctionOpt\FQuartic_Noisy.h" />
+    <ClInclude Include="Problem\FunctionOpt\FRastrigin.h" />
+    <ClInclude Include="Problem\FunctionOpt\FRosenbrock.h" />
+    <ClInclude Include="Problem\FunctionOpt\FScaffer_F6.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_1_2.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_13.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_21.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_22.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSchwefel_2_6.h" />
+    <ClInclude Include="Problem\FunctionOpt\FShaffer.h" />
+    <ClInclude Include="Problem\FunctionOpt\FShubert.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSix_humpCamelBack.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSphere.h" />
+    <ClInclude Include="Problem\FunctionOpt\FStep.h" />
+    <ClInclude Include="Problem\FunctionOpt\FSzu.h" />
+    <ClInclude Include="Problem\FunctionOpt\FValleys.h" />
+    <ClInclude Include="Problem\FunctionOpt\FVincent.h" />
+    <ClInclude Include="Problem\FunctionOpt\FWaves.h" />
+    <ClInclude Include="Problem\FunctionOpt\FWeierstrass.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ1.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ2.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ3.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\DTLZ\DTLZ4.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F1.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F2.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F3.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F4.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F5.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F6.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F7.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F8.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\MOEA-F\F9.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT1.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT2.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT3.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT4.h" />
+    <ClInclude Include="Problem\FunctionOpt\MOP\ZDT\ZDT6.h" />
+    <ClInclude Include="Problem\optimum.h" />
+    <ClInclude Include="Problem\problem.h" />
+    <ClInclude Include="Problem\RealWorld\FGear_Train.h" />
+    <ClInclude Include="Problem\RealWorld\FParEst_FMSoundWaves.h" />
+    <ClInclude Include="Random\extreal.h" />
+    <ClInclude Include="Random\newran.h" />
+    <ClInclude Include="Test\initialization.h" />
+    <ClInclude Include="Test\run.h" />
+    <ClInclude Include="Test\test.h" />
+    <ClInclude Include="Test\types.h" />
+    <ClInclude Include="Utility\Clustering\Group.h" />
+    <ClInclude Include="Utility\Clustering\HSLHClustering.h" />
+    <ClInclude Include="Utility\definition.h" />
+    <ClInclude Include="Utility\include.h" />
+    <ClInclude Include="Utility\matrix.h" />
+    <ClInclude Include="Utility\myexcept.h" />
+    <ClInclude Include="Utility\myVector.h" />
+    <ClInclude Include="Utility\objectFactory.h" />
+    <ClInclude Include="Utility\TypeList\NullType.h" />
+    <ClInclude Include="Utility\TypeList\Typelist.h" />
+    <ClInclude Include="Utility\TypeList\TypelistMacros.h" />
+    <ClInclude Include="Utility\TypeList\TypeManip.h" />
+    <ClInclude Include="Utility\TypeVar\typeVar.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

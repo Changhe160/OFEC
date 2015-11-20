@@ -1,0 +1,149 @@
+#Below problem types defined in file definition.h  add new types if needed 
+#SOP: single objective problem
+#MOP: multi-objective problem
+#DOP: dynamic optimization problem
+#MMP: multi-modal problem
+#SMP: single(uni) modal problem
+#ROOT: robust optimzation problem
+#CONT: continuous optimization problem
+#COMB: combinatorial optimization problem
+#TSP: travelling salesman problem
+#COP: constraint optimization problem
+#VRP: vehicle routing problem
+#TTP: timetabling problem
+#JSP: job shop problem
+#KOP: knapsack optimization problem
+#SAT: boolean satisfiability problem
+
+#problem_name  index_ProList(see types.h)     problem_type
+#begin
+FUN_Sphere 0 CONT SOP
+FUN_Sphere_Noisy 0 CONT SOP
+FUN_S_Sphere 0 CONT SOP
+FUN_R_Sphere 0 CONT SOP
+FUN_RS_Sphere 0 CONT SOP
+FUN_S_Sphere_CEC05 0 CONT SOP 
+FUN_Sphere_Noisy_CEC05 0 CONT SOP
+FUN_S_Sphere_CEC08 0 CONT SOP
+FUN_Noncont_Rastrigin 1 CONT SOP
+FUN_Modified_Rastrigin 2 CONT SOP MMP
+FUN_Rastrigin 3 CONT SOP
+FUN_Rastrigin_Noisy 3 CONT SOP
+FUN_S_Rastrigin 3 CONT SOP
+FUN_R_Rastrigin 3 CONT SOP
+FUN_RS_Rastrigin 3 CONT SOP
+FUN_S_Rastrigin_CEC05 3 CONT SOP
+FUN_RS_Rastrigin_CEC05 3 CONT SOP
+FUN_S_Rastrigin_CEC08 3 CONT SOP
+FUN_Weierstrass 4 CONT SOP
+FUN_RS_Weierstrass 4 CONT SOP
+FUN_R_Weierstrass 4 CONT SOP
+FUN_RS_Weierstrass_CEC05 4 CONT SOP
+FUN_Griewank 5 CONT SOP
+FUN_R_Griewank 5 CONT SOP
+FUN_RS_Griewank 5 CONT SOP 
+FUN_RS_Griewank_noBounds_CEC05 5 CONT SOP
+FUN_Griewank_Rosenbrock_F13_CEC05 5 CONT SOP
+FUN_S_Griewank_Rosenbrock_F13_CEC05 5 CONT SOP
+FUN_S_Griewank_CEC08 5 CONT SOP
+FUN_Ackley 6 CONT SOP
+FUN_Ackley_Noisy 6 CONT SOP
+FUN_S_Ackley 6 CONT SOP
+FUN_R_Ackley 6 CONT SOP
+FUN_RS_Ackley 6 CONT SOP
+FUN_RS_Ackley_Bound_CEC05 6 CONT SOP
+FUN_S_Ackley_CEC08 6 CONT SOP
+FUN_Step 7 CONT SOP
+FUN_Quartic_Noisy 8 CONT SOP
+FUN_Scaffer_F6 9 CONT SOP  
+FUN_Expanded_Scaffer_F6_CEC05 9 CONT SOP 
+FUN_Noncont_Expanded_Scaffer_F6_CEC05 9 CONT SOP 
+FUN_RS_Expanded_Scaffer_F6_CEC05 9 CONT SOP
+FUN_Rosenbrock 10 CONT SOP 
+FUN_S_Rosenbrock 10 CONT SOP 
+FUN_S_Rosenbrock_CEC05 10 CONT SOP 
+FUN_S_Rosenbrock_CEC08 10 CONT SOP 
+FUN_Schwefel_2_13_CEC05 11 CONT SOP
+FUN_Schwefel_2_22 12 CONT SOP
+FUN_Schwefel_2_22_Noisy 12 CONT SOP
+FUN_S_Schwefel_2_22 12 CONT SOP
+FUN_R_Schwefel_2_22 12 CONT SOP
+FUN_RS_Schwefel_2_22 12 CONT SOP
+FUN_Schwefel_1_2 13 CONT SOP
+FUN_Schwefel_1_2_Noisy 13 CONT SOP
+FUN_S_Schwefel_1_2 13 CONT SOP
+FUN_S_Schwefel_1_2_Noisy 13 CONT SOP
+FUN_R_Schwefel_1_2 13 CONT SOP
+FUN_RS_Schwefel_1_2  13 CONT SOP
+FUN_S_Schwefel_1_2_CEC05 13 CONT SOP 
+FUN_S_Schwefel_1_2_Noisy_CEC05 13 CONT SOP
+FUN_Schwefel_2_21 14 CONT SOP
+FUN_Schwefel_2_21_CEC08 14 CONT SOP
+FUN_Schwefel_2_6_Bound_CEC05 15 CONT SOP
+FUN_Schwefel 16 CONT SOP
+FUN_Schwefel_Noisy 16 CONT SOP
+FUN_S_Schwefel 16 CONT SOP
+FUN_R_Schwefel 16 CONT SOP
+FUN_RS_Schwefel 16 CONT SOP
+FUN_Penalized_1 17 CONT SOP 
+FUN_Penalized_2 18 CONT SOP 
+FUN_Com 19 CONT SOP 
+FUN_R_Com 19 CONT SOP 
+FUN_Com_CEC05 19 CONT SOP 
+FUN_H_Com_CEC05 19 CONT SOP
+FUN_H_Com_Noisy_CEC05 19 CONT SOP
+FUN_RH_Com_CEC05 19 CONT SOP
+FUN_RH_Com_NarrowBasin_CEC05 19 CONT SOP
+FUN_RH_Com_Bound_CEC05 19 CONT SOP
+FUN_RH_Com_F21_CEC05 19 CONT SOP
+FUN_RH_Com_HighConNumMatrix_F22_CEC05 19 CONT SOP
+FUN_Noncont_RH_Com_F23_CEC05 19 CONT SOP
+FUN_RH_Com_F24_CEC05 19 CONT SOP
+FUN_RH_Com_noBounds_F25_CEC05 19 CONT SOP
+FUN_RS_Elliptic_CEC05 20 CONT SOP
+FUN_Elliptic 20 CONT SOP
+FUN_M_global1 21 CONT SOP MMP
+FUN_M_global2 22 CONT SOP MMP
+FUN_M_global3 23 CONT SOP MMP
+FUN_M_global4 24 CONT SOP MMP
+FUN_M_global5 25 CONT SOP MMP	
+FUN_RW_Gear_Train 26 CONT SOP
+FUN_RW_ParEst_FMSoundWaves 27 CONT SOP
+FUN_Six_humpCamelBack 28 CONT SOP MMP
+FUN_Waves 29 CONT SOP MMP
+FUN_BraninRCOS 30 CONT SOP MMP
+FUN_Shubert 31 CONT SOP MMP
+FUN_Michalewicz 32 CONT SOP MMP
+FUN_Valleys 33 CONT SOP MMP
+FUN_Five_hills 34 CONT SOP MMP
+FUN_Center_peak 35 CONT SOP MMP
+FUN_Keane_Bump 36 CONT SOP
+FUN_Beasley 37 CONT SOP MMP
+FUN_Himmenblau 38 CONT SOP MMP
+FUN_Modified_Shekel 39 CONT SOP MMP
+FUN_Szu 40 CONT SOP 
+FUN_IBA 41 CONT SOP MMP
+FUN_Shaffer 42 CONT SOP 
+FUN_Vincent 43 CONT SOP MMP
+DYN_CONT_CompositionDBG 44 CONT SOP DOP
+DYN_CONT_RotationDBG 45 CONT SOP DOP MMP
+DYN_CONT_MovingPeak 46 CONT SOP DOP MMP
+FUN_MOP_ZDT1 47 CONT MOP
+FUN_MOP_ZDT2 48 CONT MOP
+FUN_MOP_ZDT3 49 CONT MOP
+FUN_MOP_ZDT4 50 CONT MOP
+FUN_MOP_ZDT6 51 CONT MOP
+FUN_MOP_DTLZ1 52 CONT MOP
+FUN_MOP_DTLZ2 53 CONT MOP
+FUN_MOP_DTLZ3 54 CONT MOP
+FUN_MOP_DTLZ4 55 CONT MOP
+FUN_MOP_F1 56 CONT MOP
+FUN_MOP_F2 57 CONT MOP
+FUN_MOP_F3 58 CONT MOP
+FUN_MOP_F4 59 CONT MOP
+FUN_MOP_F5 60 CONT MOP
+FUN_MOP_F6 61 CONT MOP
+FUN_MOP_F7 62 CONT MOP
+FUN_MOP_F8 63 CONT MOP
+FUN_MOP_F9 64 CONT MOP
+COMB_TSP 65 COMB TSP SOP
