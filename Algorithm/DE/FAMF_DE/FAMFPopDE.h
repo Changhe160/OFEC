@@ -1,6 +1,9 @@
 #ifndef FAMF_POP_DE_H
 #define FAMF_POP_DE_H
-
+/*
+C. Li, T. T. Nguyen, M. Yang, M. Mavrovouniotis, and S. Yang. An adaptive multi-population framework for 
+locating and tracking multiple optima. IEEE Transactions on Evolutionary Computation, accepted 18 November 2015
+*/
 #include "FAMFIndiDE.h"
 #include "../DEPopulation.h"
 #include "../../Clustering/FAMFPop.h"
