@@ -67,7 +67,8 @@
 #include "../Problem/FunctionOpt/MOP/MOEA-F/F8.h"
 #include "../Problem/FunctionOpt/MOP/MOEA-F/F9.h"
 #include "../Problem/Combination/TSP/TravellingSalesman.h"
-
+#include "../Problem/Combination/MKP/MultidimensionalKnapsack.h"
+#include "../Problem/Combination/QAP/QuadraticAssignment.h"
 
 //#include "../Problem/DOP/BinaryDOP.h"
 //#include "../Problem/Combination/StringMatching/StringMatching.h"
@@ -76,10 +77,11 @@
 #include "../Algorithm/Population.h"
 #include "../Algorithm/PopulationCont.h"
 #include "../Algorithm/MultiPopulationCont.h"
+#include "../Utility/Clustering/HSLHClustering.h"
 #include "../Algorithm/PSO/ClusteringPSO/CPSO/CPSOSwarm.h"
 #include "../Algorithm/PSO/ClusteringPSO/CPSOR/CPSORSwarm.h"
 #include "../Algorithm/PSO/ClusteringPSO/AMSO/AMSOSwarm.h"
-#include "../Algorithm/PSO/PSO_L/SwarmLBest.h"
+#include "../Algorithm/PSO/SPSO07/SPSO07.h"
 #include "../Algorithm/Clustering/FAMF.h"
 #include "../Algorithm/PSO/ClusteringPSO/FAMF_PSO/FAMFPopPSO.h"
 #include "../Algorithm/DE/FAMF_DE/FAMFPopDE.h"
@@ -89,17 +91,22 @@
 #include "../Algorithm/MOEA/NSGAIII/NSGAIII_ALG/NSGAIII_SBXRealMu.h"
 #include "../Algorithm/MOEA/MOEAD/MOEAD_ALG/MOEAD_DExover2RealMu.h"
 #include "../Algorithm/MOEA/MOEAD/MOEAD_ALG/MOEAD_SBXRealMu.h"
+#include "../Algorithm/DE/DEnrand1/Nrand1DEPopulation.h"
+#include "../Algorithm/DE/CRDE/CRDEPopulation.h"
 #include "../Algorithm/PSO/PSO_G/SwarmGBest.h"
 #include "../Algorithm/PSO/SLPSO/SLSwarm.h"
 #include "../Algorithm/ACO/AS/AS.h"
 #include "../Algorithm/Other/LKH/LKH.h"
 #include "../Algorithm/DE/ClassicDE/DE_BEST_2.h"
 #include "../Algorithm/DE/ClassicDE/DE_Rand1.h"
+#include "../Algorithm/ACO/ACS/ACS.h"
+#include "../Algorithm/ACO/MMAS/MMAS.h"
+#include "../Algorithm/PSO/SPSO11/SPSO11.h"
+#include "../Algorithm/Other/CMAES/CMAES_.h"
 ///Measues included
 #include "../Measure/mSingleObj.h"
 #include "../Measure/mSingleObjDyn.h"
 #include "../Measure/mMultiObj.h"
 #include "../Measure/mMultiModal.h"
-
 
 #endif

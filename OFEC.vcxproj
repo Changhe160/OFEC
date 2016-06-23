@@ -50,11 +50,11 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(BoostInclude1_59)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_INC_1_60);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -64,7 +64,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(BoostLib)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_LIB)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,11 +86,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithm\ACO\ACS\ACS.cpp" />
     <ClCompile Include="Algorithm\ACO\Ant.cpp" />
     <ClCompile Include="Algorithm\ACO\AS\AS.cpp" />
+    <ClCompile Include="Algorithm\ACO\MMAS\MMAS.cpp" />
     <ClCompile Include="Algorithm\Algorithm.cpp" />
     <ClCompile Include="Algorithm\Clustering\FAMFDera.cpp" />
+    <ClCompile Include="Algorithm\DE\CRDE\CRDEPopulation.cpp" />
     <ClCompile Include="Algorithm\DE\DEIndividual.cpp" />
+    <ClCompile Include="Algorithm\DE\DEnrand1\Nrand1DEIndividual.cpp" />
+    <ClCompile Include="Algorithm\DE\DEnrand1\Nrand1DEPopulation.cpp" />
     <ClCompile Include="Algorithm\DE\FAMF_DE\FAMFIndiDE.cpp" />
     <ClCompile Include="Algorithm\DE\FAMF_DE\FAMFPopDE.cpp" />
     <ClCompile Include="Algorithm\DE\MOEA_DE\DExover2_RealMuPopulation.cpp" />
@@ -103,6 +108,8 @@
     <ClCompile Include="Algorithm\MOEA\NSGAIII\ReferencePoint.cpp" />
     <ClCompile Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_DExover2RealMu.cpp" />
     <ClCompile Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_SBXRealMu.cpp" />
+    <ClCompile Include="Algorithm\Other\CMAES\cmaes.cpp" />
+    <ClCompile Include="Algorithm\Other\CMAES\CMAES_.cpp" />
     <ClCompile Include="Algorithm\Other\LKH\Activate.cpp" />
     <ClCompile Include="Algorithm\Other\LKH\AddCandidate.cpp" />
     <ClCompile Include="Algorithm\Other\LKH\AddExtraCandidates.cpp" />
@@ -213,9 +220,11 @@
     <ClCompile Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFPopPSO.cpp" />
     <ClCompile Include="Algorithm\PSO\Particle.cpp" />
     <ClCompile Include="Algorithm\PSO\PSO_G\SwarmGBest.cpp" />
-    <ClCompile Include="Algorithm\PSO\PSO_L\SwarmLBest.cpp" />
     <ClCompile Include="Algorithm\PSO\SLPSO\SLParticle.cpp" />
     <ClCompile Include="Algorithm\PSO\SLPSO\SLSwarm.cpp" />
+    <ClCompile Include="Algorithm\PSO\SPSO07\SPSO07.cpp" />
+    <ClCompile Include="Algorithm\PSO\SPSO11\SPSO11.cpp" />
+    <ClCompile Include="Algorithm\Termination.cpp" />
     <ClCompile Include="Global\boundaryCont.cpp" />
     <ClCompile Include="Global\global.cpp" />
     <ClCompile Include="Measure\mMultiModal.cpp" />
@@ -223,6 +232,9 @@
     <ClCompile Include="Measure\mROOT.cpp" />
     <ClCompile Include="Measure\mSingleObj.cpp" />
     <ClCompile Include="Measure\mSingleObjDyn.cpp" />
+    <ClCompile Include="Problem\Combination\MKP\MultidimensionalKnapsack.cpp" />
+    <ClCompile Include="Problem\Combination\OneMax\OneMax.cpp" />
+    <ClCompile Include="Problem\Combination\QAP\QuadraticAssignment.cpp" />
     <ClCompile Include="Problem\Combination\TSP\OptimalEdgeInfo.cpp" />
     <ClCompile Include="Problem\Combination\TSP\TravellingSalesman.cpp" />
     <ClCompile Include="Problem\ContinuousProblem.cpp" />
@@ -305,6 +317,7 @@
     <ClCompile Include="Test\initialization.cpp" />
     <ClCompile Include="Test\main.cpp" />
     <ClCompile Include="Test\run.cpp" />
+    <ClCompile Include="Utility\Clustering\FSClustering.cpp" />
     <ClCompile Include="Utility\matrix.cpp" />
     <ClCompile Include="Utility\myVector.cpp" />
     <ClCompile Include="Utility\objectFactory.cpp" />
@@ -316,15 +329,20 @@
     <ClCompile Include="Utility\TypeVar\types.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm\ACO\ACS\ACS.h" />
     <ClInclude Include="Algorithm\ACO\Ant.h" />
     <ClInclude Include="Algorithm\ACO\AS\AS.h" />
+    <ClInclude Include="Algorithm\ACO\MMAS\MMAS.h" />
     <ClInclude Include="Algorithm\Algorithm.h" />
     <ClInclude Include="Algorithm\Clustering\FAMF.h" />
     <ClInclude Include="Algorithm\Clustering\FAMFDera.h" />
     <ClInclude Include="Algorithm\Clustering\FAMFPop.h" />
     <ClInclude Include="Algorithm\DE\ClassicDE\DE_BEST_2.h" />
     <ClInclude Include="Algorithm\DE\ClassicDE\DE_Rand1.h" />
+    <ClInclude Include="Algorithm\DE\CRDE\CRDEPopulation.h" />
     <ClInclude Include="Algorithm\DE\DEIndividual.h" />
+    <ClInclude Include="Algorithm\DE\DEnrand1\Nrand1DEIndividual.h" />
+    <ClInclude Include="Algorithm\DE\DEnrand1\Nrand1DEPopulation.h" />
     <ClInclude Include="Algorithm\DE\DEPopulation.h" />
     <ClInclude Include="Algorithm\DE\FAMF_DE\FAMFIndiDE.h" />
     <ClInclude Include="Algorithm\DE\FAMF_DE\FAMFPopDE.h" />
@@ -346,6 +364,9 @@
     <ClInclude Include="Algorithm\MOEA\NSGAII\NSGAII_ALG\NSGAII_SBXRealMu.h" />
     <ClInclude Include="Algorithm\MultiPopulation.h" />
     <ClInclude Include="Algorithm\MultiPopulationCont.h" />
+    <ClInclude Include="Algorithm\Other\CMAES\cmaes.h" />
+    <ClInclude Include="Algorithm\Other\CMAES\CMAES_.h" />
+    <ClInclude Include="Algorithm\Other\CMAES\cmaes_interface.h" />
     <ClInclude Include="Algorithm\Other\LKH\Delaunay.h" />
     <ClInclude Include="Algorithm\Other\LKH\GainType.h" />
     <ClInclude Include="Algorithm\Other\LKH\Genetic.h" />
@@ -372,11 +393,13 @@
     <ClInclude Include="Algorithm\PSO\ClusteringPSO\FAMF_PSO\FAMFPopPSO.h" />
     <ClInclude Include="Algorithm\PSO\Particle.h" />
     <ClInclude Include="Algorithm\PSO\PSO_G\SwarmGBest.h" />
-    <ClInclude Include="Algorithm\PSO\PSO_L\SwarmLBest.h" />
     <ClInclude Include="Algorithm\PSO\SLPSO\Progress.h" />
     <ClInclude Include="Algorithm\PSO\SLPSO\SLParticle.h" />
     <ClInclude Include="Algorithm\PSO\SLPSO\SLSwarm.h" />
+    <ClInclude Include="Algorithm\PSO\SPSO07\SPSO07.h" />
+    <ClInclude Include="Algorithm\PSO\SPSO11\SPSO11.h" />
     <ClInclude Include="Algorithm\PSO\Swarm.h" />
+    <ClInclude Include="Algorithm\Termination.h" />
     <ClInclude Include="Global\boundary.h" />
     <ClInclude Include="Global\encoding.h" />
     <ClInclude Include="Global\global.h" />
@@ -386,6 +409,9 @@
     <ClInclude Include="Measure\mROOT.h" />
     <ClInclude Include="Measure\mSingleObj.h" />
     <ClInclude Include="Measure\mSingleObjDyn.h" />
+    <ClInclude Include="Problem\Combination\MKP\MultidimensionalKnapsack.h" />
+    <ClInclude Include="Problem\Combination\OneMax\OneMax.h" />
+    <ClInclude Include="Problem\Combination\QAP\QuadraticAssignment.h" />
     <ClInclude Include="Problem\Combination\TSP\OptimalEdgeInfo.h" />
     <ClInclude Include="Problem\Combination\TSP\TravellingSalesman.h" />
     <ClInclude Include="Problem\ContinuousProblem.h" />
@@ -470,10 +496,13 @@
     <ClInclude Include="Test\run.h" />
     <ClInclude Include="Test\test.h" />
     <ClInclude Include="Test\types.h" />
+    <ClInclude Include="Utility\Clustering\FSClustering.h" />
     <ClInclude Include="Utility\Clustering\Group.h" />
     <ClInclude Include="Utility\Clustering\HSLHClustering.h" />
+    <ClInclude Include="Utility\CornerSort.h" />
     <ClInclude Include="Utility\definition.h" />
     <ClInclude Include="Utility\include.h" />
+    <ClInclude Include="Utility\kdtree_space.h" />
     <ClInclude Include="Utility\matrix.h" />
     <ClInclude Include="Utility\myexcept.h" />
     <ClInclude Include="Utility\myVector.h" />

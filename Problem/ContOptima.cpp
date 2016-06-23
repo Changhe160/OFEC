@@ -1,7 +1,8 @@
 #include "ContOptima.h"
 #include "ContinuousProblem.h"
 #include "../Utility/definition.h"
-extern boost::mutex g_mutex;
+#include "../Problem/FunctionOpt/FFreePeak.h"
+extern mutex g_mutex;
 
 #ifdef OFEC_DEMON
 #include "../../ui/Buffer/Scene.h"
@@ -47,7 +48,7 @@ double ContOptimum::getRefRadi(const Solution<CodeVReal> &s){
 	if(!m_isReady) return 0;
 	{
 		#ifdef OFEC_DEMON
-		Ulock lock(m_mutex);
+		unique_lock<mutex> lock(m_mutex);
 		#endif
 		MyVector v(s.data().m_x);
 		v-=m_vbest;
@@ -62,7 +63,7 @@ double ContOptimum::getRefRadi(const Solution<CodeVReal> &s){
 			m_isReady=false;
 			v.normalize();
 			{
-				Ulock lock2(g_mutex);
+				unique_lock<mutex> lock2(g_mutex);
 				creatOneSample(v);
 			}
 			m_isReady=true;
@@ -75,8 +76,8 @@ double ContOptimum::getRefRadi(const Solution<CodeVReal> &s){
 void ContOptimum::generateSample(){
 	{
 		#ifdef OFEC_DEMON
-		Ulock lock(m_mutex);
-		Ulock lock2(g_mutex);
+		unique_lock<mutex> lock(m_mutex);
+		unique_lock<mutex> lock2(g_mutex);
 		#endif
 		for(int tr=0;tr<GET_NUM_DIM*2;++tr){
 			MyVector vnor(GET_NUM_DIM);
@@ -96,7 +97,8 @@ void ContOptimum::creatOneSample(const MyVector &vnor){
 	MyVector vtr(vnor);
 	Solution s0(*this),s1(*this);
 	double r=m_startRadius;
-	bool flag=true;
+	bool flag=true,first=true;
+	double dr0=1, dr1=0;
 	do{
 		s0=s1;
 		vtr=vnor*r;
@@ -111,7 +113,22 @@ void ContOptimum::creatOneSample(const MyVector &vnor){
 			s0=s1;
 			flag=false;
 			break;	
-		}			
+		}	
+		//June 19, 2016 TO DO: need to test
+		if (dynamic_cast<FreePeak*>(Global::msp_global->mp_problem.get())) {
+			dr1 = s0.getObjDistance_(s1.data().m_obj);
+			if (!first) {
+				if (dr1 / dr0 > 10) { 
+					flag = false;
+					break; 
+				}				
+			}
+			dr0 = dr1;
+			if (first) first = false;
+		}
+		
+		//***********
+
 		r+=m_step;
 	}while(s0>=s1);
 	if(flag){

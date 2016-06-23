@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -533,9 +533,9 @@ void MovingPeak::changeStepsizeRandom () /* assigns vlength a value from a norma
 
 void MovingPeak::changeStepsizeLinear() /* sinusoidal change of the stepsize, */
 {
-static	boost::thread_specific_ptr< int> counter;
+static	thread_local unique_ptr< int> counter;
 if(!counter.get()) counter.reset(new int(1));
-boost::thread_specific_ptr<double> frequency;
+thread_local unique_ptr<double> frequency;
 if(!frequency.get()) frequency.reset(new double (3.14159/20.0));
 
   m_vlength = 1+ sin((double)(*counter)*(*frequency));

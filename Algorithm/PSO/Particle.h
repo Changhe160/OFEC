@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -45,18 +45,17 @@ public:
     void initializeVmax();
 
     double getVelocity();
-    void initializeVelocity();
+    virtual void initializeVelocity();
 
     ReturnFlag NormalMutation(double *avg_v);
-    virtual ReturnFlag move( const Solution<CodeVReal> & lbest, const Solution<CodeVReal> &gbest,double w, double c1, double c2);
-	ReturnFlag moveBound( const Solution<CodeVReal> & lbest,  const Solution<CodeVReal> &gbest,double w, double c1, double c2);
- 
+
+	ReturnFlag moveBound( const Solution<CodeVReal> & lbest, double w, double c1, double c2);
+	virtual ReturnFlag move(const Solution<CodeVReal> &lbest, double w, double c1, double c2);
     virtual ReturnFlag initialize(bool mode=true);
     virtual ReturnFlag initialize( int idex, int id,bool mode=true);
     virtual void initialize(const Solution<CodeVReal> &p, int idex, int id);
     virtual ReturnFlag initialize(const Solution<CodeVReal> &p,double radius, int idex, int id,bool mode=true);
     virtual ReturnFlag initialize(int rIdx,int rID, int rPopsize,bool mode=true);
-    virtual ReturnFlag initialize(Solution<CodeVReal> *w, int mode=1,bool mode2=true);
     virtual void printToFile(ofstream & out);
     Solution<CodeVReal> & representative();
 	const Solution<CodeVReal> & representative() const;
@@ -68,6 +67,7 @@ public:
 	void printToScreen();
 	vector<double> getVel() const { return m_vel; }
 	bool isSame(const Particle &p)const;
+	Solution<CodeVReal> & pbest() { return m_pbest; }
 };
 
 #endif // PARTICLE_H

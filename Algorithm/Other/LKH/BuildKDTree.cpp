@@ -5,8 +5,8 @@ static void Partition(int start, int end, int k, int axis);
 static char FindMaxSpread(int start, int end, LKH::LKHAlg * Alg);
 static void Swap(int i, int j);
 
-static boost::thread_specific_ptr<LKH::LKHAlg::Node *> KDTree;
-static boost::thread_specific_ptr<int> cutoff;
+static thread_local unique_ptr<LKH::LKHAlg::Node *> KDTree;
+static thread_local unique_ptr<int> cutoff;
 
 #define Coord(N, axis) (axis == 0 ? (N)->X : axis == 1 ? (N)->Y : (N)->Z)
 

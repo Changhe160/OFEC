@@ -126,7 +126,8 @@ void ContinuousProblem::initializeSolution(const VirtualEncoding &ref,VirtualEnc
 ContinuousProblem::ContinuousProblem(const int rId, const int rDimNumber,  string rName, int numObj):\
 	Problem(rId,rDimNumber,rName,numObj),m_disAccuracy(0.1),m_searchRange(rDimNumber),m_globalOpt(rDimNumber,numObj){		
 		addProTag(CONT);
-		if (m_id==Global::ms_curProId)		Solution<CodeVReal>::allocateMemoryWB(rDimNumber,numObj);		
+		if (m_id==Global::ms_curProId)		
+			Solution<CodeVReal>::allocateMemoryWB(rDimNumber,numObj);		
 }
 ContinuousProblem& ContinuousProblem::operator=(const ContinuousProblem &rhs){
 	if(this==&rhs) return *this;
@@ -136,6 +137,8 @@ ContinuousProblem& ContinuousProblem::operator=(const ContinuousProblem &rhs){
 	m_searchRange=rhs.m_searchRange;
 	m_disAccuracy=rhs.m_disAccuracy;
 	m_globalOpt=rhs.m_globalOpt;
+
+	setObjSet();
 	return *this;
 }
 void ContinuousProblem::parameterSetting(Problem * rP){
@@ -144,6 +147,7 @@ void ContinuousProblem::parameterSetting(Problem * rP){
 	//m_searchRange=dynamic_cast<ContinuousProblem*>(rP)->m_searchRange;
 	m_disAccuracy=dynamic_cast<ContinuousProblem*>(rP)->m_disAccuracy;
 	//m_globalOpt=dynamic_cast<ContinuousProblem*>(rP)->m_globalOpt;
+	setObjSet();
 }
 bool ContinuousProblem::isSame(const VirtualEncoding &ss1, const VirtualEncoding & ss2){
 	const CodeVReal &s1=dynamic_cast<const CodeVReal&>(ss1);
@@ -160,7 +164,8 @@ bool ContinuousProblem::isSame(const VirtualEncoding &ss1, const VirtualEncoding
 }
 
 ContinuousProblem::~ContinuousProblem(){
-
+	if (m_id == Global::ms_curProId) 
+		Solution<CodeVReal>::freeMemoryWB();
 };
 
 double ContinuousProblem::getDomainSize(){
@@ -233,8 +238,7 @@ bool ContinuousProblem::getObjGlobalOpt(vector<double> &value){
 		value=m_globalOpt[0].obj();
         return true;
     }
-	return false;
-	
+	return false;	
 }
 
 
@@ -250,4 +254,38 @@ void ContinuousProblem::resizeDim(int num){
 void ContinuousProblem::resizeObj(int num){
 	Problem::resizeObj(num);
 	m_globalOpt.resizeObj(num);
+}
+
+const vector<pair<double, double>>& ContinuousProblem::getObjRange(){
+	// TODO move this function down to bottom classes
+	for (int i = 0; i < m_numObj; ++i){
+		if (m_objRange[i].first == DBL_MAX &&m_objRange[i].second == DBL_MAX){
+			if (m_OptMode[i] == MAX_OPT){
+				if (isGlobalOptKnown()){
+					m_objRange[i].second = m_globalOpt[0].data().m_obj[i];					
+					for (auto j = 0; j<m_globalOpt.getNumOpt(); ++j){
+						if (m_objRange[i].second < m_globalOpt[j].data().m_obj[i])m_objRange[i].second = m_globalOpt[j].data().m_obj[i];
+					}
+				}
+			}
+			else {
+				if (isGlobalOptKnown()){
+					m_objRange[i].first = m_globalOpt[0].data().m_obj[i];
+					for (auto j = 0; j<m_globalOpt.getNumOpt(); ++j){
+						if (m_objRange[i].first > m_globalOpt[j].data().m_obj[i])m_objRange[i].first = m_globalOpt[j].data().m_obj[i];
+					}
+				}
+			}
+		}
+	}
+	return m_objRange;
+}
+
+void ContinuousProblem::setObjSet() {
+	m_os.clear();
+	if (!m_globalOpt.flagGloObj()) return;
+	int num = m_globalOpt.getNumOpt();
+	for (int i = 0; i < num; ++i) {
+		m_os.push_back(&m_globalOpt[i].data().m_obj);
+	}
 }

@@ -12,14 +12,29 @@ struct VirtualEncoding{
 	VirtualEncoding(size_t s=0):m_obj(s){}
 	VirtualEncoding(const vector<double> &o) :m_obj(o){}
 	virtual ~VirtualEncoding()=0;
-	double getObjDistance(const vector<double>&rhs)const{
+	double getObjDistance(const vector<double>&rhs, DistanceMode mode = DIS_MANHATTAN)const{
 		if (this->m_obj.size() != rhs.size()){
 			throw myException("the number of objetives must be the same @ double VirtualEncoding::getObjDistance()");
 		}
 		double dis = 0;
-		for (size_t i = 0; i<this->m_obj.size(); ++i){
-			dis += fabs(this->m_obj[0] - rhs[0]);
-		}
+		switch (mode){
+			case DIS_EUCLIDEAN:
+				for (size_t i = 0; i<this->m_obj.size(); ++i){
+					dis += (this->m_obj[i] - rhs[i])*(this->m_obj[i] - rhs[i]);
+				}
+				dis=sqrt(dis);
+				break;
+			case DIS_MANHATTAN:
+				for (size_t i = 0; i<this->m_obj.size(); ++i){
+					dis += fabs(this->m_obj[i] - rhs[i]);
+				}
+				break;			
+			case DIS_HAMMING:			
+				for (size_t i = 0; i<this->m_obj.size(); ++i){
+					if(this->m_obj[i] !=rhs[i]) dis+=1;
+				}
+				break;	
+		}		
 		return dis;
 	}
 };

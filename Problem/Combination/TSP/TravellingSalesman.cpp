@@ -1,11 +1,11 @@
 /*************************************************************************
-* Project: Library of Evolutionary Algoriths
+* Project: Library of Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
-* Author: Changhe Li & Ming Yang & Yong Xia
-* Email: changhe.lw@google.com Or yangming0702@gmail.com Or cugxiayong@gmail.com
+* Author: Changhe Li & Yong Xia
+* Email: changhe.lw@google.com  Or cugxiayong@gmail.com
 * Language: C++
 *************************************************************************
-*  This file is part of EAlib. This library is free software;
+*  This file is part of OFEC. This library is free software;
 *  you can redistribute it and/or modify it under the terms of the
 *  GNU General Public License as published by the Free Software
 *  Foundation; either version 2, or (at your option) any later version.
@@ -21,7 +21,7 @@
 
 using namespace std;
 
-static boost::mutex g_mutex1;
+static mutex g_mutex1;
 
 TravellingSalesman::TravellingSalesman(ParamMap &v):Problem((v[param_proId]), (v[param_numDim]),(v[param_proName]),1),mvv_solut(m_numDim,vector<bool>(m_numDim,false)),m_globalOpt(m_numDim,m_numObj) 
 {
@@ -33,7 +33,7 @@ TravellingSalesman::TravellingSalesman(ParamMap &v):Problem((v[param_proId]), (v
 		for(int j=0;j<m_numDim;j++)
 			mvvv_cost[i][j].resize(m_numDim);
 	m_globalOpt.setFlagLocTrue();
-	string file=v[param_proFileName];
+	string file=v[param_dataFile1];
 	m_fileName=file;
 	int loc=m_fileName.find(".tsp");
 	m_fileName.erase(loc,4);
@@ -50,11 +50,11 @@ TravellingSalesman::TravellingSalesman(ParamMap &v):Problem((v[param_proId]), (v
 	//g_mutex1.lock();
 	Solution<CodeVInt>::allocateMemoryWB(m_numDim,m_numObj);
 	//g_mutex1.unlock();
-	
 }
 
 TravellingSalesman::~TravellingSalesman()
 {
+	Solution<CodeVInt>::freeMemoryWB();
 }
 
 TravellingSalesman::TravellingSalesman(const int rId, const int rDimNumber, string rName, string fileName, int numObj):Problem(rId,rDimNumber,rName,numObj),mvv_solut(m_numDim,vector<bool>(m_numDim,false)),m_globalOpt(m_numDim,m_numObj)  
@@ -293,6 +293,7 @@ ReturnFlag TravellingSalesman::evaluate_(VirtualEncoding &s_, bool rFlag, Progra
 	}
 	if (flag2){
 		if (rFlag)	m_evals++;
+		if (mode == Program_Algorithm&&Global::msp_global->mp_problem) m_globalOpt.isFound(s.m_obj);
 
 		if (Global::msp_global->mp_algorithm.get() != nullptr&&Global::msp_global->mp_algorithm->ifTerminating()) return Return_Terminate;
 		return Return_Normal;
@@ -351,116 +352,208 @@ bool TravellingSalesman::isSame(const VirtualEncoding &ss1, const VirtualEncodin
 	return false;
 }
 
-void TravellingSalesman::initializeSolution(VirtualEncoding &result_,const int idx,const int maxId)
+void TravellingSalesman::initializeSolution(VirtualEncoding &result_, const int idx, const int maxId)
 {
-	CodeVInt& result=dynamic_cast< CodeVInt&>(result_);
+	CodeVInt& result = dynamic_cast< CodeVInt&>(result_);
 
 	static vector< vector<int> > candidateSet(0);       //candidate set
 	static vector< vector<int> >  nearby(0);         //nearby cities of some city
 	static string file("");
 	g_mutex1.lock();
-	double pg,pr;
-	if(Global::g_arg.find(param_interTest1)!=Global::g_arg.end()) pg=Global::g_arg[param_interTest1];
-	else pg=0.5;
 
-	if(Global::g_arg.find(param_interTest2)!=Global::g_arg.end()) pr=Global::g_arg[param_interTest2];
-	else pr=0.2;
-
-	if(file!=m_fileName)
+	if (file != m_fileName)
 	{
-		file=m_fileName;
+		file = m_fileName;
 		candidateSet.resize(0);
 		nearby.resize(0);
 	}
 	g_mutex1.unlock();
-	switch(m_popInitialMode){
-	case POP_INIT_HEURIS:
-	{
+	switch (m_popInitialMode){
 		//utilize candidate set, top and randomness to initialize a solution
-		g_mutex1.lock();
-		if(!candidateSet.size())
+	case POP_INIT_HEURIS:
+		initializeSolution_3(result, g_mutex1, candidateSet, nearby);
+		break;
+
+		//utilize candidate sets of LKH and randomness to initialize a population
+	case POP_INIT_LKHAndRandom:
+		initializeSolution_2(result, g_mutex1, candidateSet, nearby);
+		break;
+
+		//Nearest Neighbor tour construction heuristic
+	case POP_INIT_NEAR_NEIGHBOR:
+		initializeSolution_NN(result, g_mutex1, nearby);
+		break;
+
+	case POP_INIT_UNIFORM:
+	{
+		vector<int> temp;
+		int i, pos, num = result.m_x.size();
+		for (i = 0; i<num; i++)
+			temp.push_back(int(i));
+		for (i = 0; i<num; i++)
 		{
-			nearby.resize(m_numDim);
-			candidateSet.resize(m_numDim);
-			for(int i=0;i<m_numDim;i++)
-				nearby[i].resize(int(0.15*m_numDim));
-			findNearbyCity(nearby);
-			createCandidateSets(candidateSet);
-		}
-		g_mutex1.unlock();
-		int i,j;
-		int pos;
-		int num=nearby[0].size();
-		vector<int> visited(m_numDim,0);
-		result[0]=int((m_numDim-1)*Global::msp_global->mp_uniformAlg->Next());  
-		visited[int(result[0])]=1;
-		for(i=1;i<m_numDim;i++)
-		{
-			double p=Global::msp_global->mp_uniformAlg->Next();
-			if(p<pg) //TOP, Greedy strategy  0.5
-			{
-				j=0;
-				pos=result[i-1];
-				while(j<num)
-				{
-					if(visited[nearby[pos][j]]==1)
-							j++;
-					else 
-					{
-						result[i]=nearby[pos][j];
-						visited[nearby[pos][j]]=1;
-						break;
-					}
-				} 
-				if(j==num) //如果遍历所有num个城市都不行，随机给一个城市
-					result[i]=selectCityRandom(visited,m_numDim);
-			}
-			else if(p<pg+pr)  //TOP, select one city from 15% nearest cities randomly 0.7
-			{
-				j=selectCityRandom(nearby,visited,num,result[i-1]);
-				if(j!=-1) result[i]=j;
-				else //如果遍历所有num个城市都不行，随机给一个城市
-					result[i]=selectCityRandom(visited,m_numDim);
-			}
-			else  //candidate set Strategy
-			{
-				j=0;
-				pos=result[i-1];
-				while(j<candidateSet[pos].size())
-				{
-					if(visited[candidateSet[pos][j]]==1)
-							j++;
-					else
-					{
-						result[i]=candidateSet[pos][j];
-						visited[candidateSet[pos][j]]=1;
-						break;
-					}
-				}
-				if(j==candidateSet[pos].size())  //候选集结束还没找到下个点
-					result[i]= selectCityRandom(visited,m_numDim);
-			}
+			pos = int((num - 1 - i)*Global::msp_global->mp_uniformAlg->Next());
+			result[i] = temp[pos];
+			temp[pos] = temp[num - 1 - i];
 		}
 	}
 	break;
+	}
+	if (!isValid(result))
+		throw myException("error in @TravellingSalesman::initializeSolution() in TravellingSalesman.cpp");
+}
 
-	case POP_INIT_RANDOM:
+//Nearest Neighbor tour construction heuristic
+void TravellingSalesman::initializeSolution_NN(CodeVInt& result, mutex &g_mutex1, vector< vector<int> > &nearby)
+{
+	g_mutex1.lock();
+
+	if (!nearby.size())
+	{
+		nearby.resize(m_numDim);
+		for (int i = 0; i<m_numDim; i++)
+			nearby[i].resize(m_numDim - 1);
+		findNearbyCity(nearby);
+	}
+	g_mutex1.unlock();
+	vector<int> visited(m_numDim, 0);
+	result[0] = int((m_numDim - 1)*Global::msp_global->mp_uniformAlg->Next());
+	visited[int(result[0])] = 1;
+	int num = nearby[0].size();
+	for (int i = 1; i < m_numDim; i++)
+	{
+		int j = 0, pos = result[i - 1];
+		while (j<num)
 		{
-			vector<int> temp;
-			int i,pos,num=result.m_x.size();
-			for(i=0;i<num;i++)
-				temp.push_back(int(i));
-			for(i=0;i<num;i++)
+			if (visited[nearby[pos][j]] == 1)
+				j++;
+			else
 			{
-				pos=int((num-1-i)*Global::msp_global->mp_uniformAlg->Next());
-				result[i]=temp[pos];
-				temp[pos]=temp[num-1-i];
+				result[i] = nearby[pos][j];
+				visited[nearby[pos][j]] = 1;
+				break;
 			}
 		}
-		break;
 	}
-	if(!isValid(result))
-		throw myException("error in @TravellingSalesman::initializeSolution() in TravellingSalesman.cpp");
+}
+
+//utilize candidate set, top and randomness to initialize a solution
+void TravellingSalesman::initializeSolution_3(CodeVInt& result, mutex &g_mutex1, vector< vector<int> > &candidateSet, vector< vector<int> > &nearby)
+{
+	double pg, pr;
+	if (Global::g_arg.find(param_interTest1) != Global::g_arg.end()) pg = Global::g_arg[param_interTest1];
+	else pg = 0.3;
+
+	if (Global::g_arg.find(param_interTest2) != Global::g_arg.end()) pr = Global::g_arg[param_interTest2];
+	else pr = 0.55;
+	g_mutex1.lock();
+
+	if (!candidateSet.size())
+	{
+		nearby.resize(m_numDim);
+		candidateSet.resize(m_numDim);
+		for (int i = 0; i<m_numDim; i++)
+			nearby[i].resize(int(0.15*m_numDim));
+		findNearbyCity(nearby);
+		createCandidateSets(candidateSet);
+	}
+	g_mutex1.unlock();
+	int i, j;
+	int pos;
+	int num = nearby[0].size();
+	vector<int> visited(m_numDim, 0);
+	result[0] = int((m_numDim - 1)*Global::msp_global->mp_uniformAlg->Next());
+	visited[int(result[0])] = 1;
+	for (i = 1; i<m_numDim; i++)
+	{
+		double p = Global::msp_global->mp_uniformAlg->Next();
+		if (p<pg) //TOP, Greedy strategy  0.5
+		{
+			j = 0;
+			pos = result[i - 1];
+			while (j<num)
+			{
+				if (visited[nearby[pos][j]] == 1)
+					j++;
+				else
+				{
+					result[i] = nearby[pos][j];
+					visited[nearby[pos][j]] = 1;
+					break;
+				}
+			}
+			if (j == num) //如果遍历所有num个城市都不行，随机给一个城市
+				result[i] = selectCityRandom(visited, m_numDim);
+		}
+		else if (p<pg + pr)  //TOP, select one city from 15% nearest cities randomly 0.7
+		{
+			j = selectCityRandom(nearby, visited, num, result[i - 1]);
+			if (j != -1) result[i] = j;
+			else //如果遍历所有num个城市都不行，随机给一个城市
+				result[i] = selectCityRandom(visited, m_numDim);
+		}
+		else  //candidate set Strategy
+		{
+			j = 0;
+			pos = result[i - 1];
+			while (j<candidateSet[pos].size())
+			{
+				if (visited[candidateSet[pos][j]] == 1)
+					j++;
+				else
+				{
+					result[i] = candidateSet[pos][j];
+					visited[candidateSet[pos][j]] = 1;
+					break;
+				}
+			}
+			if (j == candidateSet[pos].size())  //候选集结束还没找到下个点
+				result[i] = selectCityRandom(visited, m_numDim);
+		}
+	}
+}
+
+//utilize candidate sets of LKH and randomness to initialize a population
+void TravellingSalesman::initializeSolution_2(CodeVInt& result, mutex &g_mutex1, vector< vector<int> > &candidateSet, vector< vector<int> > &nearby)
+{
+	g_mutex1.lock();
+	if (!candidateSet.size())
+	{
+		nearby.resize(m_numDim);
+		candidateSet.resize(m_numDim);
+		for (int i = 0; i<m_numDim; i++)
+			nearby[i].resize(m_numDim - 1);
+		findNearbyCity(nearby);
+		createCandidateSets(candidateSet);
+	}
+	g_mutex1.unlock();
+	int i, j;
+	int pos;
+	int num = nearby[0].size();
+	vector<int> visited(m_numDim, 0);
+	result[0] = int((m_numDim - 1)*Global::msp_global->mp_uniformAlg->Next());
+	visited[int(result[0])] = 1;
+	for (i = 1; i<m_numDim; i++)
+	{
+		//candidate set Strategy
+		j = 0;
+		pos = result[i - 1];
+		while (j<candidateSet[pos].size())
+		{
+			if (visited[candidateSet[pos][j]] == 1)
+				j++;
+			else
+			{
+				result[i] = candidateSet[pos][j];
+				visited[candidateSet[pos][j]] = 1;
+				break;
+			}
+		}
+		if (j == candidateSet[pos].size())  //候选集结束还没找到下个点
+		{
+			result[i] = selectCityRandom(visited, m_numDim);
+		}
+	}
 }
 
 int selectCityRandom(vector< vector<int> >& matrix,vector<int> &visited,int num,int row)
@@ -482,6 +575,24 @@ int selectCityRandom(vector< vector<int> >& matrix,vector<int> &visited,int num,
 		{
 			visited[arr[pos]]=1;
 			flag=arr[pos];
+			break;
+		}
+	}
+	return flag;
+}
+
+//选择一个最近的城市
+int selectCityGreedy(vector< vector<int> >& matrix, vector<int> &visited, int num, int row)
+{
+	int i, pos, flag = -1;
+	for (i = 0; i < num; i++)
+	{
+		if (visited[matrix[row][i]] == 1)
+			continue;
+		else
+		{
+			visited[matrix[row][i]] = 1;
+			flag = matrix[row][i];
 			break;
 		}
 	}
@@ -658,3 +769,13 @@ TravellingSalesman &TravellingSalesman::getTypeRef(){
 bool TravellingSalesman::isGlobalOptKnown(){
 	return m_globalOpt.flagLoc();
 }
+
+void TravellingSalesman::setObjSet() {
+	m_os.clear();
+	if (!m_globalOpt.flagGloObj()) return;
+	int num = m_globalOpt.getNumOpt();
+	for (int i = 0; i < num; ++i) {
+		m_os.push_back(&m_globalOpt[i].data().m_obj);
+	}
+}
+

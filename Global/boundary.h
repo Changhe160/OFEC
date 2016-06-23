@@ -45,6 +45,14 @@ struct BoundaryTSP{
 	}
 };
 
+struct BoundaryQAP {
+	int m_upper;
+	int m_lower;
+	void setBoundary(int l, int u) {
+		m_lower = l; m_upper = u;
+	}
+};
+
 enum BoundaryType{Bound_Real=0,Bound_TSP};
 
 typedef LOKI_TYPELIST_2(BoundaryCont,BoundaryTSP) BoundaryTypeList;

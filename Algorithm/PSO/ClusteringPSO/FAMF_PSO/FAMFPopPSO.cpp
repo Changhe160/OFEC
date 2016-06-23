@@ -24,7 +24,7 @@ ReturnFlag FAMFPopPSO::evolve(){
 		//if(Global::msp_global->mp_problem->getEvaluations()>=9175) 
 		//	getchar();
 		//m_pop[i]->printToScreen();
-		r_flag=this->m_pop[i]->move(this->m_pop[i]->m_pbest,this->getNearestBest(this->m_pop[i]->self()),m_W,m_C1,m_C2);//
+		r_flag=this->m_pop[i]->move(this->neighborBest(i),m_W,m_C1,m_C2);//
 		//m_pop[i]->printToScreen();
 		if(this->m_pop[i]->self()>this->m_pop[i]->m_pbest){
 			this->m_pop[i]->m_pbest=this->m_pop[i]->self();
@@ -35,7 +35,7 @@ ReturnFlag FAMFPopPSO::evolve(){
 	if(r_flag==Return_Normal){
 		this->computeCenter();		
 		this->updateCurRadius(true);
-		this->m_evoNum++;
+		this->m_iter++;
 	}
 
 	return r_flag;

@@ -34,8 +34,8 @@
    A detailed description of the different cases can be found after the code.
  */
 
-static boost::thread_specific_ptr<LKH::LKHAlg::Node> s1;
-static boost::thread_specific_ptr<short> OldReversed;
+static thread_local unique_ptr<LKH::LKHAlg::Node> s1;
+static thread_local unique_ptr<short> OldReversed;
 
 void LKH::LKHAlg::freeGain23()
 {

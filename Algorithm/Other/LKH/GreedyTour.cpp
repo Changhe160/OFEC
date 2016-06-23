@@ -41,8 +41,8 @@ static void RemoveFromList(LKH::LKHAlg::Node * N, LKH::LKHAlg::Node ** First);
 static int compareX(const void *Na, const void *Nb);
 static int compareCost(const void *Na, const void *Nb);
 
-static boost::thread_specific_ptr<int> EdgesInFragments;
-static boost::thread_specific_ptr<GainType> Cost;
+static thread_local unique_ptr<int> EdgesInFragments;
+static thread_local unique_ptr<GainType> Cost;
 
 GainType LKH::LKHAlg::GreedyTour()
 {
@@ -257,7 +257,7 @@ GainType LKH::LKHAlg::GreedyTour()
  * algorithm will often produce better results than an algorithm that 
  * determines the true nearest neighbors (for example, by using a KD-tree).
  */
-static boost::thread_specific_ptr<int> mark;
+static thread_local unique_ptr<int> mark;
 
 void LKH::LKHAlg::freeGreedyTour()
 {

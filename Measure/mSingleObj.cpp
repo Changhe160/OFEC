@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -30,6 +30,7 @@ mSingleObj::mSingleObj(ParamMap &v):m_gOptIdx((int)MAX_NUM_RUN,0),m_numEvals2Suc
 		m_changeFre=int(v[param_changeFre]);
 	mpp_data.resize(maxNumrun);
 	mpp_convergeTime.resize(maxNumrun); 
+	m_duration.resize(maxNumrun);
 
 	if((v[param_gOptFlag])==true){
 		mpp_gOpt.resize(maxNumrun);
@@ -447,7 +448,12 @@ void  mSingleObj::calculatePerformance(){
 		delete [] perf;
     }
 
-
+	//2016.6.21
+	 
+	 for (auto &i : m_duration) {
+		 m_meanDuration += i.count();
+	 }
+	 m_meanDuration /= m_duration.size();
 }
 void mSingleObj::addGOpt(int runId,double rGOptObj){
 	mpp_gOpt[runId].push_back(rGOptObj);
@@ -467,7 +473,7 @@ void mSingleObj::setFileName(ParamMap &v){
 				i.first==param_numTask||i.first==param_minNumPopSize||i.first==param_hibernatingRadius||\
 				i.first==param_solutionValidationMode||i.first==param_evalCountFlag||\
 				i.first==param_workingDir||i.first==param_sampleFre||i.first==param_maxEvals||i.first==param_flagNumPeakChange||\
-				i.first==param_peakNumChangeMode) continue;
+				i.first==param_peakNumChangeMode||i.first==param_dataDirectory1) continue;
 			if(i.first==j.second){			
 				m_fileName<<j.first.substr(6)<<i.second<<"_";			
 				break;
@@ -566,9 +572,7 @@ void mSingleObj::outputResult(){
 	out<<"Total evals: "<<m_avgTevals/maxNumrun<<endl;
 	out<<"Countable evals: "<<m_avgCevals/maxNumrun<<endl;
 	out<<"Useful evals: "<<m_avgEvals/maxNumrun<<endl;
-    //out<<"ConvergeSpeed: "<<m_speed<<endl;
-    //out<<"Number of Evals to converge: "<<m_numEvals2Converge<<endl;
-    //out<<"CongergeSpeed2Best: "<<m_speed2Best<<endl;
+	out << "Elapsed time(s): " << m_meanDuration << endl;
     if(mpp_gOpt.size()>0){
        //out<<"ConvergeSpeed2GOpt: "<<m_speed2gOpt<<endl;
        // out<<"Sucess rate: "<<m_sucRate<<endl;
@@ -640,4 +644,8 @@ void mSingleObj::calculateKeyParam()
 
 void mSingleObj::deleteSingleObj(){
 	msp_perf.reset();
+}
+
+void mSingleObj::setDuration(const chrono::duration<double> & et, int runid) {
+	m_duration[runid ]= et;
 }

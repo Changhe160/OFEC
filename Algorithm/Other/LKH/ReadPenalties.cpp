@@ -15,7 +15,7 @@
  *
  * The function is called from the CreateCandidateSet function. 
  */
-static boost::thread_specific_ptr<int> PenaltiesRead;
+static thread_local unique_ptr<int> PenaltiesRead;
 
 void LKH::LKHAlg::freeReadPenalties()
 {

@@ -28,7 +28,7 @@ void CPSORSwarm::initialize(){
 	m_pop.clear();
 	for(int i=0;i<m_popsize;i++)
 		m_pop.push_back(move(unique_ptr<CPSORParticle>(new CPSORParticle())));
-	if(CAST_PROBLEM_DYN->predictChange(m_popsize)){
+	if(CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(m_popsize) /*|| CAST_PROBLEM_DYN_ONEPEAK&&CAST_PROBLEM_DYN_ONEPEAK->predictChange(m_popsize)*/){
 		Population::initialize(false,false,true);
 	}else{
 		Population::initialize(false,true,true);

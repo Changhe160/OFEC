@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -72,6 +72,7 @@ BenchmarkFunction& BenchmarkFunction::operator=(const BenchmarkFunction & rBF){
 	m_originalGlobalOpt=rBF.m_originalGlobalOpt;
 	m_idx = rBF.m_idx;
 	m_gidx = rBF.m_gidx;
+	m_tidx = rBF.m_tidx;
     return *this;
 }
 
@@ -120,8 +121,7 @@ void BenchmarkFunction::transform(double * x){
 
 
     double *x_=new double[m_numDim];
-    // gCopy(x_,x,m_numDim);
-	 copy(x,x+m_numDim,x_);
+	copy(x,x+m_numDim,x_);
     if(m_translationFlag){
         for( int i=0;i<m_numDim; i++ ) 	{
              x_[ i ] = x[ i ] - mp_translation[ i ];
@@ -299,6 +299,7 @@ void BenchmarkFunction::setGlobalOpt(int idx,vector<double>* opt,double *tran){
 	else   for(int i=0;i<m_numDim;i++)v[i]=(*opt)[i]+tran[i];
 	
 	m_globalOpt.setLocation(idx,v);
+	setObjSet();
 	BenchmarkFunction::evaluate_(m_globalOpt[idx].data(),false);
 }
 

@@ -6,7 +6,7 @@
 struct FAMFDerating
 {
 	#ifdef OFEC_CONSOLE
-	static boost::thread_specific_ptr<Optima<CodeVReal,ContOptimum>> msp_opt;
+	static thread_local unique_ptr<Optima<CodeVReal,ContOptimum>> msp_opt;
 	#endif
 	#ifdef OFEC_DEMON
 	static unique_ptr<Optima<CodeVReal,ContOptimum>> msp_opt;

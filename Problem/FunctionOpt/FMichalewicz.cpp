@@ -36,6 +36,7 @@ void FMichalewicz::initialize(){
 
 	m_originalGlobalOpt=m_globalOpt;
 	addProTag(MMP);
+	setObjSet();
 }
 void FMichalewicz::evaluate__(double const *x,vector<double>& obj){
 	double s=0;

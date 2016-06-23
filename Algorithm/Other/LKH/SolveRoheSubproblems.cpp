@@ -25,8 +25,8 @@ static void MakeSubproblem(double XMin, double XMax, double YMin,
                            double YMax, double ZMin, double ZMax,
 						   int Subproblem, int start, int end, LKH::LKHAlg *Alg);
 
-static boost::thread_specific_ptr<LKH::LKHAlg::Node *>  KDTree;
-static boost::thread_specific_ptr<int>  Size;
+static thread_local unique_ptr<LKH::LKHAlg::Node *>  KDTree;
+static thread_local unique_ptr<int>  Size;
 
 void LKH::LKHAlg::SolveRoheSubproblems()
 {

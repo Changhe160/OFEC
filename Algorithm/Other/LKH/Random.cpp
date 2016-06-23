@@ -39,8 +39,8 @@ void LKH::LKHAlg::SRandom(unsigned Seed)
 #include "../../../Utility/include.h"
 #define PRANDMAX INT_MAX
 
-static boost::thread_specific_ptr<int> a, b, initialized;
-static boost::thread_specific_ptr<vector<int> > arr;
+static thread_local unique_ptr<int> a, b, initialized;
+static thread_local unique_ptr<vector<int> > arr;
 
 unsigned LKH::LKHAlg::Random()
 {

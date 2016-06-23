@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -37,13 +37,14 @@ public:
 	ReturnFlag evaluate_(VirtualEncoding &s, bool rFlag, ProgramMode mode = Program_Problem, bool flag=true);
 	int & idx(){ return m_idx; }
 	int & gidx(){ return m_gidx; }
+	int &tidx(){ return m_tidx; };
 protected:
     double *mp_translation;         // shifted optimum positions for f(x)
     bool m_scaleFlag,m_rotationFlag,m_translationFlag,m_biasFlag;
     double m_scale,m_bias;
     double m_conditionNumber;       // generation ratation matrix for functions with rotation property
     Matrix *mp_rotationMatrix;      // rotation matrix
-	int m_gidx = 0, m_idx = 0;	//index of a group it belongs to and its index in a group
+	int m_gidx = 0, m_idx = 0,m_tidx=0;	//index of a group it belongs to, index in a group, and index of a tree it is 
 
     virtual void freeMemory();
     virtual void allocateMemory(const int rDim);
@@ -51,7 +52,7 @@ protected:
 
     void zeroTranslation();
     bool isZeroTranslation();
-    void transform(double * x);
+    virtual void transform(double * x);
 
     virtual void initialize(){};
     virtual bool loadTranslation();

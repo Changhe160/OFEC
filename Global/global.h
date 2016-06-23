@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -15,15 +15,14 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include "../Utility/definition.h"
 #include "../Utility/objectFactory.h"
 #include "../Problem/problem.h"
-
 #include "../Algorithm/Algorithm.h"
 #include "../Random/newran.h"
-#include "../Utility/definition.h"
 
-extern boost::mutex g_mutexStream;
-extern boost::mutex g_mutex;
+extern mutex g_mutexStream;
+extern mutex g_mutex;
 
 class Global{
 public:
@@ -41,10 +40,10 @@ public:
 	int m_runId;
 	
 public:
-	static	STRING2ID msm_pro,msm_alg;				// assign an id to each algorithm, and each problem
+	static	STRING2ID msm_pro,msm_alg, msm_term;				// assign an id to each algorithm, and each problem
 	static map<ALG2PRO,unsigned> msm_alg4pro;		// make pair for algorithms to problems which they solve
 	#ifdef OFEC_CONSOLE
-	static boost::thread_specific_ptr<Global> msp_global;
+	static thread_local unique_ptr<Global> msp_global;
 	#endif
 	#ifdef OFEC_DEMON
 	static unique_ptr<Global> msp_global;
@@ -53,15 +52,6 @@ public:
 	static map<string,Param> msm_param;
 	static int ms_curProId,ms_curAlgId;						// Id of the problem being solved, Id of Alg runing	
 	static ParamMap g_arg;
-private:
-	template<typename T1, typename T2>
-	static bool registerItem(map<T1,T2 >& m, const T1 & name){
-		if(m.size()==0 || m.size()>0&& m.end()==m.find(name) ){
-			m[name]=m.size();
-			return true;
-		} 
-		return false;
-	}
 public:
 	Global(int runId=0,double seedPro=-1, double seedAlg=-1);
 	~Global();
@@ -84,40 +74,42 @@ public:
 			d--;
 		}
 	}
-	static bool registerAlgorPro(const string&, ProgramMode flag);
+	template<typename T>
+	void randomize(vector<T>& arr, ProgramMode mode = Program_Algorithm) {
+		vector<T> res(arr);		
+		for (int i = 0; i < arr.size(); ++i) {
+			int t;
+			if(mode== Program_Algorithm) t= (int)(res.size()*mp_uniformAlg->Next());
+			else  t = (int)(res.size()*mp_uniformPro->Next());
+			arr[i] = res[t];
+			res.erase(res.begin() + t);
+		}
+	}
 	static bool registerAlg4Pro(ALG2PRO  alg2pro);
 	static void registerParamter();
+	template<typename T1, typename T2>
+	static bool registerItem(map<T1, T2 >& m, const T1 & name) {
+		if (m.size() == 0 || m.size()>0 && m.end() == m.find(name)) {
+			m[name] = m.size();
+			return true;
+		}
+		return false;
+	}
 
+	template<typename T>
+	T randPick(vector<T> & set, ProgramMode mode = Program_Algorithm) {
+		int idx = getRandInt(0, set.size(), mode);
+		T val = set[idx];
+		set.erase(set.begin()+idx);
+		return val;
+	}
 };
 
 #define GET_NUM_DIM (Global::msp_global->mp_problem->getNumDim())
 #define GET_NUM_OBJ (Global::msp_global->mp_problem->getNumObj())
 #define GET_EVALS Global::msp_global->mp_problem->getEvaluations()
 
-template<typename T> 
-Algorithm * createAlgorithm(ParamMap &v){
-	return new T(v);
-}
 
-template<typename T> 
-Problem * createProblem(ParamMap &v){
-	return new T(v);
-}
-
-
-template<typename T, ProgramMode flag>
-struct RegisterClassOFEC{
-	static void registerClassAlgorPro(const string &s){
-		Global::ms_classFactory.m_theMapProblem.insert(make_pair(s,&createProblem<T>));
-	}
-};
-
-template<typename T>
-struct RegisterClassOFEC<T,Program_Algorithm>{
-	static void registerClassAlgorPro(const string &s){	
-		Global::ms_classFactory.m_theMapAlgorithm.insert(make_pair(s,&createAlgorithm<T>));
-	}
-};
 template <typename T> 
 int gSign(T val) {
     return (T(0) < val) - (val < T(0));
@@ -146,8 +138,8 @@ void gQuickSort(const T &data,int size,vector<int>& index, bool min=true,int low
 	//size: the size of data  
 	//low, up : the range of data to be sorted
 	//num : the max/mim number of data within low and up 
-	static boost::thread_specific_ptr<int> lb;
-	static boost::thread_specific_ptr<vector<bool>> flag;
+	static thread_local unique_ptr<int> lb;
+	static thread_local unique_ptr<vector<bool>> flag;
 	if(start)
 	{
 		if(up==-1) up=size-1;
@@ -232,4 +224,8 @@ string gGetProblemName(const int id);
 string gGetAlgorithmName(const int id);
 char *gStrtok_r(char *s, const char *delim, char **save_ptr);
 bool gIsDynamicProlem();
+void gGetStringValue(const string &str, vector<TypeVar>& val);
+istream& gSafeGetline(istream& is, string& t);
+
+
 #endif

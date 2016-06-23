@@ -1,7 +1,7 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
-* Author: Changhe Li & Ming Yang & Yong Xia
+* Author: Changhe Li & Yong Xia
 * Email: changhe.lw@gmail.com 
 * Language: C++
 *************************************************************************

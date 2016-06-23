@@ -1,5 +1,5 @@
 #include "mMultiObj.h"
-#include "../Problem/problem.h"
+#include "../Problem/FunctionOpt/MOP/FreePeak_M_OnePeak/FFreePeak_M_OnePeak.h"
 unique_ptr<mMultiObj> mMultiObj::msp_perf(nullptr);
 
 mMultiObj::mMultiObj(Global * glob,ParamMap &v)
@@ -21,7 +21,13 @@ mMultiObj::mMultiObj(Global * glob,ParamMap &v)
 		}
 	}
 	if(glob->mp_problem->isGlobalOptKnown())
-		mvv_distance.resize(maxNumrun);	
+		mvv_distance.resize(maxNumrun);
+
+	/*if (Global::g_arg[param_proName] == "FUN_FreePeak_M_OnePeak") {
+		FFreePeak_M_OnePeak* mp = dynamic_cast<FFreePeak_M_OnePeak*>(glob->mp_problem.get());
+		m_psr = mp->getParetoRegion();
+		m_fpsr.resize(maxNumrun,vector<bool>(m_psr.size(),false));
+	}*/
 }
 
 void mMultiObj::initialize(Global * glob,ParamMap &v){
@@ -55,12 +61,33 @@ void mMultiObj::reInitialize(Global * glob,int pops)
 	}
 }
 
-void mMultiObj::record(int ID,int index,vector<double> &obj,vector<double> &point)
+void mMultiObj::record(Global * glob,int index,vector<double> &obj,vector<double> &point)
 {
+	int ID = glob->m_runId;
 	for(int i=0;i<obj.size();i++)
 		mvvv_obj[ID][index][i]=obj[i];
 	for(int i=0;i<point.size();i++)
 		mvvv_point[ID][index][i]=point[i];
+	if (Global::g_arg[param_proName] == "FUN_FreePeak_M_OnePeak") {
+		FFreePeak_M_OnePeak* mp = dynamic_cast<FFreePeak_M_OnePeak*>(glob->mp_problem.get());
+		int type = mp->getType();
+		for (int i = 0; i < m_psr.size(); ++i) {
+			int tidx = mp->getTreeRoot(point);
+			int gidx = mp->getTree(tidx)->get_regionIdx(point);
+			int bidx = mp->boxIdx(tidx, gidx);
+
+			if (bidx == m_psr[i]) {
+				if (0 == type || 1 == type)	m_fpsr[ID][i] = true;
+				else  if (2 == type) {//Countable case
+					MyVector v = mp->getPeak(bidx, 0).m_obj;
+					if (v.getDis(obj) < 1.0e-2) {
+						m_fpsr[ID][i] = true;
+					}
+				}
+			}
+		}
+
+	}
 }
 
 
@@ -74,7 +101,7 @@ void mMultiObj::setFileName(ParamMap &v){
 				i.first==param_numTask||i.first==param_minNumPopSize||i.first==param_hibernatingRadius||\
 				i.first==param_solutionValidationMode||i.first==param_evalCountFlag||\
 				i.first==param_workingDir||i.first==param_sampleFre||i.first==param_maxEvals||i.first==param_flagNumPeakChange||\
-				i.first==param_peakNumChangeMode) continue;
+				i.first == param_peakNumChangeMode || i.first == param_dataDirectory1) continue;
 			if(i.first==j.second){			
 				m_fileName<<j.first.substr(6)<<i.second<<"_";			
 				break;
@@ -159,6 +186,28 @@ void mMultiObj::outputResult()
 		out.close();
 		out.clear();
 	}
+
+	ss.str("");
+	out.clear();
+	ss << Global::g_arg[param_workingDir] << "Result/" << m_fileName.str() << "suc.txt";
+	out.open(ss.str().c_str());
+	int maxNumrun = MAX_NUM_RUN;
+	double peakRate = 0;
+	for (int i = 0; i < maxNumrun; ++i) {
+		int j;
+		for (j = 0; j < m_fpsr[i].size(); ++j) {
+			if (m_fpsr[i][j] == false) break;
+		}
+		if (j == m_fpsr[i].size()) m_suc++;
+		double rate = 0;
+		for (j = 0; j < m_fpsr[i].size(); ++j) {
+			if (m_fpsr[i][j] == true) rate += 1;
+		}
+		peakRate += rate / m_fpsr[i].size();
+	}
+	out << m_suc*1.0 / maxNumrun<<" "<< peakRate/ maxNumrun;
+	out.close();
+	
 }
 
 void mMultiObj::deleteMultiObj(){

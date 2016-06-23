@@ -15,8 +15,9 @@ CPSOSwarm::~CPSOSwarm(){
 void CPSOSwarm::initialize(){
 
 	int size=m_initialSize-mv_converge.size()-m_subPop.size()+1;
+	//if (size < 0) cout << m_initialSize<<" "<<mv_converge.size()<<" "<<m_subPop.size()<< " err" << endl;
 	CPSOSubSwarm *s=nullptr;
-	if(CAST_PROBLEM_DYN->predictChange(size))	s=new CPSOSubSwarm(size,false);
+	if(CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(size) /*|| CAST_PROBLEM_DYN_ONEPEAK&&CAST_PROBLEM_DYN_ONEPEAK->predictChange(size)*/)	s=new CPSOSubSwarm(size,false);
 	else	s=new CPSOSubSwarm(size,true);
 
 	for(auto &i:mv_converge){
@@ -79,7 +80,7 @@ ReturnFlag CPSOSwarm::run_(){
 			handleReturnFlagAll(r_flag);
 			HANDLE_RETURN_FLAG(r_flag)
 
-			if(!CAST_PROBLEM_DYN->predictChange(1)){
+			if(CAST_PROBLEM_DYN&&!CAST_PROBLEM_DYN->predictChange(1) /*|| CAST_PROBLEM_DYN_ONEPEAK&&!CAST_PROBLEM_DYN_ONEPEAK->predictChange(1)*/){
 				r_flag=x.evaluate(true);
 			}
 			if(x.obj(0)!=objOld[0])	flag=true;
@@ -99,32 +100,37 @@ ReturnFlag CPSOSwarm::run_(){
 		if(r_flag==Return_Terminate) break;
 		//cout<<Global::msp_global->mp_problem->getEvaluations()<<" "<<getNumPops()<<" "<<m_subPop[findBestPop(1)]->m_best[0]->obj(0)<<endl;
 		measureMultiPop();
-
-		if(flag){
-			initialize();
-			if(ifTerminating()) break;
-			createSubswarms();
-		}else{
-			if(Global::msp_global->m_totalNumIndis>=m_subSize){				
-				while(removeOverlapping()!=-1);
-				for(auto it=m_subPop.begin()+1;it!=m_subPop.end();++it) (*it)->checkOverCrowd(m_subSize);
-				
-				for(decltype(m_subPop.size()) i=1;i<m_subPop.size();i++){
-					if(m_subPop[i]->isConverged(0.0001)){
-						if(m_initialSize-mv_converge.size()-m_subPop.size()+1>1){
-							mv_converge.push_back(move(unique_ptr<CPSOParticle>(new CPSOParticle(*(m_subPop[i]->m_best[0])))));
-						}
-						deletePopulation(i);
-						i--;
-					}
-				}				
-			}else{
-				int num=m_subSize-Global::msp_global->m_totalNumIndis;
-				if(CAST_PROBLEM_DYN->predictChange(num))			m_subPop[0]->add(num,false,false);
-				else m_subPop[0]->add(num,true,false);
+		
+			if (flag) {			
+				initialize();
+				if (ifTerminating()) break;
+				createSubswarms();			
 			}
+			else {
+				if (Global::msp_global->m_totalNumIndis >= m_subSize) {
+					while (removeOverlapping() != -1);
+					for (auto it = m_subPop.begin() + 1; it != m_subPop.end(); ++it) (*it)->checkOverCrowd(m_subSize);
+					
+					for (decltype(m_subPop.size()) i = 1; i < m_subPop.size(); i++) {
+						if (m_subPop[i]->isConverged(0.0001)) {
+							if (m_initialSize - (int)mv_converge.size() - (int)m_subPop.size() + 1>1) {
+								mv_converge.push_back(move(unique_ptr<CPSOParticle>(new CPSOParticle(*(m_subPop[i]->m_best[0])))));
+							}
+							deletePopulation(i);
+							i--;
+						}
+					}					
+				}
+				else {
+					
+					int num = m_subSize - Global::msp_global->m_totalNumIndis;
+					if (CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(num) /*|| CAST_PROBLEM_DYN_ONEPEAK&&CAST_PROBLEM_DYN_ONEPEAK->predictChange(num)*/)			m_subPop[0]->add(num, false, false);
+					else m_subPop[0]->add(num, true, false);
+					
+				}
 
-		}
+			}
+		
 
 	}
 	return Return_Terminate;

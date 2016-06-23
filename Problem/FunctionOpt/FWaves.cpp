@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -63,6 +63,7 @@ void FWaves::initialize(){
 	in.close();
 	m_originalGlobalOpt=m_globalOpt;
 	addProTag(MMP);
+	setObjSet();
 }
 void FWaves::evaluate__(double const *x,vector<double>& obj){
 	double s,t;

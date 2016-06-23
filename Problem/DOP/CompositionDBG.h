@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -37,7 +37,7 @@ private:
 
     double *mp_fmax;
 	static const int msc_numComFuns=5;					// number of basic functions
-	static boost::thread_specific_ptr<ComDBGFuncID> ms_funID;
+	static thread_local unique_ptr<ComDBGFuncID> ms_funID;
 private:
 	
 	void setComBoundary();

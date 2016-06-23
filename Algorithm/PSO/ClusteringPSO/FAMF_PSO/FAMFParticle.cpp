@@ -46,7 +46,7 @@ ReturnFlag FAMFParticle::cauchyMove(double radius){
 	
 	return rf;
 }
-ReturnFlag FAMFParticle::move( const Solution<CodeVReal> & lbest, const Solution<CodeVReal> &gbest,double w, double c1, double c2){
+ReturnFlag FAMFParticle::move( const Solution<CodeVReal> &lbest,double w, double c1, double c2){
 	double u,l,x;
 
 	for( int j=0;j<GET_NUM_DIM;j++){
@@ -54,7 +54,7 @@ ReturnFlag FAMFParticle::move( const Solution<CodeVReal> & lbest, const Solution
 		double r1=Global::msp_global->mp_uniformAlg->Next();
 		double r2=Global::msp_global->mp_uniformAlg->Next();
 		x=data()[j];
-		m_vel[j]=w*m_vel[j]+c1*r1*(lbest.data()[j]-x)+	c2*r2*((gbest.data()[j])-(x));
+		m_vel[j]=w*m_vel[j]+c1*r1*(m_pbest.data()[j]-x)+	c2*r2*((lbest.data()[j])-(x));
 		
 		if(m_vel[j]>m_vMax[j].m_max)	m_vel[j]=m_vMax[j].m_max;
 		else if(m_vel[j]<m_vMax[j].m_min)		m_vel[j]=m_vMax[j].m_min;

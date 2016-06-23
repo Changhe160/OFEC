@@ -7,7 +7,7 @@
  *
  * The function is called from CreateCandidateSet.
  */
-static boost::thread_specific_ptr<int> Level;
+static thread_local unique_ptr<int> Level;
 
 void LKH::LKHAlg::freeCreateDelaunay()
 {

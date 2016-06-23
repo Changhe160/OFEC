@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -60,6 +60,7 @@ void FBeasley::initialize(){ // note
 
 	m_globalOpt=m_originalGlobalOpt;
 	addProTag(MMP);
+	setObjSet();
 }
 void FBeasley::evaluate__(double const *x,vector<double>& obj){
 	double s;

@@ -7,11 +7,11 @@
  * of the tour. The population is kept sorted in increasing fitness order.
  */
 
-boost::thread_specific_ptr<int> MaxPopulationSize; /* The maximum size of the population */ 
-boost::thread_specific_ptr<int> PopulationSize;    /* The current size of the population */ 
-boost::thread_specific_ptr<CrossoverFunction> Crossover;
-boost::thread_specific_ptr<int*> Population;      /* Array of individuals (solution tours) */
-boost::thread_specific_ptr<GainType> Fitness;     /* The fitness (tour cost) of each individual */
+thread_local unique_ptr<int> MaxPopulationSize; /* The maximum size of the population */ 
+thread_local unique_ptr<int> PopulationSize;    /* The current size of the population */ 
+thread_local unique_ptr<CrossoverFunction> Crossover;
+thread_local unique_ptr<int*> Population;      /* Array of individuals (solution tours) */
+thread_local unique_ptr<GainType> Fitness;     /* The fitness (tour cost) of each individual */
 
 void AddToPopulation(GainType Cost,LKH::LKHAlg *Alg)
 {

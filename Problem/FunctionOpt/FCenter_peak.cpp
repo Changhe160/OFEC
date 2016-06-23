@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -55,6 +55,7 @@ void FCenter_peak::initialize(){
 	
 	 m_originalGlobalOpt=m_globalOpt;
 	 addProTag(MMP);
+	 setObjSet();
 }
 void FCenter_peak::evaluate__(double const *x,vector<double>& obj){
 	double s;

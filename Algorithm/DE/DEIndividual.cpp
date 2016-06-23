@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -104,9 +104,10 @@ void DEIndividual::recombine(double CR){
 
 }
 ReturnFlag DEIndividual::select(){
-
     ReturnFlag rf=m_pu.evaluate();
-    if(m_pu>self()) self()=m_pu;
+	if (m_pu > self()) {
+		self() = m_pu;
+	}
 	return rf;
 }
 void DEIndividual::increaseDimension(){
@@ -126,4 +127,8 @@ void DEIndividual::printToScreen(){
 	cout<<"pu  : ";
 	m_pu.printToScreen();
 }
+Solution<CodeVReal>& DEIndividual::trial() {
+	return m_pu;
+}
+
 

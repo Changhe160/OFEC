@@ -15,12 +15,12 @@ static void ComputeBounds(int start, int end,LKH::LKHAlg *Alg);
 typedef int (*ContainsFunction) (LKH::LKHAlg::Node * T, int Q, LKH::LKHAlg::Node * N);
 typedef int (*BoxOverlapsFunction) (LKH::LKHAlg::Node * T, int Q, LKH::LKHAlg::Node * N);
 
-static boost::thread_specific_ptr<LKH::LKHAlg::Node *> KDTree;
-static boost::thread_specific_ptr<LKH::LKHAlg::Candidate> CandidateSet;
-static boost::thread_specific_ptr<double> XMin, XMax, YMin, YMax, ZMin, ZMax;
-static boost::thread_specific_ptr<int> Candidates, Radius, Level;
-static boost::thread_specific_ptr<ContainsFunction> Contains;
-static boost::thread_specific_ptr<BoxOverlapsFunction> BoxOverlaps;
+static thread_local unique_ptr<LKH::LKHAlg::Node *> KDTree;
+static thread_local unique_ptr<LKH::LKHAlg::Candidate> CandidateSet;
+static thread_local unique_ptr<double> XMin, XMax, YMin, YMax, ZMin, ZMax;
+static thread_local unique_ptr<int> Candidates, Radius, Level;
+static thread_local unique_ptr<ContainsFunction> Contains;
+static thread_local unique_ptr<BoxOverlapsFunction> BoxOverlaps;
 
 /*
  * The CreateQuadrantCandidateSet function creates for each node 

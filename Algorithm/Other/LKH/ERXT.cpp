@@ -24,8 +24,8 @@
  * However, ERXT does not implement the greedy strategy used by Edge-T for 
  * choosing foreign edges.
  */
-static boost::thread_specific_ptr<LKH::LKHAlg::Node> FirstFree;
-static boost::thread_specific_ptr<int> Tabu;
+static thread_local unique_ptr<LKH::LKHAlg::Node> FirstFree;
+static thread_local unique_ptr<int> Tabu;
 
 static LKH::LKHAlg::Node *SelectNext(LKH::LKHAlg::Node * N,LKH::LKHAlg *Alg);
 

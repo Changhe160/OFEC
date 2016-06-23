@@ -18,8 +18,7 @@ DTLZ::DTLZ(int ID, int numDim, const string &proName, int numObj) :BenchmarkFunc
 {
 	if (m_numObj > m_numDim) throw myException("the number of dim must be greater or eaqual to the number of obj for DTLZ pros");
     setSearchRange(0.,1.);
-	vector<ProTag> p_tag(1,MOP);
-	p_tag.push_back(CONT);
+	set<ProTag> p_tag = { MOP, CONT };
 	setProTag(p_tag);
 	setOptType(MIN_OPT,-1);
 	m_popInitialMode=POP_INIT_UNIFORM;
@@ -78,6 +77,8 @@ void DTLZ::generateAdLoadPF()
 			infile>>m_originalGlobalOpt[i].data().m_obj[j];
 	m_globalOpt=m_originalGlobalOpt;
 	infile.close();
+
+	setObjSet();
 }
 
 // ----------------------------------------------------------------------

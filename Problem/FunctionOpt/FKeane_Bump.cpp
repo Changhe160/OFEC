@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -42,6 +42,7 @@ void FKeane_Bump::initialize(){
 	m_globalOpt.flagLoc()=false;
 	m_globalOpt.setNumOpts(1);
 	m_originalGlobalOpt=m_globalOpt;
+	setObjSet();
 }
 bool FKeane_Bump::isValid(const VirtualEncoding &x_){
 	const CodeVReal&x = dynamic_cast<const CodeVReal&>(x_);

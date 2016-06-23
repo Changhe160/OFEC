@@ -16,7 +16,7 @@
  */
 
 static void SwapCandidateSets(LKH::LKHAlg *Alg);
-static boost::thread_specific_ptr<GainType> OrdinalTourCost;
+static thread_local unique_ptr<GainType> OrdinalTourCost;
 
 GainType LKH::LKHAlg::FindTour()
 {

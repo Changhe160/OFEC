@@ -128,6 +128,20 @@ MyVector &  MyVector::operator +=(const MyVector & v){
 		 throw myException("Global::msp_global not initialized@MyVector::randOnRadi()");
 	 }
  }
+
+ void MyVector::randOnRadi(double radius, uniform_real_distribution<double> &unif, default_random_engine &gen){
+
+	 randomize(unif, gen, -1, 1);
+	 normalize();
+	 for (auto&i : m_data) i *= radius;
+	 m_length = radius;
+	 m_write = false;
+
+ }
+ void MyVector::randomize(uniform_real_distribution<double> &unif, default_random_engine &gen, double min, double max){
+	 for (auto&i : m_data) i = min+(unif(gen)-unif.min())/(unif.max()-unif.min())*(max - min);
+	 m_write = true;
+ }
  void MyVector::randomize(double min,double max,ProgramMode mode){	
 	 if(Global::msp_global.get()!=nullptr){
 		for(auto&i:m_data) i=Global::msp_global->getRandFloat(min,max,mode);	
@@ -198,6 +212,11 @@ MyVector &  MyVector::operator +=(const MyVector & v){
 	vector<double> v(m_data);
 	for(auto&i:v) i*=val;
 	return MyVector(v);
+ }
+ MyVector  MyVector::operator *(double val){
+	 vector<double> v(m_data);
+	 for (auto&i : v) i *= val;
+	 return MyVector(v);
  }
  MyVector  MyVector::operator /(double val){
 	vector<double> v(m_data);
@@ -271,4 +290,12 @@ void MyVector::zero(){
 	}
 	m_length = 0;
 	m_write = false;
+}
+
+MyVector MyVector::getPointBetween(const MyVector & v1, double r){
+	vector<double> v(m_data);
+	for (auto i = 0; i < m_data.size(); ++i){
+		v[i] = m_data[i] * r + v1[i] * (1 - r);
+	}
+	return MyVector(v);
 }

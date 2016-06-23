@@ -1,3 +1,6 @@
+
+//part of the source code is from nanoflann lib at https://github.com/jlblancoc/nanoflann
+
 #ifndef  KD_TREE_SPACE_PARTITION_HPP_
 #define  KD_TREE_SPACE_PARTITION_HPP_
 
@@ -161,7 +164,6 @@ namespace KDTreeSpace
 	};
 	/** @} */
 
-	
 	template <typename ElementType,  typename IndexType = size_t>
 	class PartitioningKDTree
 	{
@@ -205,7 +207,10 @@ namespace KDTreeSpace
 		/** The KD-tree used to find regions */
 		NodePtr m_root;
 
-		typedef std::vector<std::pair<ElementType, ElementType>> BoundingBox;
+	 	typedef  struct {
+			std::vector<std::pair<ElementType, ElementType>> box;
+			double rat=1.0;
+		}BoundingBox;
 		BoundingBox m_rootBbox;
 
 		/**
@@ -216,7 +221,8 @@ namespace KDTreeSpace
 		 * number small of memory allocations.
 		 */
 		PooledAllocator pool;
-
+		double m_lrat = 0, m_srat = 1;
+		int m_lbox=0, m_sbox=0;
 	public:
 		std::vector<BoundingBox> region;
 
@@ -240,7 +246,7 @@ namespace KDTreeSpace
 			init_vind();
 		}
 		void setInitBox(const std::vector<std::pair<ElementType, ElementType>> &initBBox){
-			m_rootBbox = initBBox;
+			m_rootBbox.box = initBBox;
 		}
 		/** Standard destructor */
 		~PartitioningKDTree() { }
@@ -295,7 +301,12 @@ namespace KDTreeSpace
 			low = result->sub.low;
 			high = result->sub.high;
 		}
-	
+		
+		const BoundingBox & get_rootBox(){
+			return m_rootBbox;
+		}
+		int smallestBox(){ return m_sbox; }
+		int largestBox(){ return m_lbox; }
 	private:
 		/** Make sure the auxiliary list \a vind has the same size than the current dataset, and re-generate if size has changed. */
 		void init_vind()
@@ -329,6 +340,7 @@ namespace KDTreeSpace
 				node->child1 = node->child2 = NULL;    /* Mark as leaf node. */	
 				node->lr.idx_region = region.size();
 				region.push_back(bbox);
+				boxRatio(region.back(), region.size()-1);
 			}
 			else {
 				IndexType idx;
@@ -338,14 +350,14 @@ namespace KDTreeSpace
 
 				node->sub.idx_sample = m_vind[left + idx];
 				node->sub.divfeat = cutfeat;
-				node->sub.low = bbox[cutfeat].first;
-				node->sub.high = bbox[cutfeat].second;
+				node->sub.low = bbox.box[cutfeat].first;
+				node->sub.high = bbox.box[cutfeat].second;
 				BoundingBox left_bbox(bbox);
-				left_bbox[cutfeat].second = cutval;
+				left_bbox.box[cutfeat].second = cutval;
 				node->child1 = divideTree(left, left + idx, left_bbox,  depth + 1);
 
 				BoundingBox right_bbox(bbox);
-				right_bbox[cutfeat].first = cutval;
+				right_bbox.box[cutfeat].first = cutval;
 				node->child2 = divideTree(left + idx+1, right, right_bbox, depth + 1);
 				node->sub.pivot = cutval;				
 			}
@@ -361,6 +373,7 @@ namespace KDTreeSpace
 				node->child1 = node->child2 = NULL;    /* Mark as leaf node. */
 				node->lr.idx_region = region.size();
 				region.push_back(bbox);
+				boxRatio(region.back(), region.size()-1);
 			}
 			else {
 				IndexType idx=0;
@@ -369,14 +382,14 @@ namespace KDTreeSpace
 				
 				node->sub.idx_sample = m_vind[left + idx];
 				node->sub.divfeat = cutfeat;
-				node->sub.low = bbox[cutfeat].first;
-				node->sub.high = bbox[cutfeat].second;
+				node->sub.low = bbox.box[cutfeat].first;
+				node->sub.high = bbox.box[cutfeat].second;
 				BoundingBox left_bbox(bbox);
-				left_bbox[cutfeat].second = cutval;
+				left_bbox.box[cutfeat].second = cutval;
 				node->child1 = equalDivideTree(left, left + idx, left_bbox, depth + 1);
 
 				BoundingBox right_bbox(bbox);
-				right_bbox[cutfeat].first = cutval;
+				right_bbox.box[cutfeat].first = cutval;
 				node->child2 = equalDivideTree(left + idx + 1, right, right_bbox, depth + 1);
 				node->sub.pivot = cutval;
 			}
@@ -490,6 +503,20 @@ namespace KDTreeSpace
 			if (node->child2 != NULL&&result == NULL)  leafParent(idx_region, node->child2, node, result);
 		}
 
+		void boxRatio(BoundingBox &it,unsigned idx){
+			it.rat = 1;
+			for (int i = 0; i < m_dim; ++i){
+				it.rat *= (it.box[i].second - it.box[i].first) / (m_rootBbox.box[i].second - m_rootBbox.box[i].first);
+			}
+			if (it.rat > m_lrat){
+				m_lrat = it.rat;
+				m_lbox = idx;
+			}
+			if (it.rat < m_srat){
+				m_srat = it.rat;
+				m_sbox = idx;
+			}
+		}
 	}; 
 /** @} */ // end of grouping
 } // end of NS

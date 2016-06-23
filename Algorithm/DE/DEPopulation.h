@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -37,8 +37,9 @@ public:
     virtual void mutate(const int idx);
     void setParmeter(double cr, double f);
 	void defaultParameter();
-	virtual void reInitialize(bool clearOldBest,bool mode);
+	virtual void reInitialize(bool clearOldBest,bool mode);	
 protected:
+	virtual void select(int base, int number, vector<int>&);
 	ReturnFlag evolve();
 };
 template<typename ED,typename TypeDEIndi>
@@ -76,38 +77,35 @@ DEPopulation<ED,TypeDEIndi> & DEPopulation<ED,TypeDEIndi>::operator=(const DEPop
 }
 template<typename ED,typename TypeDEIndi>
 void DEPopulation<ED,TypeDEIndi>::mutate(const int idx){
-    vector<int>a(this->m_popsize);
-	Global::msp_global->initializeRandomArray<vector<int>>(a,this->m_popsize);
-    int j=0;
-    while(a[j]!=idx){j++;}
-    int r1,r2,r3,r4,r5;
-    r1=a[(j+1)%this->m_popsize];
-    r2=a[(j+2)%this->m_popsize];
-    r3=a[(j+3)%this->m_popsize];
-    r4=a[(j+4)%this->m_popsize];
-    r5=a[(j+5)%this->m_popsize];
-
+	vector<int> ridx;
     switch(m_mutStrategy){
         case DE_rand_1:
-            this->m_pop[idx]->mutate(m_F,&this->m_pop[r1]->self(),&this->m_pop[r2]->self(),&this->m_pop[r3]->self());
+			select(idx, 3, ridx);
+            this->m_pop[idx]->mutate(m_F,&this->m_pop[ridx[0]]->self(),&this->m_pop[ridx[1]]->self(),&this->m_pop[ridx[2]]->self());
             break;
         case DE_best_1:
-            this->m_pop[idx]->mutate(m_F,&this->m_best[0]->self(),&this->m_pop[r1]->self(),&this->m_pop[r2]->self());
+			select(idx, 2, ridx);
+            this->m_pop[idx]->mutate(m_F,&this->m_best[0]->self(),&this->m_pop[ridx[0]]->self(),&this->m_pop[ridx[1]]->self());
             break;
         case DE_targetToBest_1:
-            this->m_pop[idx]->mutate(m_F,&this->m_pop[idx]->self(),&this->m_best[0]->self(),&this->m_pop[idx]->self(),&this->m_pop[r1]->self(),&this->m_pop[r2]->self());
+			select(idx, 2, ridx);
+            this->m_pop[idx]->mutate(m_F,&this->m_pop[idx]->self(),&this->m_best[0]->self(),&this->m_pop[idx]->self(),&this->m_pop[ridx[0]]->self(),&this->m_pop[ridx[1]]->self());
             break;
         case DE_best_2:
-            this->m_pop[idx]->mutate(m_F,&this->m_best[0]->self(),&this->m_pop[r1]->self(),&this->m_pop[r2]->self(),&this->m_pop[r3]->self(),&this->m_pop[r4]->self());
+			select(idx, 4, ridx);
+            this->m_pop[idx]->mutate(m_F,&this->m_best[0]->self(),&this->m_pop[ridx[0]]->self(),&this->m_pop[ridx[1]]->self(),&this->m_pop[ridx[2]]->self(),&this->m_pop[ridx[3]]->self());
             break;
         case DE_rand_2:
-            this->m_pop[idx]->mutate(m_F,&this->m_pop[r1]->self(),&this->m_pop[r2]->self(),&this->m_pop[r3]->self(),&this->m_pop[r4]->self(),&this->m_pop[r5]->self());
+			select(idx, 5, ridx);
+            this->m_pop[idx]->mutate(m_F,&this->m_pop[ridx[0]]->self(),&this->m_pop[ridx[1]]->self(),&this->m_pop[ridx[2]]->self(),&this->m_pop[ridx[3]]->self(),&this->m_pop[ridx[4]]->self());
             break;
 		case DE_randToBest_1:
-			this->m_pop[idx]->mutate(m_F,&this->m_pop[r1]->self(),&this->m_best[0]->self(),&this->m_pop[r1]->self(),&this->m_pop[r2]->self(),&this->m_pop[r3]->self());
+			select(idx, 3, ridx);
+			this->m_pop[idx]->mutate(m_F,&this->m_pop[ridx[0]]->self(),&this->m_best[0]->self(),&this->m_pop[ridx[0]]->self(),&this->m_pop[ridx[1]]->self(),&this->m_pop[ridx[2]]->self());
 			break;
 		case DE_targetToRand_1:
-			this->m_pop[idx]->mutate(m_F,&this->m_pop[idx]->self(),&this->m_pop[r1]->self(),&this->m_pop[idx]->self(),&this->m_pop[r2]->self(),&this->m_pop[r3]->self());
+			select(idx, 3, ridx);
+			this->m_pop[idx]->mutate(m_F,&this->m_pop[idx]->self(),&this->m_pop[ridx[0]]->self(),&this->m_pop[idx]->self(),&this->m_pop[ridx[1]]->self(),&this->m_pop[ridx[2]]->self());
 			break;
     }
 }
@@ -132,7 +130,7 @@ ReturnFlag DEPopulation<ED,TypeDEIndi>::evolve(){
 	if(r_flag==Return_Normal) {
 		this->m_center=*this->m_best[0];
 		this->updateCurRadius();
-		this->m_evoNum++;
+		this->m_iter++;
 	}
     return r_flag;
 }
@@ -158,6 +156,18 @@ void DEPopulation<ED,TypeDEIndi>::reInitialize(bool clearOldBest,bool mode){
 	if(clearOldBest) this->m_best.clear();
 	for(unsigned i=0;i<this->m_bestIdx.size();i++){
 			this->updateBestArchive(this->m_pop[this->m_bestIdx[i]]->representative());
+	}
+}
+template<typename ED, typename TypeDEIndi>
+void DEPopulation<ED, TypeDEIndi>::select(int base, int number, vector<int>& result){
+	vector<int> candidate;
+	for (int i = 0; i < this->m_popsize; i++) {
+		if (base != i) candidate.push_back(i);
+	}
+	for (int i = 0; i < number; ++i) {
+		int idx=Global::msp_global->getRandInt(0, candidate.size());
+		result.push_back(candidate[idx]);
+		candidate.erase(candidate.begin() + idx);
 	}
 }
 #endif // DEPOPULATION_H

@@ -1,11 +1,11 @@
 /*************************************************************************
-* Project: Library of Evolutionary Algoriths
+* Project: Library of Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
-* Author: Changhe Li & Ming Yang & Yong Xia
-* Email: changhe.lw@google.com Or yangming0702@gmail.com Or cugxiayong@gmail.com
+* Author: Changhe Li & Yong Xia
+* Email: changhe.lw@google.com  Or cugxiayong@gmail.com
 * Language: C++
 *************************************************************************
-*  This file is part of EAlib. This library is free software;
+*  This file is part of OFEC. This library is free software;
 *  you can redistribute it and/or modify it under the terms of the
 *  GNU General Public License as published by the Free Software
 *  Foundation; either version 2, or (at your option) any later version.
@@ -41,7 +41,7 @@ public:
 	void setFileName(ParamMap &v);
 
 	template<typename TypeIndiv>
-	void recordEdgeInfo(Global *glob, const Solution<CodeVInt> & bestSofar,const vector<unique_ptr<TypeIndiv> > &pop, const vector<int>& bestIdx,int &num,int popsize,int saveFre,bool flag=true)
+	void recordEdgeInfo(Global *glob, const Solution<CodeVInt> & bestSofar,const vector<unique_ptr<TypeIndiv> > &pop, int &num,int popsize,int saveFre,bool flag=true)
 	{
 		if(glob->mp_problem->getEvaluations()/saveFre<num&&flag) return;
 
@@ -69,8 +69,7 @@ public:
 		edgePop=bestSofar.getObjDistance_(gopt.data().m_obj)/gopt.data().m_obj[0];
 		edgeBest/=numDim;
 
-		//below are only for test usage
-		/*edgePop=0;
+		edgePop=0;
 		for(i=0;i<popsize;i++)
 		{
 			for(j=0;j<numDim;j++)
@@ -80,11 +79,9 @@ public:
 			}
 		}
 		for(i=0;i<numDim;i++)
-			if(edgeInfo[int(glob->mp_problem->getGOpt()[0].m_x[i])][int(glob->mp_problem->getGOpt()[0].m_x[(i+1)%numDim])])
+			if (edgeInfo[int(gopt.data().m_x[i])][int(gopt.data().m_x[(i + 1) % numDim])])
 				edgePop+=1;
 		edgePop/=numDim;
-		*/
-		//test end
 
 
 		mvv_edgeInfoPop[glob->m_runId].push_back(move(make_pair(glob->mp_problem->getEvaluations(),edgePop)));

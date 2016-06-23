@@ -23,7 +23,7 @@
  *
  * The function is called from the LinKernighan function. 
  */
-static boost::thread_specific_ptr<GainType> BestG2;
+static thread_local unique_ptr<GainType> BestG2;
 
 static GainType BestKOptMoveRec(int k, GainType G0,LKH::LKHAlg *Alg);
 

@@ -13,7 +13,7 @@ protected:
 	bool m_isReady;
 	int m_order;
 #ifdef OFEC_DEMON
-	boost::mutex m_mutex;
+	mutex m_mutex;
 #endif // OFEC_DEMON
 
 public:

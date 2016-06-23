@@ -10,6 +10,7 @@ SwarmGBest::SwarmGBest() :Swarm<CodeVReal,Particle>()
 
 SwarmGBest::SwarmGBest(ParamMap &v) :Swarm<CodeVReal,Particle>(v[param_popSize],true)
 {
+	
 }
 
 SwarmGBest::SwarmGBest(int popsize, bool mode):Swarm<CodeVReal,Particle>(popsize,mode)
@@ -26,7 +27,7 @@ ReturnFlag SwarmGBest::evolve(){
 	ReturnFlag r_flag=Return_Normal;
 
 	for(int i=0;i<this->m_popsize;i++){				  
-		r_flag=this->m_pop[i]->move(this->m_pop[i]->representative(),this->getNearestBest(this->m_pop[i]->self()),m_W,m_C1,m_C2);//			
+		r_flag=this->m_pop[i]->move(neighborBest(i),m_W,m_C1,m_C2);//			
 		if(this->m_pop[i]->self()>this->m_pop[i]->representative()){
 			this->m_pop[i]->representative()=this->m_pop[i]->self();
 			this->updateBestArchive(this->m_pop[i]->self());
@@ -34,7 +35,7 @@ ReturnFlag SwarmGBest::evolve(){
 		if(r_flag!=Return_Normal) break;
 	}
 	if(r_flag==Return_Normal){
-		this->m_evoNum++;
+		this->m_iter++;
 	}
 	return r_flag;
 }
@@ -51,11 +52,14 @@ ReturnFlag SwarmGBest::run_()
 	}
 	#endif // OFEC_CONSOLE
 
+	int maxG = Global::g_arg[param_maxEvals] / m_popsize;
+
 	while(!ifTerminating()){
 		g_mutexStream.lock();
 		//cout<<Global::msp_global->m_runId<<" "<<Global::msp_global->mp_problem->getEvaluations()<<" "<<m_best[0]->obj(0)<<endl;
 		g_mutexStream.unlock();
 		rf=this->evolve();
+
 		#ifdef OFEC_DEMON
 			vector<Algorithm*> vp;	
 			vp.push_back(this);	
@@ -76,6 +80,6 @@ ReturnFlag SwarmGBest::run_()
 
 		if(rf==Return_Terminate) break;
     }
-	 
+	cout << "run" << Global::msp_global->m_runId << endl;
      return rf;
 }

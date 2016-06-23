@@ -37,7 +37,7 @@ struct edge {
 
 typedef enum {right, left} side;
 
-extern boost::thread_specific_ptr<point> p_array;
+extern thread_local unique_ptr<point> p_array;
 
 void delaunay(int n,LKH::LKHAlg *Alg);
 void free_memory();

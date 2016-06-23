@@ -6,8 +6,10 @@
 typedef  FAMF<FAMFParticle,Swarm<CodeVReal,FAMFParticle>,FAMFPopPSO> ALG_FAMF_PSO;
 typedef  FAMF<FAMFIndiDE,DEPopulation<CodeVReal,FAMFIndiDE>,FAMFPopDE> ALG_FAMF_DE;
 
-typedef LOKI_TYPELIST_18(CPSOSwarm,CPSORSwarm,AMSOSwarm,SwarmLBest,NSGAII_DExover2RealMu,NSGAII_SBXRealMu,NSGAIII_DExover2RealMu,NSGAIII_SBXRealMu,MOEAD_DExover2RealMu
-		,MOEAD_SBXRealMu,ALG_FAMF_PSO,ALG_FAMF_DE,SwarmGBest,SLPSO,AS,LKH::LKHAlg,DEBest2,DERand1) AlgList;
+typedef LOKI_TYPELIST_24(CPSOSwarm,CPSORSwarm,AMSOSwarm,SPSO07,NSGAII_DExover2RealMu,NSGAII_SBXRealMu,NSGAIII_DExover2RealMu,NSGAIII_SBXRealMu,MOEAD_DExover2RealMu,
+	MOEAD_SBXRealMu,Nrand1DEPopulation,ALG_FAMF_PSO,ALG_FAMF_DE,CRDEPopulation,SwarmGBest,SLPSO,AS,LKH::LKHAlg,DEBest2, DERand1, ACS, MMAS,SPSO11,CMAES) AlgList;
+
+
 typedef LOKI_TYPELIST_50(FSphere,FNoncont_Rastrigin,FModified_Rastrigin,FRastrigin,FWeierstrass,FGriewank,FAckley,FStep,FQuartic_Noisy,FScaffer_F6,
 		FRosenbrock,FSchwefel_2_13,FSchwefel_2_22,FSchwefel_1_2,FSchwefel_2_21,FSchwefel_2_6,FSchwefel,FPenalized_1,FPenalized_2,HybridComp,FElliptic,
 		FMAX_global1,FMAX_global2,FMAX_global3,FMAX_global4,FMAX_global5,FGear_Train,FParEst_FMSoundWaves,FSix_humpCamelBack,FWaves,FBraninRCOS,
@@ -28,6 +30,10 @@ typedef	Loki::TL::Append<ProList61,F6>::Result ProList62;
 typedef	Loki::TL::Append<ProList62,F7>::Result ProList63;
 typedef	Loki::TL::Append<ProList63,F8>::Result ProList64;
 typedef	Loki::TL::Append<ProList64,F9>::Result ProList65;
-typedef	Loki::TL::Append<ProList65, TravellingSalesman>::Result ProList;
+typedef	Loki::TL::Append<ProList65, TravellingSalesman>::Result ProList66;
+typedef	Loki::TL::Append<ProList66, QuadraticAssignment>::Result ProList67;
+typedef	Loki::TL::Append<ProList67, MultidimensionalKnapsack>::Result ProList;
+
+
 #endif
 

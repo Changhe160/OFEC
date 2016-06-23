@@ -3,8 +3,7 @@
 ZDT::ZDT(ParamMap &v):BenchmarkFunction((v[param_proId]),(v[param_numDim]),(v[param_proName]),2)
 {
     setSearchRange(0.,1.);
-	vector<ProTag> p_tag(1,MOP);
-	p_tag.push_back(CONT);
+	set<ProTag> p_tag = { MOP, CONT };
 	setProTag(p_tag);
 	setOptType(MIN_OPT,-1);
 	m_popInitialMode=POP_INIT_UNIFORM;
@@ -53,4 +52,6 @@ void ZDT::generateAdLoadPF()
 		m_globalOpt=m_originalGlobalOpt;
 		infile.close();
 	}
+
+	setObjSet();
 }

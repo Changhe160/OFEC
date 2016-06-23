@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -44,6 +44,7 @@ void FShaffer::initialize(){
 	 CodeVReal x(m_numDim,1);
 	 x.m_x[0]=0.0;x.m_x[1]=0.0; x.m_obj[0]=0.9999;
 	 m_globalOpt[0].data()=m_originalGlobalOpt[0].data()=x;
+	 setObjSet();
 }
 void FShaffer::evaluate__(double const *x,vector<double>& obj){
 	double s,t=x[0]*x[0]+x[1]*x[1];

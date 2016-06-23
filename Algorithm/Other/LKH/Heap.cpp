@@ -9,7 +9,7 @@
  * priorities (ranks) are their associated costs (their minimum distance 
  * to the current tree). 
  */
-static boost::thread_specific_ptr<int> HeapCount,HeapCapacity;
+static thread_local unique_ptr<int> HeapCount,HeapCapacity;
 
 /*      
  * The MakeHeap function creates an empty heap. 

@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -15,7 +15,7 @@
 
 #include "CompositionDBG.h"
 #include "../../Global/global.h"
-boost::thread_specific_ptr<ComDBGFuncID> CompositionDBG::ms_funID;
+thread_local unique_ptr<ComDBGFuncID> CompositionDBG::ms_funID;
 
 void CompositionDBG::freeMemory(){
     delete [] mp_stretchSeverity; 

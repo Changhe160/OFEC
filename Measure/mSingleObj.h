@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -52,6 +52,7 @@ class mSingleObj
 		void setCompareType(Compare comp);
 		void setProParameter(stringstream & rPar);
 		static	void deleteSingleObj();
+		void setDuration(const chrono::duration<double> & et, int runid);
     protected:
         void calculateConvergenceTime();
 		static unique_ptr<mSingleObj>  msp_perf;
@@ -85,6 +86,8 @@ class mSingleObj
 		int m_changeFre;
 		Compare m_comp;
 		double m_avgEvals,m_avgCevals,m_avgTevals;
+		vector<chrono::duration<double>> m_duration;
+		double m_meanDuration = 0;
 };
 
 #endif // SINGLEOBJSTA_H

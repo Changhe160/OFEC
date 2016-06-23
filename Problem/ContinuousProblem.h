@@ -17,6 +17,7 @@ protected:
 	void allocateMemory(const int numDim);
 	void resizeDim(int num);
 	void resizeObj(int num);
+	void setObjSet();
 public:
 	ContinuousProblem(const int rId, const int rDimNumber, string rName, int numObj);
 	bool isValid(const VirtualEncoding  &s);
@@ -43,6 +44,10 @@ public:
 	const Optima<CodeVReal> & getGOpt()const; 
 	inline Optima<CodeVReal> & getGOpt();
 	bool isGlobalOptKnown();
+	const vector<pair<double, double>>& getObjRange();
+	bool isParetoSet(const CodeVReal &s);  //check if s is dominated by the POS
+	bool isGlobalOptFound();
+	
 };
 
 inline double ContinuousProblem::getDisAccuracy(){
@@ -58,5 +63,19 @@ inline Optima<CodeVReal> & ContinuousProblem::getGOpt(){
 }
 inline void ContinuousProblem::getSearchRange(double &l, double&u, int i){
 	m_searchRange.getSearchRange(l, u, i);
+}
+inline bool  ContinuousProblem::isParetoSet(const CodeVReal &s){
+	int num = m_globalOpt.getNumOpt();
+	for (int i = 0; i < num; ++i){
+		if (Compare_Better == m_globalOpt[i].compare_(s)) return false;
+	}
+	return true;
+}
+
+inline bool ContinuousProblem::isGlobalOptFound() {
+	if (isGlobalOptKnown()) {
+		if (m_globalOpt.isAllFound()) return true;
+	}
+	return false;
 }
 #endif

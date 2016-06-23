@@ -1,14 +1,14 @@
 #include "global.h"
 
 #ifdef OFEC_CONSOLE
-boost::thread_specific_ptr<Global> Global::msp_global;
+thread_local unique_ptr<Global> Global::msp_global=nullptr; 
 #endif
 
 #ifdef OFEC_DEMON
 unique_ptr<Global>  Global::msp_global;
 #endif
 
-STRING2ID Global::msm_alg,Global::msm_pro;
+STRING2ID Global::msm_alg,Global::msm_pro, Global::msm_term;
 map<ALG2PRO,unsigned> Global::msm_alg4pro;
 classFactory  Global::ms_classFactory;
 map<string,Param> Global::msm_param;
@@ -63,18 +63,17 @@ void Global::setSeedAlg(double seed){
 }
 
 int Global::getRandInt(const int min, const int max,ProgramMode mode){
+	if (min == max||min==max-1) return min;
 	if(mode==Program_Algorithm)	return static_cast<int>(min+(max-min)*mp_uniformAlg->Next());
 	else	return static_cast<int>(min+(max-min)*mp_uniformPro->Next());
 }
 double Global::getRandFloat(const double min, const double max,ProgramMode mode){
+	if (min == max) return min;
 	if(mode==Program_Algorithm)	return min+(max-min)*mp_uniformAlg->Next();
 	else		return min+(max-min)*mp_uniformPro->Next();
 }
 
-bool  Global::registerAlgorPro(const string& name, ProgramMode flag){ // flag=true for problem, flag=false for algorithm
-	if(flag==Program_Algorithm) return registerItem(msm_alg,name);
-	else return  registerItem(msm_pro,name);
-}
+
 bool Global::registerAlg4Pro(ALG2PRO  alg2pro){
 	return registerItem(msm_alg4pro,alg2pro);
 }
@@ -122,7 +121,7 @@ void Global::registerParamter(){
 	msm_param["param_NO"]=param_numObj;
 	msm_param["param_C"]=param_case;
 	msm_param["param_RBP"]=param_resource4BestPop;
-	msm_param["param_PFN"]=param_proFileName;
+	msm_param["param_DF1"]=param_dataFile1;
 	msm_param["param_XP"]=param_xoverProbability;
 	msm_param["param_MP"]=param_mutProbability;
 	msm_param["param_PT"] = param_proTag;
@@ -148,8 +147,16 @@ void Global::registerParamter(){
 	msm_param["param_DM"] = param_divisionMode; 
 	msm_param["param_POS"] = param_peakOffset;
 	msm_param["param_FI"] = param_flagIrregular;
-	msm_param["param_FA"] = param_flagAsymmetric;
-
+	msm_param["param_FA"] = param_flagAsymmetry;
+	msm_param["param_DF2"] = param_dataFile2;
+	msm_param["param_DF3"] = param_dataFile3;
+	msm_param["param_FR"] = param_flagRotation;
+	msm_param["param_DD1"] = param_dataDirectory1;
+	msm_param["param_MI"] = param_maxIter;
+	msm_param["param_MSI"] = param_maxSucIter;
+	msm_param["param_E"] = param_epsilon;
+	msm_param["param_MSDE"] = param_mutationSchemeDE;
+	msm_param["param_USPL"] = param_updateSchemeProbabilityLearning;
 }
 
 string gGetProblemName(const int id){
@@ -197,4 +204,80 @@ bool gIsDynamicProlem(){
 	if (pro == "FUN_FreePeak_D_OnePeak" || pro == "FUN_FreePeak_D_R_OnePeak" || pro == "FUN_FreePeak_D_C_OnePeak" || pro == "FUN_FreePeak_D_M_OnePeak"\
 		|| pro == "DYN_CONT_CompositionDBG" || pro == "DYN_CONT_RotationDBG" || pro == "DYN_CONT_MovingPeak") return true;
 	else return false;
+}
+
+void gGetStringValue(const string &str, vector<TypeVar>& val){
+	//val=1:2:3
+	string s(str);
+	string letter;
+	for (auto i = 'a'; i <= 'z'; i++) {
+		letter += i;
+		letter += i - 32;
+	}
+	size_t pos1 = s.find("="), pos2;
+	s.erase(0, pos1 + 1);
+	val.clear();
+	while (1){
+		pos2 = s.find(":");
+		string value;
+		if (pos2 != string::npos){
+			value = s.substr(0, pos2);
+		}
+		else{
+			value = s.substr(0, s.size());
+		}
+
+		if (value.compare("true") == 0){
+			val.push_back(true);
+		}
+		else if (value.compare("false") == 0){
+			val.push_back(false);
+		}
+		else if (value.find_first_of(letter) != string::npos){
+			if (value.size() == 1)
+				val.push_back(value[0]);
+			else
+				val.push_back(value);
+		}
+		else if (string::npos != value.find('.')){
+			val.push_back(atof(value.c_str()));
+		}
+		else{
+			val.push_back(atoi(value.c_str()));
+		}
+		if (pos2 != string::npos)	s.erase(0, pos2 + 1);
+		else break;
+	}
+}
+
+std::istream& gSafeGetline(std::istream& is, std::string& t){
+	t.clear();
+
+	// The characters in the stream are read one-by-one using a std::streambuf.
+	// That is faster than reading them one-by-one using the std::istream.
+	// Code that uses streambuf this way must be guarded by a sentry object.
+	// The sentry object performs various tasks,
+	// such as thread synchronization and updating the stream state.
+
+	std::istream::sentry se(is, true);
+	std::streambuf* sb = is.rdbuf();
+
+	for (;;) {
+		int c = sb->sbumpc();
+		switch (c) {
+		case '\n':
+			return is;
+		case '\r':
+			if (sb->sgetc() == '\n')
+				sb->sbumpc();
+			return is;
+		case EOF:
+			// Also handle the case when the last line has no line ending
+			if (t.empty())
+				is.setstate(std::ios::eofbit);
+			return is;
+		default:
+			t += (char)c;
+		}
+	}
 }

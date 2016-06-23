@@ -235,7 +235,7 @@ ReturnFlag SLPSO::evolve(){
 	}
 
 	updateParameters();
-	m_evoNum++;
+	m_iter++;
 
 	delete [] avg_v;
 	avg_v=0;

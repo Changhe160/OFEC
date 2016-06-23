@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -282,7 +282,7 @@ void mMultiModal::setFileName(ParamMap &v){
 				i.first==param_numTask||i.first==param_minNumPopSize||i.first==param_hibernatingRadius||\
 				i.first==param_solutionValidationMode||i.first==param_evalCountFlag||\
 				i.first==param_workingDir||i.first==param_sampleFre||i.first==param_maxEvals||i.first==param_flagNumPeakChange||\
-				i.first==param_peakNumChangeMode) continue;
+				i.first == param_peakNumChangeMode || i.first == param_dataDirectory1) continue;
 			if(i.first==j.second){			
 				m_fileName<<j.first.substr(6)<<i.second<<"_";			
 				break;

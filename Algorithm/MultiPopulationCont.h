@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -17,6 +17,7 @@
 
 #include "PopulationCont.h"
 #include "MultiPopulation.h"
+
 template<typename TypePop>
 class MultiPopulationCont:public MultiPopulation<TypePop>{
 protected:
@@ -209,7 +210,14 @@ void MultiPopulationCont<TypePop>::measureMultiPop(){
 			Global::msp_global->m_totalNumIndis,this->getNumPops()+this->m_convergedPops,peaksf,\
 			CAST_PROBLEM_DYN_CONT->getNumofVisablePeaks(),getAvgInitialRadius(),getAvgCurRadius(),0,0,\
 			0,0,CAST_PROBLEM_DYN_CONT->isGOptTracked());
-	}
+	}/*else if(IS_PROBLEM_NAME(Global::ms_curProId, "FUN_FreePeak_D_OnePeak")){
+		FFreePeak_D_OnePeak*pro = dynamic_cast<FFreePeak_D_OnePeak*>(Global::msp_global->mp_problem.get());
+		int peaksf = pro->getPT();
+		mMultiModal::getPopInfor()->input(Global::msp_global.get(), Global::msp_global->mp_problem->getEvaluations(), \
+			Global::msp_global->m_totalNumIndis, this->getNumPops() + this->m_convergedPops, peaksf, \
+			pro->getNumPeak(), getAvgInitialRadius(), getAvgCurRadius(), 0, 0, \
+			0, 0, pro->isAllGOptTraced());
+	}*/
 	else if (Global::msp_global->mp_problem->m_name.find("FUN_") != string::npos){
 			int peaksf=CAST_PROBLEM_CONT->getGOpt().getNumGOptFound();
 		    mMultiModal::getPopInfor()->input(Global::msp_global.get(), Global::msp_global->mp_problem->getEvaluations(),\

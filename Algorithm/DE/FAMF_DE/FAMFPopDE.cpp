@@ -22,7 +22,7 @@ ReturnFlag FAMFPopDE::evolve(){
 	if(r_flag==Return_Normal) {
 		computeCenter();
 		this->updateCurRadius(true);
-		this->m_evoNum++;
+		this->m_iter++;
 	}
     return r_flag;
 }

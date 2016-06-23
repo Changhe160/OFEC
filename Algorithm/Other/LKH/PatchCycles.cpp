@@ -21,7 +21,7 @@ static GainType PatchCyclesRec(int k, int m, int M, GainType G0, LKH::LKHAlg *Al
 static int ShortestCycle(int M, int k,LKH::LKHAlg *Alg);
 static int Cycle(LKH::LKHAlg::Node * N, int k,LKH::LKHAlg *Alg);
 
-static boost::thread_specific_ptr<int> CurrentCycle, Patchwork, RecLevel;
+static thread_local unique_ptr<int> CurrentCycle, Patchwork, RecLevel;
 
 /*
  * The PatchCycles function tries to find a gainful move by patch the cycles 

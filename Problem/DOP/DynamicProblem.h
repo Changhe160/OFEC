@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -23,7 +23,7 @@
 
 #define HANDLE_RETURN_FLAG(flag)\
 		if(flag==Return_Change_Timelinkage){\
-			CAST_PROBLEM_DYN->getTriggerTimelinkage()=false;\
+			if(CAST_PROBLEM_DYN) CAST_PROBLEM_DYN->getTriggerTimelinkage()=false;\
 		}else if(flag==Return_Change){\
 			if(mROOT::getROOT())	mROOT::getROOT()->updateObjValue(Global::msp_global.get());\
 		}else if(flag==Return_Terminate) break;
@@ -66,7 +66,7 @@ class DynamicProblem : virtual public Problem
         static const int msc_MaxNumPeaks=100;
         static const int msc_MinNumPeaks=10;
 		
-		static boost::thread_specific_ptr<int> ms_initNumPeaks,ms_initNumDim,ms_numInstance;
+		static thread_local unique_ptr<int> ms_initNumPeaks,ms_initNumDim,ms_numInstance;
         double m_alpha, m_maxAlpha;              // to control step severity
         double m_chaoticConstant;
  

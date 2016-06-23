@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -18,6 +18,7 @@
 
 #include "definition.h"
 #include "TypeVar/typeVar.h"
+#include <random>
 class Matrix;
 class MyVector{								
 	vector<double> m_data;
@@ -52,9 +53,11 @@ public:
 	MyVector & operator -=(double val);
 	MyVector & operator +=(double val);
 	MyVector  operator *(double val) const;
+	MyVector  operator *(double val);
 	MyVector  operator /(double val);
 	MyVector  operator -(double val);
 	MyVector  operator +(double val);
+	MyVector getPointBetween(const MyVector & v, double ratio);
 	MyVectorProxy operator [](int);
 	const double &operator [](int)const;
 	double operator *(const MyVector & v);
@@ -64,7 +67,9 @@ public:
 	friend class Matrix;
 	void randWithinRadi(double radius, ProgramMode mode=Program_Algorithm);
 	void randOnRadi(double radius, ProgramMode mode=Program_Algorithm);
+	void randOnRadi(double radius, uniform_real_distribution<double> &unif, default_random_engine &gen);
 	void randomize(double min=0,double max=1,ProgramMode mode=Program_Algorithm);
+	void randomize(uniform_real_distribution<double> &unif, default_random_engine &gen, double min, double max);
 	void norRandomize(ProgramMode mode=Program_Algorithm);
 	void norRandWithinRadi(double radius, ProgramMode mode=Program_Algorithm);
 	vector<double>::iterator  begin();

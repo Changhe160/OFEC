@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -118,26 +118,24 @@ void Particle::initializeVelocity(){
 	}
 }
 
-ReturnFlag Particle::move( const Solution<CodeVReal> & lbest,  const Solution<CodeVReal> &gbest,double w, double c1, double c2){
-	double u,l;
+ReturnFlag Particle::move(const Solution<CodeVReal> &lbest, double w, double c1, double c2) {
+	double u, l;
 
-	for( int j=0;j<GET_NUM_DIM;j++){
-		CAST_PROBLEM_CONT->getSearchRange(l,u,j);
-		double x=data()[j];
-		m_vel[j]=w*m_vel[j]+c1*Global::msp_global->mp_uniformAlg->Next()*(lbest.data()[j]-x)+c2*Global::msp_global->mp_uniformAlg->Next()*(gbest.data()[j]-x);
+	for (int j = 0; j<GET_NUM_DIM; j++) {
+		CAST_PROBLEM_CONT->getSearchRange(l, u, j);
+		double x = data()[j];
+		m_vel[j] = w*m_vel[j] + c1*Global::msp_global->mp_uniformAlg->Next()*(m_pbest.data()[j] - x) + c2*Global::msp_global->mp_uniformAlg->Next()*(lbest.data()[j] - x);
 
-		if(m_vel[j]>m_vMax[j].m_max)	m_vel[j]=m_vMax[j].m_max;
-		else if(m_vel[j]<m_vMax[j].m_min)		m_vel[j]=m_vMax[j].m_min;
+		if (m_vel[j]>m_vMax[j].m_max)	m_vel[j] = m_vMax[j].m_max;
+		else if (m_vel[j]<m_vMax[j].m_min)		m_vel[j] = m_vMax[j].m_min;
 
-		data()[j]+=m_vel[j];
+		data()[j] += m_vel[j];
 	}
 	self().validate();
 	return self().evaluate();
-
 }
 
-
-ReturnFlag Particle::moveBound( const Solution<CodeVReal> & lbest ,  const Solution<CodeVReal> &gbest,double w, double c1, double c2){
+ReturnFlag Particle::moveBound( const Solution<CodeVReal> & lbest,double w, double c1, double c2){
 	double u,l,cur_x,x;
 
 	for( int j=0;j<GET_NUM_DIM;j++){
@@ -145,14 +143,14 @@ ReturnFlag Particle::moveBound( const Solution<CodeVReal> & lbest ,  const Solut
 		x=(data()[j]);
 		if(x==l||x==u){
 			double p=Global::msp_global->mp_uniformAlg->Next();
-			x=p*(lbest.data()[j])+(1-p)*(x);
+			x=p*(m_pbest.data()[j])+(1-p)*(x);
 		}
 		cur_x=x;
 
 		double r1=Global::msp_global->mp_uniformAlg->Next();
 		double r2=Global::msp_global->mp_uniformAlg->Next();
 
-		m_vel[j]=w*m_vel[j]+c1*r1*((lbest.data()[j])-(x))+c2*r2*((gbest.data()[j])-(x));
+		m_vel[j]=w*m_vel[j]+c1*r1*((m_pbest.data()[j])-(x))+c2*r2*((lbest.data()[j])-(x));
 		if(m_vel[j]>m_vMax[j].m_max)	m_vel[j]=m_vMax[j].m_max;
 		else if(m_vel[j]<m_vMax[j].m_min)		m_vel[j]=m_vMax[j].m_min;
 		
@@ -180,13 +178,6 @@ ReturnFlag Particle::NormalMutation(double *avg_v){
 	return self().evaluate();
 }
 
-
-ReturnFlag Particle::initialize( Solution<CodeVReal> *w, int mode,bool mode2){
-	ReturnFlag rf=Individual::initialize(w,mode,mode2);
-	initializeVelocity();
-	m_pbest=self();
-	return rf;
-}
 
 void Particle::printToFile(ofstream & out){
         m_pbest.printToFile(out);

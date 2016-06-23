@@ -1,8 +1,8 @@
 #include "LKH.h"
 
-static boost::thread_specific_ptr<int> TrialsMin, TrialsMax, TrialSum, Successes;
-static boost::thread_specific_ptr<GainType> CostMin, CostMax, CostSum;
-static boost::thread_specific_ptr<double> TimeMin, TimeMax, TimeSum;
+static thread_local unique_ptr<int> TrialsMin, TrialsMax, TrialSum, Successes;
+static thread_local unique_ptr<GainType> CostMin, CostMax, CostSum;
+static thread_local unique_ptr<double> TimeMin, TimeMax, TimeSum;
 
 void LKH::LKHAlg::InitializeStatistics()
 {

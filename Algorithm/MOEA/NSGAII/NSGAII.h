@@ -1,11 +1,11 @@
 /*************************************************************************
-* Project: Library of Evolutionary Algoriths
+* Project: Library of Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
-* Author: Changhe Li & Ming Yang & Yong Xia
-* Email: changhe.lw@google.com Or yangming0702@gmail.com
+* Author: Changhe Li & Yong Xia
+* Email: changhe.lw@google.com 
 * Language: C++
 *************************************************************************
-*  This file is part of EAlib. This library is free software;
+*  This file is part of OFEC. This library is free software;
 *  you can redistribute it and/or modify it under the terms of the
 *  GNU General Public License as published by the Free Software
 *  Foundation; either version 2, or (at your option) any later version.
@@ -159,7 +159,7 @@ ReturnFlag NSGAII<TypeIndiv,TypePop>::run_()
 	// evolution
 	while(!this->ifTerminating())
 	{
-	//	cout<<"Run "<<Global::msp_global->m_runId<<" is running "<<Global::msp_global->mp_problem->getEvaluations()<<endl;
+		//cout<<"Run "<<Global::msp_global->m_runId<<"  "<<Global::msp_global->mp_problem->getEvaluations()<<" "<< mMultiObj::getMultiObj()->getCurDis2PF(Global::msp_global->m_runId)<<endl;
 	
 		evolve_mo();
 		m_offspring.rank();
@@ -181,8 +181,9 @@ ReturnFlag NSGAII<TypeIndiv,TypePop>::run_()
 	if(mMultiObj::getMultiObj()){
 	mMultiObj::getMultiObj()->reInitialize(Global::msp_global.get(),m_parent.getPopSize());
 	for(int i=0;i<m_parent.getPopSize();i++)
-		mMultiObj::getMultiObj()->record(Global::msp_global->m_runId,i,m_parent[i]->data().m_obj,m_parent[i]->data().m_x);
+		mMultiObj::getMultiObj()->record(Global::msp_global.get(),i,m_parent[i]->data().m_obj,m_parent[i]->data().m_x);
 	}
+
 #endif
 
 //	cout<<"Run "<<Global::msp_global->m_runId<<" is terminated"<<endl;

@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -70,6 +70,7 @@ void FSzu::initialize(){
 	 m_globalOpt=m_originalGlobalOpt;
 	 setDisAccuracy(0.1);
 	 setAccuracy(1.e-2);
+	 setObjSet();
 }
 void FSzu::evaluate__(double const *x,vector<double>& obj){
 	double s=0;

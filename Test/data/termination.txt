@@ -1,0 +1,16 @@
+#Below stopping criteria defined in file "termination.h", add new types if needed 
+#Termination: terminate when global optimum is found 
+#TermMaxFes: terminate when maximum evaluations is reached 
+#TermMaxGen: terminate when maximum generations is reached
+#TermBest: terminate when the best solution remain the same over a number of successive iterations
+#TermMean: terminate when the change of the mean objective is less than a small value over over a number of successive iterations
+#TermVar: terminate when the variance of objective is less than a small value
+
+#name   index_TermList(see termination.h)   
+#begin
+TermGO 0
+TermMF 1
+TermMG 2
+TermB 3
+TermM 4
+TermV 5

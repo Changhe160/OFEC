@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -58,6 +58,7 @@ void FValleys::initialize(){
 
 	m_originalGlobalOpt=m_globalOpt;
 	addProTag(MMP);
+	setObjSet();
 }
 void FValleys::evaluate__(double const *x,vector<double>& obj){
 	double s;

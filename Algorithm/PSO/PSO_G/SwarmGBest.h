@@ -1,7 +1,7 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
-* Author: Changhe Li & Ming Yang & Yong Xia
+* Author: Changhe Li & Yong Xia
 * Email: changhe.lw@gmail.com 
 * Language: C++
 *************************************************************************
@@ -23,6 +23,7 @@ class SwarmGBest :public Swarm<CodeVReal,Particle>
 {
 public:
     SwarmGBest();
+	SwarmGBest(int size) :SwarmGBest(Global::g_arg) {}
 	~SwarmGBest(){}
 	SwarmGBest(ParamMap &v);
 	SwarmGBest(int popsize, bool mode);

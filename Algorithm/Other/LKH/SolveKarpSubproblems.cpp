@@ -18,9 +18,9 @@
 static void KarpPartition(int start, int end, LKH::LKHAlg * Alg);
 static void CalculateSubproblems(int start, int end, LKH::LKHAlg * Alg);
 
-static boost::thread_specific_ptr<LKH::LKHAlg::Node *> KDTree;
-static boost::thread_specific_ptr<GainType> GlobalBestCost, OldGlobalBestCost;
-static boost::thread_specific_ptr<int> CurrentSubproblem, Subproblems;
+static thread_local unique_ptr<LKH::LKHAlg::Node *> KDTree;
+static thread_local unique_ptr<GainType> GlobalBestCost, OldGlobalBestCost;
+static thread_local unique_ptr<int> CurrentSubproblem, Subproblems;
 
 void LKH::LKHAlg::SolveKarpSubproblems()
 {

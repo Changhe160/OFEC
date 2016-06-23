@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -34,8 +34,9 @@ class Problem{
 		
 		PopInitMethod m_popInitialMode;
 		SolutionValidation m_validationMode;
-		vector<ProTag> m_tag;
-				
+		set<ProTag> m_tag;
+		vector<pair<double, double>>m_objRange;
+		vector<vector<double>*> m_os;  //the set of objectives
 	protected:
 		virtual void  freeMemory(){};
 		virtual void parameterSetting(Problem * rDP);
@@ -45,6 +46,7 @@ class Problem{
 		virtual void allocateMemory(const int numDim){}
 		virtual void resizeDim(int num){}
 		virtual void resizeObj(int num);
+		virtual void setObjSet() = 0;
 	public:
 		Problem(const int rId, const int rDimNumber, string rName, const int numObj=1);
 		virtual ~Problem(){};
@@ -78,7 +80,7 @@ class Problem{
 		void setAccuracy(double rAcc);
 		bool isSameType();
 
-		void setProTag(const vector<ProTag> &);
+		void setProTag(const set<ProTag> &);
 		void addProTag(ProTag tag);
 		bool isProTag(ProTag tag);
 		inline int &cevals();
@@ -88,6 +90,10 @@ class Problem{
 		virtual bool getObjGlobalOpt(vector<vector<double>> &opt)=0;
 		virtual CompareResultFlag compare(const VirtualEncoding &s1, const VirtualEncoding &s2)const;
 		virtual void copyChanges(const Problem * pro, const vector<int> *cd = nullptr, const vector<int> *co = nullptr);
+		virtual const vector<pair<double, double>>& getObjRange() { return m_objRange; }
+		const vector<vector<double>*> & getObjSet() { return m_os; }
+
+		virtual bool isGlobalOptFound() = 0;
 };
 
 template<typename T> Problem * createFunction( int rId,  int rDimNumber, string& rName){

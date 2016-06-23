@@ -1,11 +1,11 @@
 /*************************************************************************
-* Project: Library of Evolutionary Algoriths
+* Project: Library of Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
-* Author: Changhe Li & Ming Yang & Yong Xia
-* Email: changhe.lw@google.com Or yangming0702@gmail.com Or cugxiayong@gmail.com
+* Author: Changhe Li & Yong Xia
+* Email: changhe.lw@google.com  Or cugxiayong@gmail.com
 * Language: C++
 *************************************************************************
-*  This file is part of EAlib. This library is free software;
+*  This file is part of OFEC. This library is free software;
 *  you can redistribute it and/or modify it under the terms of the
 *  GNU General Public License as published by the Free Software
 *  Foundation; either version 2, or (at your option) any later version.
@@ -34,6 +34,9 @@ public:
 	TravellingSalesman(const int rId, const int rDimNumber, string rName, string fileName, int numObj=1);
 	ReturnFlag evaluate_(VirtualEncoding &s, bool rFlag, ProgramMode mode = Program_Problem, bool flag=true);
 	bool isValid(const VirtualEncoding &s);
+	void initializeSolution_3(CodeVInt& result, mutex &g_mutex1, vector< vector<int> > &candidateSet, vector< vector<int> > &nearby);
+	void initializeSolution_2(CodeVInt& result, mutex &g_mutex1, vector< vector<int> > &candidateSet, vector< vector<int> > &nearby);
+	void initializeSolution_NN(CodeVInt& result, mutex &g_mutex1, vector< vector<int> > &nearby);
 	void initializeSolution(VirtualEncoding &result,const int idx=0,const int maxId=0);
 	void initializeSolution(const VirtualEncoding &base,VirtualEncoding &result,double range){}
 	void initializePartSolution(VirtualEncoding &result,int begin,int end){}
@@ -57,9 +60,20 @@ public:
 	TravellingSalesman *getTypePtr();
 	TravellingSalesman &getTypeRef();
 	void validate(VirtualEncoding &s,SolutionValidation *mode=0){}
+	bool isGlobalOptFound();
+protected:
+	void setObjSet();
 };
 
-int selectCityRandom(vector< vector<int> > &,vector<int> &visited,int num,int row);
-int selectCityRandom(vector<int> &visited,int dim);
+int selectCityRandom(vector< vector<int> > &matrix, vector<int> &visited, int num, int row);
+int selectCityRandom(vector<int> &visited, int dim);
+int selectCityGreedy(vector< vector<int> > &matrix, vector<int> &visited, int num, int row);
+
+inline bool TravellingSalesman::isGlobalOptFound() {
+	if (isGlobalOptKnown()) {
+		if (m_globalOpt.isAllFound()) return true;
+	}
+	return false;
+}
 
 #endif  //TRAVELLING_SALESMAN_H

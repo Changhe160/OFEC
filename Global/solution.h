@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -20,7 +20,9 @@
 #include "../Utility/definition.h"
 #include "../Utility/myexcept.h"
 #include "../Measure/mSingleObj.h"
-
+#if defined __GNUG__ && __GNUG__ >= 3
+#include "boost/thread.hpp"
+#endif
 template<typename ED=EncodingType >
 class Solution: protected ED{
 public:
@@ -90,9 +92,16 @@ public:
 	virtual void updateMemory();
 	Solution(Solution<ED>&& rhs);
 	Solution<ED>& operator=(Solution<ED>&& rhs);
+	~Solution() {
+	}
 private:
 	#ifdef OFEC_CONSOLE
-	static boost::thread_specific_ptr<Solution<ED>> m_bestSoFar,m_worstSoFar; // one non-dominated worst/best solution
+	#if defined __GNUG__ && __GNUG__ >= 3
+	static boost::thread_specific_ptr<Solution<ED>> m_bestSoFar, m_worstSoFar;
+	#endif
+#if defined _MSC_VER && _MSC_VER >= 1300
+	static thread_local unique_ptr<Solution<ED>> m_bestSoFar,m_worstSoFar; // one non-dominated worst/best solution, note fail to compile in gcc 4.8
+#endif
 	#endif
 	#ifdef OFEC_DEMON
 	static unique_ptr<Solution<ED>> m_bestSoFar,m_worstSoFar;
@@ -107,21 +116,37 @@ public:
 	static void allocateMemoryWB(int,int);
 	static void initilizeWB(const Solution<ED>&);
 	static void initilizeWB(const ED&);
+	static void freeMemoryWB() {
+		if(m_bestSoFar.get()!=nullptr)
+			m_bestSoFar.reset();
+		m_worstSoFar.reset();
+	}
 };
 
 
 #ifdef OFEC_CONSOLE
+#if defined __GNUG__ && __GNUG__ >= 3
 template<typename ED >
-boost::thread_specific_ptr<Solution<ED>> Solution<ED>::m_bestSoFar(nullptr);
+boost::thread_specific_ptr<Solution<ED>> Solution<ED>::m_bestSoFar;
+
 template<typename ED >
-boost::thread_specific_ptr<Solution<ED>> Solution<ED>::m_worstSoFar(nullptr); 
+boost::thread_specific_ptr<Solution<ED>> Solution<ED>::m_worstSoFar;
 #endif
+
+#if defined _MSC_VER && _MSC_VER >= 1300
+template<typename ED >
+thread_local unique_ptr<Solution<ED>> Solution<ED>::m_bestSoFar=nullptr;
+template<typename ED >
+thread_local unique_ptr<Solution<ED>> Solution<ED>::m_worstSoFar=nullptr; // note fail to compile in gcc 4.8
+#endif
+#endif
+
 
 #ifdef OFEC_DEMON
 template<typename ED >
-unique_ptr<Solution<ED>> Solution<ED>::m_bestSoFar(nullptr);
+unique_ptr<Solution<ED>> Solution<ED>::m_bestSoFar=nullptr;
 template<typename ED >
-unique_ptr<Solution<ED>> Solution<ED>::m_worstSoFar(nullptr);
+unique_ptr<Solution<ED>> Solution<ED>::m_worstSoFar=nullptr;
 #endif
 
 template<typename ED>
@@ -181,6 +206,7 @@ ReturnFlag Solution<ED>::evaluate(const bool rFlag){
 	return rf;
 }
  
+
 template<typename ED>
 ReturnFlag Solution<ED>::initialize(const bool mode,const int rIndex,const int rSize){
 	Global::msp_global->mp_problem->initializeSolution(*this,rIndex,rSize);

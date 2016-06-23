@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -17,7 +17,7 @@
 #include "../../Global/global.h"
 #include "../../Measure/mSingleObj.h"
 
-boost::thread_specific_ptr<int> DynamicProblem::ms_initNumPeaks,DynamicProblem::ms_initNumDim,DynamicProblem::ms_numInstance;
+thread_local unique_ptr<int> DynamicProblem::ms_initNumPeaks,DynamicProblem::ms_initNumDim,DynamicProblem::ms_numInstance;
 
 #ifdef OFEC_DEMON
 #include "../../../ui/Buffer/Scene.h"

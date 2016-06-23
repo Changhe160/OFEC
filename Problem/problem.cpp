@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -18,7 +18,7 @@
 Problem::Problem(const int rId, const int rDimNumber, string rName, const int numObj):m_id(rId),\
 m_numDim(rDimNumber), m_OptMode(numObj,MIN_OPT), m_evals(0), m_numObj(numObj), m_name(rName), \
 	m_popInitialMode(POP_INIT_UNIFORM),m_validationMode(VALIDATION_REMAP),m_accuracy(0),m_sameType(true),\
-	m_tag(1,SOP),m_tevals(0),m_cevals(0){
+	m_tag({ SOP }), m_tevals(0), m_cevals(0), m_objRange(numObj, pair<double, double>(DBL_MAX, DBL_MAX)) {
     
 	int mode=Global::g_arg[param_solutionValidationMode];	
 	m_validationMode=static_cast<SolutionValidation>(mode);
@@ -48,6 +48,7 @@ Problem& Problem::operator=(const Problem & rhs){
 
 	m_numDim = rhs.m_numDim;
 
+	m_objRange = rhs.m_objRange;
     return *this;
 }
 void Problem::parameterSetting(Problem * rhs){
@@ -60,6 +61,7 @@ void Problem::parameterSetting(Problem * rhs){
 	m_tag=rhs->m_tag;
 	m_tevals=rhs->m_tevals;
 	m_cevals=rhs->m_cevals;
+	m_objRange = rhs->m_objRange;
 }
 
 void Problem::setAccuracy(double rAcc){
@@ -107,20 +109,16 @@ void Problem::setSameType(bool flag){
 }
 
 
-void Problem::setProTag(const vector<ProTag> &tag){
+void Problem::setProTag(const set<ProTag> &tag){
 	m_tag=tag;
 }
 
 void Problem::addProTag(ProTag tag){
-	if(!isProTag(tag))	m_tag.push_back(tag);
+	if(!isProTag(tag))	m_tag.insert(tag);
 }
 bool Problem::isProTag(ProTag tag){
-	auto i=m_tag.begin();
-	for(;i!=m_tag.end();++i){
-		if(*i==tag) break;
-	}
-	if(i==m_tag.end()) return false;
-	return true;
+	if(m_tag.find(tag)!=m_tag.end())	return true;
+	else return false;
 }
 
 CompareResultFlag Problem::compare(const VirtualEncoding &s1, const VirtualEncoding &s2)const{

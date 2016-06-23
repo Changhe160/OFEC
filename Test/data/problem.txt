@@ -14,6 +14,8 @@
 #JSP: job shop problem
 #KOP: knapsack optimization problem
 #SAT: boolean satisfiability problem
+#QAP: Quadratic Assignment Problem
+#MKP: Multidimensional Knapsack Problem
 
 #problem_name  index_ProList(see types.h)     problem_type
 #begin
@@ -147,3 +149,5 @@ FUN_MOP_F7 62 CONT MOP
 FUN_MOP_F8 63 CONT MOP
 FUN_MOP_F9 64 CONT MOP
 COMB_TSP 65 COMB TSP SOP
+COMB_QAP 66 COMB QAP SOP
+COMB_MKP 67 COMB MKP SOP

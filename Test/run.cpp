@@ -83,7 +83,12 @@ Run::~Run(){
 	Global::msp_global.reset();	
 }
 ReturnFlag Run::go(){
-	return Global::msp_global->mp_algorithm->run();
+	chrono::time_point<chrono::system_clock> start, end;
+	start = chrono::system_clock::now();
+	ReturnFlag f=Global::msp_global->mp_algorithm->run();
+	end = chrono::system_clock::now();
+	if (mSingleObj::getSingleObj()) mSingleObj::getSingleObj()->setDuration(end - start, m_runId);
+	return f;
 }
 
 void Run::test(){

@@ -6,8 +6,8 @@
  * return, a newline, both, or EOF.
  */
 
-static boost::thread_specific_ptr<vector<char> > Buffer;
-static boost::thread_specific_ptr<int> MaxBuffer;
+static thread_local unique_ptr<vector<char> > Buffer;
+static thread_local unique_ptr<int> MaxBuffer;
 
 static int EndOfLine(FILE * InputFile, int c)
 {

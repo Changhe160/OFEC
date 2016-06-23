@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -20,12 +20,11 @@ template<typename ED>
 class Individual: public Solution<ED>{
 	template <typename, typename> friend class Population;
     public:
-        explicit Individual():Solution<ED>(),m_id(-1),m_index(-1),m_ranking(-1),m_flag(-1){}
+        explicit Individual():Solution<ED>(),m_id(-1),m_index(-1),m_ranking(-1),m_flag(-1), m_impr(false){}
         virtual ReturnFlag initialize(int rIdx,int rID, int rPopsize,bool mode=true);
         virtual ReturnFlag initialize(int rIdx,int rID,bool mode=true);
         virtual ReturnFlag initialize(bool mode=true);
         virtual void initialize(const Solution<ED> &x,int rIdx,int rID);
-		virtual ReturnFlag initialize(Solution<ED> *w=0, int mode=1,bool mode2=true);
 		virtual ReturnFlag initialize(const Solution<ED>  &p,double radius, int rIdx, int rID,bool mode);
 		
 		virtual void printToScreen();
@@ -50,11 +49,17 @@ class Individual: public Solution<ED>{
 		virtual bool isSame(const Individual<ED> &p)const;
 		virtual Solution<ED> & representative();
 		virtual const Solution<ED> & representative() const;
+		bool isImproved();
+		bool isActive();
+		void setActive(bool value);
+		void setImpr(bool value);
+		double & fitness();
 protected:
 		double m_fitness=0;               // fitness of each individual
         int m_id,m_index;
         int m_ranking=-1;
 		int m_flag;				// for a certain purpose
+		bool m_impr,m_active=true;			// if the indi gets improved, added 2016.4.20.
 };
 
 
@@ -80,19 +85,7 @@ void Individual<ED>::initialize(const Solution<ED> &x,int rIdx,int rID){
     m_index=rIdx;
     Solution<ED>::operator=(x);
 }
-template<typename ED>
-ReturnFlag Individual<ED>::initialize(Solution<ED> *w, int mode,bool mode2){
-	if(w==0){
-		return Solution<ED>::initialize(mode2);
-	}else{
-		if(mode==1){
-			Solution<ED>::operator=(*w);
-		}else if(mode ==2){
-			return Solution<ED>::initialize(*w,1,mode2);
-		}
-	}
-	return Return_Normal;
-}
+
 template<typename ED>
 ReturnFlag Individual<ED>::initialize(const Solution<ED>  &p,double radius, int rIdx, int rID,bool mode){
     m_id=rID;
@@ -101,12 +94,12 @@ ReturnFlag Individual<ED>::initialize(const Solution<ED>  &p,double radius, int 
 }
 template<typename ED>
 Individual<ED>::Individual(const Individual<ED> &rhs):Solution<ED>(rhs), m_id(rhs.m_id),m_index(rhs.m_index),\
-m_ranking(rhs.m_ranking), m_flag(rhs.m_flag), m_fitness(rhs.m_fitness){
+m_ranking(rhs.m_ranking), m_flag(rhs.m_flag), m_fitness(rhs.m_fitness), m_impr(rhs.m_impr) , m_active(rhs.m_active){
 
 }
 
 template<typename ED>
-Individual<ED>::Individual(const Solution<ED> &rhs):Solution<ED>(rhs),m_id(-1),m_index(-1),m_ranking(-1),m_flag(-1){  
+Individual<ED>::Individual(const Solution<ED> &rhs):Solution<ED>(rhs),m_id(-1),m_index(-1),m_ranking(-1),m_flag(-1), m_impr(0){
 
 }
 
@@ -119,6 +112,8 @@ Individual<ED> & Individual<ED>::operator=(const Individual &rhs){
     m_ranking=rhs.m_ranking;
 	m_flag=rhs.m_flag;
 	m_fitness = rhs.m_fitness;
+	m_impr = rhs.m_impr;
+	m_active = rhs.m_active;
     return *this;
 }
 
@@ -213,4 +208,27 @@ template<typename ED>
 const Solution<ED> & Individual<ED>::representative() const{
 	return *this;
 };
+template<typename ED>
+bool Individual<ED>::isImproved() {
+	return m_impr;
+}
+template<typename ED>
+bool Individual<ED>::isActive() {
+	return m_active;
+}
+
+template<typename ED>
+void Individual<ED>::setActive(bool val) {
+	m_active=val;
+}
+
+template<typename ED>
+double & Individual<ED>::fitness() {
+	return m_fitness;
+}
+
+template<typename ED>
+void Individual<ED>::setImpr(bool value) {
+	m_impr = value;
+}
 #endif // INDIVIDUAL_H

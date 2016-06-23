@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -22,22 +22,29 @@
 #include "../Measure/mSingleObj.h"
 #include "../Problem/optimum.h"
 #include "../Problem/FunctionOpt/BenchmarkFunction.h"
+//#include "../Problem/DOP/FFreePeak_D_OnePeak.h"
 template<typename>  class MultiPopulation;
 
 template <typename ED, typename TypeIndi>
 class Population: public  Algorithm{
 	template<typename> friend class MultiPopulation;
+
+	struct TASKINFOR{
+		list<vector<int>>::iterator it;
+		int idx;
+	};
 protected:
 	int m_popsize;                              // swarm size
 	int m_maxID;                                // the maximum ID of the population
 	vector<unique_ptr<TypeIndi>> m_pop;			// the population, the number of indis can changes
-	int m_evoNum;                               // the number of generations
+	int m_iter;                               // the number of generations
 	int m_popID;                                // the ID of the populaton
 	vector<int> m_bestIdx,m_worstIdx;                   // the indice of the best and worst individual(warning: for non-dominate population, they are equal to -1)
 	vector<bool> m_flag;                                // for use in some cases, e.g., whether it found an optimum solution or not, ....
 	vector<unique_ptr<Solution<ED>>> m_best;              // the best one in the population, notice: can be non-donimated solutions for multi-objective optimization problems	
 	vector<int> m_orderList;							// indices of ordered individuals
 	int m_curRank=0;
+	unique_ptr<Termination> m_term;
 protected:
 	void copy_(const Population<ED, TypeIndi> &s);
 	virtual ReturnFlag initialize(bool isInitialized,bool mode, bool clearOldBest);
@@ -49,7 +56,7 @@ protected:
 	const Solution<ED> & getNearestBest(const Solution<ED> &chr);
 public:
 	virtual ~Population(void);
-	explicit Population():Algorithm(-1,string()),m_popsize(0),m_maxID(0),m_evoNum(0),m_popID(0),m_orderList(0),m_best(0),m_pop(0){}	
+	explicit Population():Algorithm(-1,string()),m_popsize(0),m_maxID(0),m_iter(0),m_popID(0),m_orderList(0),m_best(0),m_pop(0){}	
 	Population(const int rPopsize);
 	Population(const int rPopsize,bool mode);
 	Population(const Population &s);
@@ -103,9 +110,13 @@ public:
 	double rank(const ED & i, bool mode = true);
 	void clearBestArchive();
 	#ifdef OFEC_DEMON
-	void startRankThread(vector<int> &rank_, vector<int> &count, vector<vector<int> >& cset);
-	static int rankThread(vector<int> &tsk, const Population<ED, TypeIndi> &p, vector<int> &rank_, vector<int> &count, vector<vector<int> >& cset);
+	void startRankThread(vector<int> &rank_, vector<int> &count, list<vector<int> >& cset);
+	static int rankThread(vector<TASKINFOR> &tsk, const Population<ED, TypeIndi> &p, vector<int> &rank_, vector<int> &count, list<vector<int> >& cset);
 	#endif
+
+	virtual double mean();
+	virtual double variance(double mean);
+	
 };
 
 template <typename ED, typename TypeIndi>
@@ -126,7 +137,7 @@ void Population<ED, TypeIndi>::copy_(const Population<ED, TypeIndi> &s){
 	}
 		
 	m_maxID=s.m_maxID;
-	m_evoNum=s.m_evoNum;
+	m_iter=s.m_iter;
 	m_popID=s.m_popID;
 	m_flag=s.m_flag;
 		
@@ -151,7 +162,7 @@ ReturnFlag Population<ED, TypeIndi>::initialize(bool isInitialized,bool mode, bo
 			} 
 		}
 	}
-	m_evoNum=0;
+	m_iter=0;
 	findWorst();
 	findBest();
 	if(clearOldBest) m_best.clear();
@@ -220,7 +231,7 @@ bool Population<ED, TypeIndi>::updateBestArchive(const Solution<ED> & chr){
 			i--;
 		}
 	}
-	if(!first) return false;
+	if(!first) return true;
 	//check equal case	
 	for(auto i=m_best.begin();i!=m_best.end();i++){
 		if(**i==chr&&!((*i)->isSame(chr))){
@@ -267,14 +278,14 @@ Population<ED, TypeIndi>::~Population(void){
 }
 
 template <typename ED, typename TypeIndi>
-Population<ED, TypeIndi>::Population(const int rPopsize):Algorithm(-1,string()),m_popsize(rPopsize),m_maxID(rPopsize),m_evoNum(0),m_popID(0),\
+Population<ED, TypeIndi>::Population(const int rPopsize):Algorithm(-1,string()),m_popsize(rPopsize),m_maxID(rPopsize),m_iter(0),m_popID(0),\
 	m_flag(1,false),m_best(),m_pop(rPopsize),m_orderList(rPopsize){
 	for(auto &i:m_pop) i=move(unique_ptr<TypeIndi>(new TypeIndi()));
 	Global::msp_global->m_totalNumIndis+=m_popsize;
 }
 
 template <typename ED, typename TypeIndi>
-Population<ED, TypeIndi>::Population(const int rPopsize,bool mode):Algorithm(-1,string()),m_popsize(rPopsize),m_maxID(rPopsize),m_evoNum(0),m_popID(0),\
+Population<ED, TypeIndi>::Population(const int rPopsize,bool mode):Algorithm(-1,string()),m_popsize(rPopsize),m_maxID(rPopsize),m_iter(0),m_popID(0),\
 	m_flag(1,false),m_best(),m_pop(rPopsize),m_orderList(rPopsize){
 	for(auto &i:m_pop) i=move(unique_ptr<TypeIndi>(new TypeIndi()));
 	initialize(false,mode,false);
@@ -292,7 +303,7 @@ Population<ED, TypeIndi>::Population(const Population<ED, TypeIndi> &s):Algorith
 	}
 
 	m_maxID=s.m_maxID;
-	m_evoNum=s.m_evoNum;
+	m_iter=s.m_iter;
 	m_popID=s.m_popID;
 	m_flag=s.m_flag;
 	m_bestIdx=s.m_bestIdx;
@@ -303,7 +314,7 @@ Population<ED, TypeIndi>::Population(const Population<ED, TypeIndi> &s):Algorith
 
 //transfer ownership to m_pop
 template <typename ED, typename TypeIndi> 
-Population<ED, TypeIndi>::Population( Group<ED,TypeIndi> &g):Algorithm(-1,string()),m_popsize(g.getSize()),m_maxID(g.getSize()),m_evoNum(0),m_popID(0),m_flag(1,false),\
+Population<ED, TypeIndi>::Population( Group<ED,TypeIndi> &g):Algorithm(-1,string()),m_popsize(g.getSize()),m_maxID(g.getSize()),m_iter(0),m_popID(0),m_flag(1,false),\
 	m_best(g.getBest().size()),m_pop(g.getSize()),m_orderList(g.getSize()){
 		
 	for(int i=0;i<m_popsize;i++){
@@ -315,7 +326,7 @@ Population<ED, TypeIndi>::Population( Group<ED,TypeIndi> &g):Algorithm(-1,string
 		m_best[i]=move(unique_ptr<Solution<ED>>(new Solution<ED>(g.getBest()[i])));
 	}
 
-	m_evoNum=0;
+	m_iter=0;
 	findWorst();
 	Global::msp_global->m_totalNumIndis+=m_popsize;	
 }
@@ -512,7 +523,7 @@ void Population<ED, TypeIndi>::decreaseDimension(){
 
 template <typename ED, typename TypeIndi>
 void Population<ED, TypeIndi>::changeDimension(){
-	if(CAST_PROBLEM_DYN->getDirDimensionChange()==true)increaseDimension();
+	if(CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->getDirDimensionChange()==true)increaseDimension();
 	else decreaseDimension();
 }
 
@@ -571,17 +582,18 @@ template <typename ED, typename TypeIndi>
 void Population<ED, TypeIndi>::rank(){
 	vector<int> rank_(m_popsize,0);
 	vector<int> count(m_popsize,0);
-	vector<vector<int> > cset(m_popsize,vector<int>(m_popsize));
+	list<vector<int> > cset(m_popsize,vector<int>(m_popsize));
 	
 	for (int i = 0; i < m_popsize; i++)
 	{
 		m_pop[i]->m_ranking = -1;	
 	}
-	
+
 	#ifdef OFEC_DEMON
 		startRankThread(rank_, count, cset);
 	#else
-		for (int k = 0; k<m_popsize; k++)
+	auto i=cset.begin();
+		for (int k = 0; k<m_popsize; k++,++i)
 			for (int j = 0; j<m_popsize; j++)
 			{
 				if (k != j)
@@ -590,7 +602,8 @@ void Population<ED, TypeIndi>::rank(){
 
 					if (*m_pop[k]>*m_pop[j])
 					{
-						cset[k][count[k]] = j;
+						//cset[k][count[k]] = j;
+						(*i)[count[k]] = j;
 						count[k]++;
 					}
 				}
@@ -604,15 +617,16 @@ void Population<ED, TypeIndi>::rank(){
 		int stop_count = 0;
 	    for(int k=0; k<m_popsize; k++)
 			rank2[k] = rank_[k];
-
-        for(int k=0; k<m_popsize; k++)
-		{			
+		auto i = cset.begin();
+        for(int k=0; k<m_popsize; k++,++i)
+		{						
 		    if(m_pop[k]->m_ranking==-1&&rank_[k]==0)
 			{
 				m_pop[k]->m_ranking = m_curRank;
 				for(int j=0; j<count[k]; j++)
 				{
-				   int id =	cset[k][j];
+				   //int id =	cset[k][j];
+					int id = (*i)[j];
 				   rank2[id]--;
 				   stop_count++;
 				}
@@ -717,8 +731,10 @@ void Population<ED, TypeIndi>::handleReturnFlag(ReturnFlag f){
 		ROOTBest();
 		break;
 	case Return_Change_Timelinkage:
-		CAST_PROBLEM_DYN->getTriggerTimelinkage()=false;
-		updateMemory();
+		if (CAST_PROBLEM_DYN) {
+			CAST_PROBLEM_DYN->getTriggerTimelinkage() = false;
+			updateMemory();
+		}
 		break;
 	case Return_Loop:
 		break;
@@ -798,7 +814,7 @@ vector<bool> Population<ED, TypeIndi>::getFlag() const {
 }
 template <typename ED, typename TypeIndi>
 int Population<ED, TypeIndi>::getEvoNum() const { 
-	return m_evoNum; 
+	return m_iter; 
 }
 
 template <typename ED, typename TypeIndi>
@@ -848,43 +864,44 @@ double Population<ED, TypeIndi>::rank(const ED & s, bool mode){
 
 #ifdef OFEC_DEMON
 template <typename ED, typename TypeIndi>
-void Population<ED, TypeIndi>::startRankThread(vector<int> &rank_, vector<int> &count, vector<vector<int> > &cset){
-
-
-	typedef boost::packaged_task<int> TASK;
-	typedef boost::unique_future<int> FUTURE;
+void Population<ED, TypeIndi>::startRankThread(vector<int> &rank_, vector<int> &count, list<vector<int> > &cset){
 
 	int numTask = std::thread::hardware_concurrency();
 
 	if (numTask>m_popsize) numTask = m_popsize;
 
-	vector<TASK>  at(numTask);
-	vector<FUTURE> af(numTask);
+	vector<thread>  thrd;
+	
+	vector<vector<TASKINFOR>> tsk(numTask);
 
-	vector<vector<int>> tsk(numTask);
 	int num = (m_popsize / numTask);
 	int i = 0;
-	for (; i < m_popsize; ++i){
+	auto it = cset.begin();
+	for (; i < m_popsize; ++i,++it){
 		int k = i/num;
-		if (k == numTask) break;		
-		tsk[k].push_back(i);
+		if (k == numTask) break;
+		TASKINFOR inf;
+		inf.idx = i;
+		inf.it = it;
+		tsk[k].push_back( move(inf));
 	}
-	for (int j=0; i < m_popsize; ++i,++j){
-		tsk[j].push_back(i);
+	for (int j=0; i < m_popsize; ++i,++j,++it){
+		TASKINFOR inf;
+		inf.idx = i;
+		inf.it = it;
+		tsk[j].push_back(move(inf));
 	}
-	for (int i = 0; i<numTask; i++){
-		at[i] = TASK(boost::bind(Population<ED, TypeIndi>::rankThread, boost::ref(tsk[i]), boost::ref(*this), boost::ref(rank_), boost::ref(count), boost::ref(cset)));
-		af[i] = at[i].get_future();
-		boost::thread(boost::move(at[i]));
-
+	for (int i = 0; i < numTask; i++) {
+		thrd.push_back(thread(Population<ED, TypeIndi>::rankThread, ref(tsk[i]), ref(*this), ref(rank_), ref(count), ref(cset)));
 	}
-	boost::wait_for_all(af.begin(), af.end());
-	for (auto &i : af) assert(i.is_ready() && i.has_value());
+	for (auto &i : thrd) i.join();
 }
 template <typename ED, typename TypeIndi>
-int Population<ED, TypeIndi>::rankThread(vector<int> &tsk, const Population<ED, TypeIndi> &p, vector<int> &rank_, vector<int> &count, vector<vector<int> >& cset){
+int Population<ED, TypeIndi>::rankThread(vector<TASKINFOR> &tsk, const Population<ED, TypeIndi> &p, vector<int> &rank_, vector<int> &count, list<vector<int> >& cset){
 
-	for (auto k:tsk){
+	for (auto t:tsk){	
+		int k = t.idx;
+		auto i = t.it;	
 		for (int j = 0; j<p.m_popsize; j++)
 		{
 			if (k != j)
@@ -893,7 +910,9 @@ int Population<ED, TypeIndi>::rankThread(vector<int> &tsk, const Population<ED, 
 
 				if (*(p.m_pop[k])>*(p.m_pop[j]))
 				{
-					cset[k][count[k]] = j;
+										
+					//cset[k][count[k]] = j;
+					(*i)[count[k]] = j;
 					count[k]++;
 				}
 			}
@@ -906,5 +925,30 @@ int Population<ED, TypeIndi>::rankThread(vector<int> &tsk, const Population<ED, 
 template <typename ED, typename TypeIndi>
 void Population<ED, TypeIndi>::clearBestArchive(){
 	m_best.clear();
+}
+
+template <typename ED, typename TypeIndi>
+double Population<ED, TypeIndi>::mean() {
+	if (m_popsize == 0) throw myException("no individual in the population @Population::meanObj()");
+
+	double mean = 0;
+	for (auto p = m_pop.begin(); p != m_pop.end(); ++p) {	
+			mean += (*p)->data().m_obj[0];
+	}
+	mean /= m_popsize;
+
+	return mean;
+}
+
+template <typename ED, typename TypeIndi>
+double Population<ED, TypeIndi>::variance(double mean) {
+
+	double var = 0;	
+	for (auto p = m_pop.begin(); p != m_pop.end(); ++p) {
+		var += pow((*p)->data().m_obj[0]- mean,2);
+	}
+	var /= sqrt(var / m_popsize);
+	
+	return var;
 }
 #endif // POPULATION_H

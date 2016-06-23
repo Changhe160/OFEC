@@ -34,7 +34,7 @@ void AMSOSwarm::initialize()
 	m_pop.clear();
 	for(int i=0;i<m_popsize;i++)
 		m_pop.push_back(move(unique_ptr<AMSOParticle>(new AMSOParticle())));
-	if(CAST_PROBLEM_DYN->predictChange(m_popsize)){
+	if(CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(m_popsize) /*|| CAST_PROBLEM_DYN_ONEPEAK&&CAST_PROBLEM_DYN_ONEPEAK->predictChange(m_popsize)*/){
 		Population<CodeVReal,AMSOParticle>::initialize(false,false,true);
 	}else{
 		Population<CodeVReal,AMSOParticle>::initialize(false,true,true);

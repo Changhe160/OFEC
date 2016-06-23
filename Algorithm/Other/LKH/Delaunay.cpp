@@ -456,10 +456,10 @@ static edge *make_edge(point * u, point * v)
         v->entry_pt = e;
     return e;
 }
-boost::thread_specific_ptr<point> p_array;
-static boost::thread_specific_ptr<edge> e_array;
-static boost::thread_specific_ptr<edge*> free_list_e;
-static boost::thread_specific_ptr<int> n_free_e;
+thread_local unique_ptr<point> p_array;
+static thread_local unique_ptr<edge> e_array;
+static thread_local unique_ptr<edge*> free_list_e;
+static thread_local unique_ptr<int> n_free_e;
 
 static void alloc_memory(int n)
 {

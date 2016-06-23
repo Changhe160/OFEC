@@ -95,15 +95,11 @@
 		#include <boost/variant.hpp>
 		#include <boost/variant/static_visitor.hpp>
 		#include <boost/variant/apply_visitor.hpp>
-		#include <boost/thread.hpp>
 		#include <boost/array.hpp>
 		#include <boost/shared_ptr.hpp>
 		#include <boost/make_shared.hpp>
 		#include <boost/utility.hpp>
-		#include <boost/thread/locks.hpp>
-		#include <boost/thread/mutex.hpp>
-		#include <boost/thread/condition.hpp>
-		#include <boost/chrono.hpp>
+		//#include <boost/thread.hpp>
 	#endif
 	#ifdef WANT_STL
 		#include <deque>
@@ -130,6 +126,8 @@
 		#include <tuple>
 		#include <cfloat>
 		#include <chrono>
+		#include <mutex>
+		#include<future>
 	#endif
 
 

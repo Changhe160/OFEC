@@ -25,9 +25,9 @@ public:
 #endif // OFEC_CONSOLE
 
 		while (!ifTerminating()){
-			g_mutexStream.lock();
-			//cout << Global::msp_global->m_runId << " " << Global::msp_global->mp_problem->getEvaluations() << " " << m_best[0]->obj(0) << endl;
-			g_mutexStream.unlock();
+			/*g_mutexStream.lock();
+			cout << Global::msp_global->m_runId << " " << Global::msp_global->mp_problem->getEvaluations() << " " << m_best[0]->obj(0) << endl;
+			g_mutexStream.unlock();*/
 			rf = this->evolve();
 #ifdef OFEC_DEMON
 			vector<Algorithm*> vp;

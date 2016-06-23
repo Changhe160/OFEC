@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -22,6 +22,8 @@ class Swarm: public PopulationCont<ED,TypeParticle>{
 protected:
 	double m_C1,m_C2;                       //accelerators
 	double m_W,m_maxW, m_minW;                // inertia weight
+	//May 10, 2016
+	vector<vector<bool>> m_link;
 public:
 	virtual ~Swarm(void){}
 	virtual void initialize( bool mode=true);
@@ -43,7 +45,11 @@ public:
 
 	virtual void reInitialize(bool clearOldBest,bool mode=true);
 	void reInitialize(const TypeParticle & center,bool mode=true);
-	double getAvgVelocity();               
+	double getAvgVelocity(); 
+protected:
+	//May 10, 2016
+	virtual void setNeibourhood(); //gbest as default 
+	virtual Solution<ED>& neighborBest(int);
 };
 
 
@@ -69,6 +75,7 @@ Swarm<ED,TypeParticle>::Swarm(const Swarm &s):PopulationCont<ED,TypeParticle>(s)
 	m_C2=s.m_C2;
 	m_maxW=s.m_maxW;
 	m_minW=s.m_minW;
+	m_link = s.m_link;
 }
 template <typename ED,typename TypeParticle>
 Swarm<ED,TypeParticle>::Swarm(Group<ED,TypeParticle> &g):PopulationCont<ED,TypeParticle>(g){
@@ -95,6 +102,9 @@ void Swarm<ED,TypeParticle>::initialize(bool mode){
 			this->m_pop[i]->setVmax(-this->m_initialRadius,this->m_initialRadius);
 		}
 	//**************** July 20 2012*****************//
+	m_link.resize(this->m_popsize);
+	for (auto &i : m_link) i.resize(this->m_popsize);
+
 }
 template <typename ED,typename TypeParticle>
 Swarm<ED,TypeParticle> &Swarm<ED,TypeParticle>::operator= (const Swarm &s){
@@ -106,6 +116,7 @@ Swarm<ED,TypeParticle> &Swarm<ED,TypeParticle>::operator= (const Swarm &s){
 	m_C2=s.m_C2;
 	m_maxW=s.m_maxW;
 	m_minW=s.m_minW;
+	m_link = s.m_link;
 	return *this;
 }
 
@@ -219,4 +230,16 @@ void Swarm<ED,TypeParticle>::setC2(const double rc2){
 
 }
 
+template <typename ED, typename TypeParticle>
+void Swarm<ED, TypeParticle>::setNeibourhood() {
+	for (auto &i : m_link) {
+		for (int j = 0; j < i.size(); ++j) {
+			i[j] = true;
+		}
+	}
+}
+template <typename ED, typename TypeParticle>
+Solution<ED>& Swarm<ED, TypeParticle>::neighborBest(int idx) {
+	return *this->m_best[0];
+}
 #endif // SWARM_H

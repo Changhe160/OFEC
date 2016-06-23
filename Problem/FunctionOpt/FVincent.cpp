@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -49,6 +49,7 @@ void FVincent::initialize(){ // note
 	m_globalOpt.setGloObj(vector<vector<double>>(pow(6,m_numDim),vector<double>(m_numObj,1)));
 	m_originalGlobalOpt=m_globalOpt;
 	addProTag(MMP);
+	setObjSet();
 }
 void FVincent::evaluate__(double const *x,vector<double>& obj){
 	double s=0;

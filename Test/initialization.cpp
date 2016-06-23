@@ -2,26 +2,27 @@
 #include "../Global/global.h"
 #include "types.h"
 
-template<typename pro, typename alg, int n,ProgramMode flag>
+
+template<typename List, typename Map, typename Base, int n >
 struct Rigister {
-  static void regist(const vector<Info> & info) {
-	for(int i=0;i<info.size();i++)
-	{	
-		if(info[i].ClassIndex==n)
-		{		
-			Global::registerAlgorPro(info[i].Name,flag);
-			RegisterClassOFEC<typename Loki::TL::TypeAt<typename Loki::Select<flag,pro,alg>::Result,n>::Result,flag>::registerClassAlgorPro(info[i].Name);
+	static void regist(const vector<Info> & info, Map &map,  STRING2ID &msi) {
+		for (int i = 0; i<info.size(); i++)
+		{
+			if (info[i].ClassIndex == n)
+			{
+				Global::registerItem(msi, info[i].Name);
+				map.insert(make_pair(info[i].Name, &createObject<Base, typename Loki::TL::TypeAt<List, n>::Result>));
+			}
 		}
+		Rigister<List, Map,Base,n - 1>::regist(info,map,msi);
 	}
-	Rigister<pro,alg,n-1,flag>::regist(info);
-  }
- 
 };
 
-template<typename pro, typename alg, ProgramMode flag>
-struct Rigister<pro,alg,-1,flag>{
-  static void regist(const vector<Info> & info) {}
+template<typename List, typename Map, typename Base>
+struct Rigister<List,Map,Base,-1> {
+	static void regist(const vector<Info> & info, Map &map,  STRING2ID &msi) { }
 };
+
 
 void setAlgParameters(){
 	ParamMap &v=Global::g_arg;
@@ -68,12 +69,16 @@ void setAlgParameters(){
 void registerProNdAlg(){
 	
 	//register problems and algorithms here
-	vector<Info> proInfo, algInfo;
-	LoadData(proInfo,algInfo);
+	vector<Info> proInfo, algInfo,termInfo;
+	LoadData(proInfo,algInfo, termInfo);
 	
-	Rigister<ProList,AlgList,Loki::TL::Length<ProList>::value-1,Program_Problem>::regist(proInfo); 
-	Rigister<ProList,AlgList,Loki::TL::Length<AlgList>::value-1,Program_Algorithm>::regist(algInfo);
-	//bind algorithm and problem here
+	
+	Rigister<ProList, classFactory::ClassMapProblem,Problem, Loki::TL::Length<ProList>::value - 1>::regist(proInfo, Global::ms_classFactory.m_theMapProblem,Global::msm_pro);
+	Rigister<AlgList, classFactory::ClassMapAlgorithm, Algorithm, Loki::TL::Length<AlgList>::value - 1>::regist(algInfo, Global::ms_classFactory.m_theMapAlgorithm,Global::msm_alg);
+	Rigister<TermList, classFactory::ClassMapTermination, Termination, Loki::TL::Length<TermList>::value - 1>::regist(termInfo, Global::ms_classFactory.m_theMapTermination,Global::msm_term);
+
+
+	//bind algorithms and problems here
 	for(int i=0;i<algInfo.size();i++)
 	{
 		for(int j=0;j<proInfo.size();j++)
@@ -87,44 +92,12 @@ void registerProNdAlg(){
 					Global::registerAlg4Pro(make_pair(algInfo[i].Name, proInfo[j].Name));
 					break;
 				}
-			}
-
-			/*if(algInfo[i].Type.find("DOP")!=algInfo[i].Type.end())
-			{
-				if(algInfo[i].Name=="ALG_FAMF_PSO"||algInfo[i].Name=="ALG_FAMF_DE")
-				{
-					for(set<string>::iterator iter=proInfo[j].Type.begin();;)
-					{
-						if(!algInfo[i].Type.count(*iter))
-							break;
-						if(++iter==proInfo[j].Type.end()) 
-						{
-							Global::registerAlg4Pro(make_pair(algInfo[i].Name,proInfo[j].Name));
-							break;
-						}
-					}
-				}
-				else
-				{
-					if(algInfo[i].Type==proInfo[j].Type)
-						Global::registerAlg4Pro(make_pair(algInfo[i].Name,proInfo[j].Name));
-				}
-			}
-			else
-			{
-				for(set<string>::iterator iter=proInfo[j].Type.begin();;)
-				{
-					if(!algInfo[i].Type.count(*iter))
-						break;
-					if(++iter==proInfo[j].Type.end()) 
-					{
-						Global::registerAlg4Pro(make_pair(algInfo[i].Name,proInfo[j].Name));
-						break;
-					}
-				}
-			}*/
-			
+			}			
 		}
+	}
+	// check if the algorithm and the problem match
+	if (Global::msm_alg4pro.find(make_pair(Global::g_arg[param_algName], Global::g_arg[param_proName])) == Global::msm_alg4pro.end()) {
+		throw myException("The algorithm is not for solving the problem");
 	}
 
 }
@@ -217,7 +190,7 @@ void setAddtParameters(){
 
 }
 
-void LoadData(vector<Info> & proInfo,vector<Info> & algInfo)
+void LoadData(vector<Info> & proInfo,vector<Info> & algInfo, vector<Info> &termInfo)
 {
 	ifstream infile;
 	ostringstream os;
@@ -259,7 +232,6 @@ void LoadData(vector<Info> & proInfo,vector<Info> & algInfo)
 	}
 	
 	//load algorithm data
-	istringstream stream;
 	while(getline(infile,line))
 	{
 		Info temp;
@@ -269,6 +241,29 @@ void LoadData(vector<Info> & proInfo,vector<Info> & algInfo)
 		while(stream>>word)
 			temp.Type.insert(word);
 		algInfo.push_back(move(temp));
+	}
+	infile.close();
+	infile.clear();
+	os.str("");
+
+	os << Global::g_arg[param_workingDir] << "Test/data/termination.txt";
+	infile.open(os.str());
+	if (!infile) throw myException("load algorithm file fail in the @LoadData()");
+	while (getline(infile, line))
+	{
+		string::size_type pos = string::npos;
+		if ((pos = line.find('\r')) && pos != string::npos) { line.erase(pos, 1); }
+		if (line.compare("#begin") == 0)	break;
+	}
+
+	//load termination data
+	while (getline(infile, line))
+	{
+		Info temp;
+		istringstream stream(line);
+		stream >> temp.Name;
+		stream >> temp.ClassIndex;		
+		termInfo.push_back(move(temp));
 	}
 	infile.close();
 	infile.clear();
@@ -318,9 +313,9 @@ void setGlobalParameters(int argn,char *argv[]){
 	Global::ms_curAlgId=Global::msm_alg[(Global::g_arg[param_algName])];
 	Global::ms_curProId=Global::msm_pro[(Global::g_arg[param_proName])];
 
-	if(Global::g_arg.find(param_proFileName)!=Global::g_arg.end()) 
+	if(Global::g_arg.find(param_dataFile1)!=Global::g_arg.end()) 
 	{
-		string str=Global::g_arg[param_proFileName];
+		string str=Global::g_arg[param_dataFile1];
 		int i;
 		if((i=str.find(".tsp"))==string::npos) return;
 		str.erase(i,4);

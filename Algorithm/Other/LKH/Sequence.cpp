@@ -17,16 +17,16 @@
  *   
  *     BETWEEN(t[p[i-1]], t[p[i]], t[p[i+1]]) for i = 2, ..., 2k-1
  */
-static boost::thread_specific_ptr<LKH::LKHAlg::Node> tp1;
-boost::thread_specific_ptr<vector<LKH::LKHAlg::Node *> > t;       /* The sequence of nodes to be used in a move */
-boost::thread_specific_ptr<vector<LKH::LKHAlg::Node *> > T;       /* The sequence of nodes to be used in a move */
-boost::thread_specific_ptr<vector<LKH::LKHAlg::Node *> > tSaved;       /* The sequence of nodes to be used in a move */
-boost::thread_specific_ptr<vector<int> > p;         /* The permutation corresponding to the sequence in which the t's occur on the tour */
-boost::thread_specific_ptr<vector<int> > q;         /* The inverse permutation of p */
-boost::thread_specific_ptr<vector<int> > incl;      /* Array: incl[i] == j, if (t[i], t[j]) is an inclusion edge */
-boost::thread_specific_ptr<vector<int> > cycle;     /* Array: cycle[i] is cycle number of t[i] */
-boost::thread_specific_ptr<vector<GainType> > G;    /* For storing the G-values in the BestKOptMove function */
-boost::thread_specific_ptr<int> K;          /* The value K for the current K-opt move */
+static thread_local unique_ptr<LKH::LKHAlg::Node> tp1;
+thread_local unique_ptr<vector<LKH::LKHAlg::Node *> > t;       /* The sequence of nodes to be used in a move */
+thread_local unique_ptr<vector<LKH::LKHAlg::Node *> > T;       /* The sequence of nodes to be used in a move */
+thread_local unique_ptr<vector<LKH::LKHAlg::Node *> > tSaved;       /* The sequence of nodes to be used in a move */
+thread_local unique_ptr<vector<int> > p;         /* The permutation corresponding to the sequence in which the t's occur on the tour */
+thread_local unique_ptr<vector<int> > q;         /* The inverse permutation of p */
+thread_local unique_ptr<vector<int> > incl;      /* Array: incl[i] == j, if (t[i], t[j]) is an inclusion edge */
+thread_local unique_ptr<vector<int> > cycle;     /* Array: cycle[i] is cycle number of t[i] */
+thread_local unique_ptr<vector<GainType> > G;    /* For storing the G-values in the BestKOptMove function */
+thread_local unique_ptr<int> K;          /* The value K for the current K-opt move */
 
 static int compare(const void *pa, const void *pb)
 {

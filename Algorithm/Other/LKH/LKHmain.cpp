@@ -8,7 +8,7 @@ vector<double> LKH::LKHAlg::mv_cost;
 LKH::LKHAlg::LKHAlg(ParamMap &v) :Algorithm(-1,string())
 {
 	initializeParam();
-	string file=v[param_proFileName];
+	string file=v[param_dataFile1];
 	ProblemFileName=new char[file.size()+1];
 	ParameterFileName=new char[file.size()+1];
 	int loc=file.find(".tsp");

@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -17,9 +17,11 @@
 #include "../Individual.h"
 
 template<class,  class> class DEPopulation;
+class CRDEPopulation;
 class DEIndividual: public Individual<CodeVReal>
 {
 	template<class ,class> friend class DEPopulation;
+	friend class CRDEPopulation;
 protected:
         Solution<CodeVReal> m_pv,m_pu;    // donor vector and trial vector, respectively.
     public:
@@ -39,6 +41,7 @@ protected:
         virtual void recombine(double CR);
         virtual ReturnFlag select();
 		void printToScreen();
+		Solution<CodeVReal>& trial();
 };
 
 #endif // DEINDIVIDUAL_H

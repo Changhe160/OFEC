@@ -57,6 +57,7 @@ void FShubert::initialize(){
 	}
 	m_originalGlobalOpt=m_globalOpt;
 	addProTag(MMP);
+	setObjSet();
 }
 void FShubert::evaluate__(double const *x,vector<double>& obj){
 	double s=1;

@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -73,6 +73,7 @@ void FIBA::initialize(){
 		m_globalOpt[3].data()=x;
 	}
 	addProTag(MMP);
+	setObjSet();
 }
 void FIBA::evaluate__(double const *x,vector<double>& obj){
 	double s=0;

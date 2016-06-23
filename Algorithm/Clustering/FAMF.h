@@ -9,6 +9,9 @@
 extern unique_ptr<Scene> msp_buffer;
 #endif
 
+#ifdef OFEC_DEBUG_
+static  vector<vector<int>> avgIndi(30);
+#endif
 
 template<typename TypeIndi,typename TypeMainPop,typename TypeSubPop>
 class FAMF: public TypeMainPop, public MultiPopulationCont<TypeSubPop> {
@@ -45,6 +48,7 @@ protected:
 	void increaseDimension();
 	void decreaseDimension();
 	void updateMemory();
+	void wirteFile();
 };
 
 template<typename TypeIndi, typename TypeMainPop, typename TypeSubPop>
@@ -99,7 +103,6 @@ ReturnFlag FAMF<TypeIndi,TypeMainPop,TypeSubPop>::run_(){
 		for(unsigned k=0;k<this->m_subPop.size();k++){		
 			if(this->m_subPop[k]->m_flag[FAMFPop<TypeIndi,TypeMainPop>::f_hiber]) continue;	
 			int tres=1;
-			// for DOPs, a larger amount of computing resource (default tres=3) is given to the best population than that on static problems
 			if(CAST_PROBLEM_CONT->getGOpt().getNumOpt()==1&& k==this->findBestPop(0,FAMFPop<TypeIndi,TypeMainPop>::f_hiber,false)) tres=Global::g_arg[param_resource4BestPop];
 			for(int ii=0;ii<tres;++ii){	
 				if(this->m_subPop[k]->m_popsize>1){
@@ -244,9 +247,11 @@ ReturnFlag FAMF<TypeIndi,TypeMainPop,TypeSubPop>::run_(){
 			}
 			updateIndis(curPops);
 
-			
+			// fuzzy logic theory to determine the total number of indis for next moment
 			int indisNum=static_cast<int>(Global::msp_global->mp_normalAlg->NextNonStand(mv_indis[curPops][0],mv_indis[curPops][1]));
-								
+						
+			//cout<<Global::msp_global->mp_problem->getEvaluations()<<" "<<curPops<<" "<<m_prePops<<" "<<indisNum<<" "<<Global::msp_global->m_totalNumIndis<<endl;
+				
 			int dif=curPops-m_prePops;
 			double ratio=fabs(dif*1./mc_offPeak);
 			if(ratio>=1){
@@ -258,7 +263,20 @@ ReturnFlag FAMF<TypeIndi,TypeMainPop,TypeSubPop>::run_(){
 				if(p<=ratio) m_nextIndis=indisNum+mc_stepIndis*dif;
 				else m_nextIndis=indisNum;
 			}
-
+			#ifdef OFEC_DEBUG_
+			//for test purpurs result
+			g_mutex.lock();
+			taction[Global::msp_global->m_runId]+=1;
+			action[Global::msp_global->m_runId].push_back(move(make_pair((double)Global::msp_global->mp_problem->getEvaluations(),(double)taction[Global::msp_global->m_runId])));
+			if(Global::ms_curProId==Global::msm_pro["DYN_CONT_MovingPeak"]){ //
+				if(curPops<CAST_PROBLEM_DYN_CONT->getNumberofPeak()&&m_nextIndis<indisNum||curPops>CAST_PROBLEM_DYN_CONT->getNumberofPeak()&&m_nextIndis>indisNum) waction[Global::msp_global->m_runId]+=1;
+			}else{ 
+				if(curPops<CAST_PROBLEM_CONT->getGOpt().getNumOpt()&&m_nextIndis<indisNum||curPops>CAST_PROBLEM_CONT->getGOpt().getNumOpt()&&m_nextIndis>indisNum) 
+					waction[Global::msp_global->m_runId]+=1;
+			}
+			g_mutex.unlock();
+			//end
+			#endif
 			m_prePops=curPops;
 
 			if(m_nextIndis<=Global::msp_global->m_totalNumIndis){
@@ -277,6 +295,46 @@ ReturnFlag FAMF<TypeIndi,TypeMainPop,TypeSubPop>::run_(){
 			if(r_flag==Return_Terminate) 	break;
 		}
 	}
+	#ifdef OFEC_DEBUG_
+	#ifdef OFEC_CONSOLE
+		//for debug or middle results
+		wirteFile();	
+		g_mutex.lock();
+		string ss=Global::g_arg[param_workingDir];
+		ss+="Result/";
+		ss+=mSingleObj::getSingleObj()->m_fileName.str();
+		ss+="WAR.txt";
+		ofstream out(ss.c_str());
+		double rate=0;
+		double avgPS=0;
+		int maxsize=0;
+		int RUN=MAX_NUM_RUN;
+		for(int i=0;RUN>i;i++){
+			rate+=waction[Global::msp_global->m_runId]/taction[Global::msp_global->m_runId];
+			avgPS+=std::accumulate(avgIndi[Global::msp_global->m_runId].begin(),avgIndi[Global::msp_global->m_runId].end(),0.)/avgIndi[Global::msp_global->m_runId].size();
+			if(maxsize<action[i].size()) maxsize=action[i].size();
+		}
+		rate/=(int)RUN;
+		avgPS/=(int)RUN;
+		out<<"# "<<rate<<" "<<waction[Global::msp_global->m_runId]<<" "<<taction[Global::msp_global->m_runId]<<" "<<avgPS<<" "<<lessPreIndi/(int)MAX_NUM_RUN<<endl;
+		for(int i=0;i<maxsize;++i){
+			double mfes(0),mact(0);
+			for(int j=0;RUN>j;j++){
+				if(i<action[j].size()){
+					mfes+=action[j][i].first;
+					mact+=action[j][i].second;
+				}else{
+					mfes+=action[j].back().first;
+					mact+=action[j].back().second;
+				}
+			}
+			out<<mfes/RUN<<" "<<mact/RUN<<endl;
+		}
+		out.close();
+		g_mutex.unlock();
+		//end
+	#endif
+	#endif
 
 	return Return_Terminate;
 
@@ -308,6 +366,11 @@ template<typename TypeIndi, typename TypeMainPop, typename TypeSubPop>
 		TypeSubPop *s=new TypeSubPop(m_clst[k]);
 		s->setConvergThreshold(this->m_convergThreshold);
 		s->checkOverCrowd(this->m_maxSubSize);
+		#ifdef OFEC_DEBUG_
+		g_mutex.lock();
+		avgIndi[Global::msp_global->m_runId].push_back(s->m_popsize);
+		g_mutex.unlock();
+		#endif
 		this->addPopulation(*s);
 		newswarms++;
 		s=0;
@@ -416,7 +479,7 @@ ReturnFlag FAMF<TypeIndi,TypeMainPop,TypeSubPop>::increaseDiversity(){
 		}
 		for(unsigned conv=0;conv<mv_convered.size();conv++){
 			if(number<2) break;
-			if (!CAST_PROBLEM_DYN || CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(2))
+			if ((!CAST_PROBLEM_DYN || CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(2))/*|| (!CAST_PROBLEM_DYN_ONEPEAK || CAST_PROBLEM_DYN_ONEPEAK&&CAST_PROBLEM_DYN_ONEPEAK->predictChange(2))*/)
 				rf=this->add(2,false,false);
 			else
 				rf=this->add(2,true,false);
@@ -438,7 +501,7 @@ ReturnFlag FAMF<TypeIndi,TypeMainPop,TypeSubPop>::increaseDiversity(){
 
 		for(int i=0;i<mp_single->getPopSize();i++){
 			if(number<2) break;
-			if (!CAST_PROBLEM_DYN||CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(2))
+			if ((!CAST_PROBLEM_DYN || CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(2)) /*|| (!CAST_PROBLEM_DYN_ONEPEAK || CAST_PROBLEM_DYN_ONEPEAK&&CAST_PROBLEM_DYN_ONEPEAK->predictChange(2))*/)
 				rf=this->add(2,false,false);
 			else
 				rf=this->add(2,true,false);
@@ -452,7 +515,7 @@ ReturnFlag FAMF<TypeIndi,TypeMainPop,TypeSubPop>::increaseDiversity(){
 	}
 	
 	if(number>0){
-		if (!CAST_PROBLEM_DYN || CAST_PROBLEM_DYN&& CAST_PROBLEM_DYN->predictChange(number)){
+		if ((!CAST_PROBLEM_DYN || CAST_PROBLEM_DYN&&CAST_PROBLEM_DYN->predictChange(number)) /*|| (!CAST_PROBLEM_DYN_ONEPEAK || CAST_PROBLEM_DYN_ONEPEAK&&CAST_PROBLEM_DYN_ONEPEAK->predictChange(number))*/) {
 			rf=this->add(number,false,false);
 		}else{
           	rf=this->add(number,true,false);
@@ -549,7 +612,7 @@ bool FAMF<TypeIndi,TypeMainPop,TypeSubPop>::ifTerminating(){
 	#endif
 
 	#ifdef OFEC_CONSOLE
-		if (CAST_PROBLEM_DYN || Global::msp_global->mp_problem->m_name=="FUN_FreePeak_D_OnePeak") return Algorithm::ifTerminating();
+		if (Global::msp_global->mp_problem->isProTag(DOP)) return Algorithm::ifTerminating();
 	if(Global::msp_global->mp_problem->m_name.find("FUN_")!=string::npos){
 		if(CAST_PROBLEM_CONT->getGOpt().getNumGOptFound()==CAST_PROBLEM_CONT->getGOpt().getNumOpt()||Algorithm::ifTerminating()){
 			this->measureMultiPop();	
@@ -601,4 +664,56 @@ double FAMF<TypeIndi,TypeMainPop,TypeSubPop>::getAvgCurRadius(){
 	return r;
 }
 
+template<typename TypeIndi, typename TypeMainPop, typename TypeSubPop>
+void FAMF<TypeIndi,TypeMainPop,TypeSubPop>::wirteFile(){
+		
+	g_mutex.lock();	
+	double total=0;
+	for(int i=0;i<mv_indis.size();i++) total+=mv_indis[i].size()-2;
+	static vector<double> distri;
+	if(mv_indis.size()>distri.size()){
+		distri.resize(mv_indis.size(),0);
+	}
+	for(int i=0;i<mv_indis.size();i++){
+		distri[i]+=(mv_indis[i].size()-2)/total;
+	}		
+
+	string ss=Global::g_arg[param_workingDir];
+	ss+="Result/";
+	ss+=mSingleObj::getSingleObj()->m_fileName.str();
+	ss+="distr.txt";
+
+	/*if(Global::msp_global->mp_problem->isProTag(DOP)){
+		ss<<Global::g_arg[param_workingDir]<<"Result/peaks"<<CAST_PROBLEM_DYN->getInitialNumPeaks()<<"numPeaksChange"<<CAST_PROBLEM_DYN->getFlagNumPeaksChange()<<"type"<<CAST_PROBLEM_DYN->getNumPeakChangeMode()<<"_distr.txt";
+	}else{
+		ss<<Global::g_arg[param_workingDir]<<"Result/"<<Global::msp_global->mp_problem->m_name<<"_Dim_"<<GET_NUM_DIM<<"_distr.txt";
+	}*/
+
+	ofstream out(ss.c_str());
+	for(int i=0;i<distri.size();i++) out<<i<<" "<<distri[i]/(int)MAX_NUM_RUN<<endl;
+	out.close();
+	
+	/*if(CAST_PROBLEM_CONT->getGOpt().flagGloObj()){
+		static int num=0;
+		if(num<CAST_PROBLEM_CONT->getGOpt().getNumGOptFound()){
+			num=CAST_PROBLEM_CONT->getGOpt().getNumGOptFound();
+			stringstream ss;
+			ss<<Global::g_arg[param_workingDir]<<"Result/"<<Global::msp_global->mp_problem->m_name<<"_Opt_"<<GET_NUM_DIM<<"_Dim.txt";
+			ofstream out(ss.str().c_str());
+			CAST_PROBLEM_CONT->getGOpt().printGOpt(out);
+			out.close();
+		}
+	}else{
+		static int num=0;
+		if(num<m_optFound.getNumGOptFound()){
+			num=m_optFound.getNumGOptFound();
+			stringstream ss;
+			ss<<Global::g_arg[param_workingDir]<<"Result/"<<Global::msp_global->mp_problem->m_name<<"_Opt_"<<GET_NUM_DIM<<"_Dim.txt";
+			ofstream out(ss.str().c_str());
+			m_optFound.printGOpt(out);
+			out.close();
+		}
+	}*/
+	g_mutex.unlock();
+}
 #endif

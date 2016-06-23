@@ -7,13 +7,13 @@
  */
 
 /*************************************************************************
-* Project: Library of Evolutionary Algoriths
+* Project: Library of Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
-* Author: Changhe Li & Ming Yang & Yong Xia
-* Email: changhe.lw@google.com Or yangming0702@gmail.com Or cugxiayong@gmail.com
+* Author: Changhe Li & Yong Xia
+* Email: changhe.lw@google.com  Or cugxiayong@gmail.com
 * Language: C++
 *************************************************************************
-*  This file is part of EAlib. This library is free software;
+*  This file is part of OFEC. This library is free software;
 *  you can redistribute it and/or modify it under the terms of the
 *  GNU General Public License as published by the Free Software
 *  Foundation; either version 2, or (at your option) any later version.

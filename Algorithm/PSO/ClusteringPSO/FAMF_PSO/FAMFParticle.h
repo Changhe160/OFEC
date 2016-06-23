@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -28,7 +28,7 @@ public:
 	void initializeVelocityAftClustering();
 	// Brownian movements to dealwith noisy environments for the gbest particle
 	ReturnFlag brwonianMove(double radius);
-	ReturnFlag move( const Solution<CodeVReal> & lbest,  const Solution<CodeVReal> &gbest,double w, double c1, double c2);
+	ReturnFlag move( const Solution<CodeVReal> &gbest,double w, double c1, double c2);
 	ReturnFlag cauchyMove(double radius=-1);
 };
 

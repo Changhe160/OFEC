@@ -3,8 +3,7 @@
 F_Base::F_Base(int ID, int numDim, const string &proName, int numObj):BenchmarkFunction(ID,numDim,proName,numObj)
 {
     setSearchRange(0.,1.);
-	vector<ProTag> p_tag(1,MOP);
-	p_tag.push_back(CONT);
+	set<ProTag> p_tag = { MOP, CONT };
 	setProTag(p_tag);
 	setOptType(MIN_OPT,-1);
 	m_popInitialMode=POP_INIT_UNIFORM;
@@ -38,6 +37,8 @@ void F_Base::LoadPF()
 			infile>>m_originalGlobalOpt[i].data().m_obj[j];
 	m_globalOpt=m_originalGlobalOpt;
 	infile.close();
+
+	setObjSet();
 }
 
 // control the PF shape

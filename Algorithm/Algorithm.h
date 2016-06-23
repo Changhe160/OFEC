@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -16,11 +16,12 @@
 #define ALGORITHM_H
 #include "../Utility/definition.h"
 #include "../Utility/TypeVar/typeVar.h"
+#include "Termination.h"
 class Algorithm{
     protected:
        const int m_algID;
 	   int m_numDim;
-	   bool m_isTerminated;
+	   unique_ptr<Termination> m_term;
     public:
         string m_name;
         stringstream m_algPar;

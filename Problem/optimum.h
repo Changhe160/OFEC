@@ -40,6 +40,7 @@ public:
 	const Solution<ED> * getNearestGOpt(const Solution<ED>& p,int *idx,double*dis)const;
 	void setFoundFlagFalse(int idx=-1);
 	void setFoundFlagTrue(int idx = -1);
+	bool isFound(const vector<double> &obj);
 };
 
 template<typename ED, typename T>
@@ -188,6 +189,19 @@ bool Optima<ED,T>::isFound(const TS &sol,double disAcc,double objAcc){
 	return flag;
 }
 
+template<typename ED, typename T>
+bool Optima<ED, T>::isFound(const vector<double> &obj) {
+	if (!m_recordFlag) return false;	
+	
+	if (m_flagGloObj) { 				
+		if (m_opt[0].getObjDistance_(obj)==0) {
+			setFoundFlagTrue();
+			return true;
+		}
+	}	
+		
+	return false;
+}
 template<typename ED, typename T>
 inline int Optima<ED,T>::getNumGOptFound()const{
 	int num=0;

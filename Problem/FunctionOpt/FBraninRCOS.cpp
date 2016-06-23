@@ -1,5 +1,5 @@
 /*************************************************************************
-* Project:Open Frameworks for Evolutionary Computation
+* Project:Open Frameworks for Evolutionary Computation (OFEC)
 *************************************************************************
 * Author: Changhe Li
 * Email: changhe.lw@gmail.com 
@@ -61,7 +61,7 @@ void FBraninRCOS::initialize(){
 	m_globalOpt[2].data()=x;
 	m_originalGlobalOpt=m_globalOpt;
 	addProTag(MMP);
-	
+	setObjSet();
 }
 void FBraninRCOS::evaluate__(double const *x,vector<double>& obj){
 	double s,a;

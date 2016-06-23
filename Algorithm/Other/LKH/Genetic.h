@@ -8,11 +8,11 @@
 
 typedef void (*CrossoverFunction) (LKH::LKHAlg *Alg);
 
-extern boost::thread_specific_ptr<int> MaxPopulationSize; /* The maximum size of the population */ 
-extern boost::thread_specific_ptr<int> PopulationSize;    /* The current size of the population */ 
-extern boost::thread_specific_ptr<CrossoverFunction> Crossover;
-extern boost::thread_specific_ptr<int*> Population;      /* Array of individuals (solution tours) */
-extern boost::thread_specific_ptr<GainType> Fitness;     /* The fitness (tour cost) of each individual */
+extern thread_local unique_ptr<int> MaxPopulationSize; /* The maximum size of the population */ 
+extern thread_local unique_ptr<int> PopulationSize;    /* The current size of the population */ 
+extern thread_local unique_ptr<CrossoverFunction> Crossover;
+extern thread_local unique_ptr<int*> Population;      /* Array of individuals (solution tours) */
+extern thread_local unique_ptr<GainType> Fitness;     /* The fitness (tour cost) of each individual */
 
 void AddToPopulation(GainType Cost,LKH::LKHAlg *Alg);
 void ApplyCrossover(int i, int j,LKH::LKHAlg *Alg);

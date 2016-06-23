@@ -4,8 +4,8 @@
 #include "../Problem/Combination/TSP/OptimalEdgeInfo.h"
 #include "../Algorithm/Other/LKH/LKH_outPutResult/LKH_OBJ.h"
 
-boost::mutex g_mutex;
-boost::mutex g_mutexStream;
+mutex g_mutex;
+mutex g_mutexStream;
 void outputResults(){
 #ifndef OFEC_PROBLEM_DEBUG
 	if(mLKHObj::getLKHOBJ()!=nullptr)
@@ -36,15 +36,20 @@ void outputResults(){
 #endif
 }
 
-int go(vector<int> &runId){
+int go(vector<int> runId){
 
 	for(auto & r:runId){
 		try {
-		g_mutex.lock();
-		Run run(r,Global::g_arg);
-		g_mutex.unlock();
-                //run.test();
-                run.go();
+			
+			g_mutex.lock();
+			Run run(r,Global::g_arg);
+			g_mutex.unlock();
+		
+		//run.test();
+			run.go();
+			/*g_mutexStream.lock();
+			cout << "run " << r << " finishes "<< endl;
+			g_mutexStream.unlock();*/
 		}
 		catch(exception &e){
 			g_mutexStream.lock();
@@ -68,30 +73,25 @@ void run(){
 		}
 		return;
 	}else if(numTask==0){ // auto mode, the number of threads depends on the number of logical/physical threads 
-		numTask=boost::thread::hardware_concurrency();
+		numTask = thread::hardware_concurrency();
 	}
 
 	//**** concurrent run *****//
 	//cout<<"Warning: Program is running in MULTI-THREAD mode!"<<endl;
-	typedef boost::packaged_task<int> TASK;
-	typedef boost::unique_future<int> FUTURE;
-	if(MAX_NUM_RUN<numTask) numTask=MAX_NUM_RUN;
-	vector<TASK>  at(numTask);
-	vector<FUTURE> af(numTask);
+	if (MAX_NUM_RUN<numTask) numTask = MAX_NUM_RUN;
 
-	int rest=MAX_NUM_RUN%numTask;
-	int id1=0,id2=id1+MAX_NUM_RUN/numTask-1+(rest-->0?1:0);
-	for(int i=0;i<numTask;i++){
+	vector<thread> atrd;
+	int rest = MAX_NUM_RUN%numTask;
+	int id1 = 0, id2 = id1 + MAX_NUM_RUN / numTask - 1 + (rest-->0 ? 1 : 0);
+	for (int i = 0; i<numTask; i++) {
 		vector<int> runs;
-		for(int r=id1;r<=id2;r++) runs.push_back(r);
-		id1=id2+1;
-		id2=id1+MAX_NUM_RUN/numTask-1+(rest-->0?1:0);
-		at[i]=TASK(boost::bind(go,runs));
-		af[i]=at[i].get_future();
-		boost::thread(boost::move(at[i]));
+		for (int r = id1; r <= id2; r++) runs.push_back(r);
+		id1 = id2 + 1;
+		id2 = id1 + MAX_NUM_RUN / numTask - 1 + (rest-->0 ? 1 : 0);
+		atrd.push_back(thread(go, runs));
 	}
-	boost::wait_for_all(af.begin(),af.end());
-	for(auto &i:af) assert(i.is_ready()&&i.has_value());
+
+	for (auto&t : atrd) t.join();
 	
 }
 
@@ -106,5 +106,6 @@ int main(int argc,char* argv[]){
 	time(&timer_end);
 	cout<<"Time used: "<<difftime(timer_end,timer_start)<<" seconds"<<endl;	
     outputResults();
+	
 	return 0;
 }
