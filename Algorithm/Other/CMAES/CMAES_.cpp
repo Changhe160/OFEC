@@ -4,7 +4,8 @@
 #include "../../../Global/global.h"
 #include "../../../Measure/mMultiModal.h"
 #include "../../../Measure/mSingleObj.h"
-#include "../../../Problem/FunctionOpt/FFreePeak_OnePeak.h"
+#include "../../../Problem/ContinuousProblem.h"
+//#include "../../../Problem/FunctionOpt/FFreePeak_OnePeak.h"
 
 CMAES::CMAES(ParamMap &v):Algorithm(-1, "CMAES"), m_pop(v[param_popSize])
 {

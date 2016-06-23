@@ -7,6 +7,6 @@ OFEC was implemented in C++11 language based on some libraries of Boost and seve
 
 OFEC has three basic components: algorithm, problem, and performance measurements. Several algorithm examples are provided, including three multi-objective optimization algorithms, the standard particle swarm optimization, the basic differential evolution, the original ant colony optimization, the standard genetic algorithm, and several algorithms of mine. The problem component collects problems mainly from continuous domain, including two dynamic optimization problems (the moving peak benchmark and the GDBG benchmark), global optimization problems, multi-modal optimization problems, and travelling salesman problems. Traditional performance metrics for dynamic optimization and global optimization are implemented in the performance component.
 
-The current version of OFEC is 0.4.2 develped with MS Visual Studio Community 2015 and the BOOST version is 1.59, a makefile is also available for Linux users.
+The current version of OFEC is 0.4.2 develped with MS Visual Studio Community 2015 and the BOOST version is 1.59, a makefile is also available for GCC users with v4.8.2.
 
 Please feel free to contact me by changhe.lw@gmail.com if you have any questions.

@@ -1,7 +1,7 @@
 #include "ContOptima.h"
 #include "ContinuousProblem.h"
 #include "../Utility/definition.h"
-#include "../Problem/FunctionOpt/FFreePeak.h"
+//#include "../Problem/FunctionOpt/FFreePeak.h"
 extern mutex g_mutex;
 
 #ifdef OFEC_DEMON
@@ -115,7 +115,7 @@ void ContOptimum::creatOneSample(const MyVector &vnor){
 			break;	
 		}	
 		//June 19, 2016 TO DO: need to test
-		if (dynamic_cast<FreePeak*>(Global::msp_global->mp_problem.get())) {
+		/*if (dynamic_cast<FreePeak*>(Global::msp_global->mp_problem.get())) {
 			dr1 = s0.getObjDistance_(s1.data().m_obj);
 			if (!first) {
 				if (dr1 / dr0 > 10) { 
@@ -125,7 +125,7 @@ void ContOptimum::creatOneSample(const MyVector &vnor){
 			}
 			dr0 = dr1;
 			if (first) first = false;
-		}
+		}*/
 		
 		//***********
 

@@ -1,5 +1,5 @@
 #include "mMultiObj.h"
-#include "../Problem/FunctionOpt/MOP/FreePeak_M_OnePeak/FFreePeak_M_OnePeak.h"
+//#include "../Problem/FunctionOpt/MOP/FreePeak_M_OnePeak/FFreePeak_M_OnePeak.h"
 unique_ptr<mMultiObj> mMultiObj::msp_perf(nullptr);
 
 mMultiObj::mMultiObj(Global * glob,ParamMap &v)
@@ -68,7 +68,7 @@ void mMultiObj::record(Global * glob,int index,vector<double> &obj,vector<double
 		mvvv_obj[ID][index][i]=obj[i];
 	for(int i=0;i<point.size();i++)
 		mvvv_point[ID][index][i]=point[i];
-	if (Global::g_arg[param_proName] == "FUN_FreePeak_M_OnePeak") {
+	/*if (Global::g_arg[param_proName] == "FUN_FreePeak_M_OnePeak") {
 		FFreePeak_M_OnePeak* mp = dynamic_cast<FFreePeak_M_OnePeak*>(glob->mp_problem.get());
 		int type = mp->getType();
 		for (int i = 0; i < m_psr.size(); ++i) {
@@ -87,7 +87,7 @@ void mMultiObj::record(Global * glob,int index,vector<double> &obj,vector<double
 			}
 		}
 
-	}
+	}*/
 }
 
 
